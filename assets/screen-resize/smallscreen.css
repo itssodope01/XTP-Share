@@ -178,6 +178,10 @@
         right: 13.6%;
         bottom: 27.6%;
     }
+    #successModal {
+        width: 250px;
+        max-width: 80%;
+    }
 }
 
 @media only screen and (max-width: 650px) {
@@ -221,6 +225,7 @@
         top: 2%;
       }
 
+
 }
 @media only screen and (max-width: 670px) {
 #expand-files {
@@ -253,12 +258,13 @@
     right: 12.5%;
     bottom: 19.9%;
 }
-.section.S3 p{
-    margin-top: -12px;
-}
 
-.section.S3{
-    margin-top: -30px;
-}
+    .section.S3 p{
+        margin-top: -12px;
+    }
+
+    .section.S3{
+        margin-top: -30px;
+    }
 
 }
