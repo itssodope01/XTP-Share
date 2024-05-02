@@ -14,20 +14,27 @@ let firstAttemptTimestamp;
 let remainingTimeDisplayInterval;
 let lastFilledInput = null;
 let inputDone = false;
-let flagenb = false;
-
-localStorage.removeItem('incorrectAttempts');
-localStorage.removeItem('firstIncorrectTime');
 
 // Retrieve incorrectAttempts from localStorage if exists, otherwise set it to 0 (localstorage is for demo)
 // Needs actual User Information from App
 let incorrectAttempts = localStorage.getItem('incorrectAttempts') ? parseInt(localStorage.getItem('incorrectAttempts')) : 0;
-let firstIncorrectTime = localStorage.getItem('firstIncorrectTime') ? parseInt(localStorage.getItem('firstIncorrectTime')) : null;
+
+function checkTimestampOnPageLoad() {
+    const firstAttemptTimestamp = localStorage.getItem('firstAttemptTimestamp') ? parseInt(localStorage.getItem('firstAttemptTimestamp')) : null;
+    if (firstAttemptTimestamp) {
+      const currentTime = Date.now();
+      const elapsedSinceFirstAttempt = currentTime - firstAttemptTimestamp;
+      const remainingTime = 20000 - elapsedSinceFirstAttempt;
+      updateTimeStamp(remainingTime);
+    }
+} checkTimestampOnPageLoad();
+  
 
 function handleUserActivity() {
     lastActivityTime = Date.now(); // Update last activity time
     clearInterval(remainingTimeDisplayInterval);
     remainingTimeDisplay.style.visibility = 'hidden';
+    
 }
 
 // Event listeners to track user activity
@@ -38,13 +45,12 @@ function handleUserActivity() {
 function verifyCode(Code) {
     Code = Code.toString();
     const verificationCode = [...document.querySelectorAll(".code-input")].map(input => input.value).join(""); // Verification Code from user
-    if(incorrectAttempts < 5){
-        if (verificationCode.length < 6 || verificationCode.trim() === "") {
+        if (verificationCode.length < 6 || verificationCode.trim() === "" && incorrectAttempts < 5) {
             displayVerificationMessage('Please input a valid code', false);
             shake('.code-input-container');
             return;
         } else {
-            if (verificationCode === Code && incorrectAttempts < 5) {
+            if (verificationCode === Code && incorrectAttempts < 5 && incorrectAttempts < 5) {
                 clearTimeout(pageReloadTimer);
                 verificationStartTime = Date.now();
                 if (currentButton === 'send-email-button') {
@@ -60,46 +66,45 @@ function verifyCode(Code) {
                 setTimeout(() => {
                     clearCodeFields();
                 }, 1000);
-                flagenb = false;
 
                 // Skiping verification section for future transitions
                 skipVerificationSection = true;
                 startVerificationTimer();
-            } else {
+                incorrectAttempts = 0;
+            } else if (incorrectAttempts < 5){
                 incorrectAttempts++; // Increment incorrect attempts
                 localStorage.setItem('incorrectAttempts', incorrectAttempts); // Save incorrectAttempts to localStorage
                 displayVerificationMessage('Incorrect verification code', false);
                 shake('.code-input-container');
+            }  else if (incorrectAttempts >= 5) { // 5 incorrect attempts reached
+                if (!localStorage.getItem('firstAttemptTimestamp')) {
+                    // Record the timestamp of the first time 5 incorrect attempts threshold is exceeded
+                    localStorage.setItem('firstAttemptTimestamp', Date.now());
+                }
+                firstAttemptTimestamp = parseInt(localStorage.getItem('firstAttemptTimestamp'));
+                const currentTime = Date.now();
+                const elapsedSinceFirstAttempt = currentTime - firstAttemptTimestamp;
+                const remainingTime = (20000) - elapsedSinceFirstAttempt;
+                updateTimeStamp(remainingTime);
+                return; 
             }
         }
-    } else if (incorrectAttempts >= 5) { // 5 incorrect attempts reached
-        if (!localStorage.getItem('firstAttemptTimestamp')) {
-            // Record the timestamp of the first time 5 incorrect attempts threshold is exceeded
-            localStorage.setItem('firstAttemptTimestamp', Date.now());
-        }
-        firstAttemptTimestamp = parseInt(localStorage.getItem('firstAttemptTimestamp'));
-        const currentTime = Date.now();
-        const elapsedSinceFirstAttempt = currentTime - firstAttemptTimestamp;
-        const remainingTime = (20000) - elapsedSinceFirstAttempt;
-
-        if (remainingTime <= 0) {
-            // Reset incorrect attempts and firstAttemptTimestamp after 15 minutes
-            localStorage.removeItem('incorrectAttempts');
-            localStorage.removeItem('firstAttemptTimestamp');
-            incorrectAttempts = 0;
-            displayVerificationMessage(``);
-            
-        } else {
-            // Update remaining time
-            const remainingMinutes = Math.floor(remainingTime / (60 * 1000));
-            const remainingSeconds = Math.floor((remainingTime % (60 * 1000)) / 1000);
-            displayVerificationMessage(`Too many incorrect attempts \nPlease try again in: ${remainingMinutes}m ${remainingSeconds}s`, false); 
-        }
-        return; 
-    }
 }
 
-
+function updateTimeStamp(remainingTime) {
+    if (remainingTime <= 0) {
+        // Reset incorrect attempts and firstAttemptTimestamp after 15 minutes (demo 20s)
+        localStorage.removeItem('incorrectAttempts');
+        localStorage.removeItem('firstAttemptTimestamp');
+        incorrectAttempts = 0;
+        displayVerificationMessage(``);
+    } else {
+        // Update remaining time
+        const remainingMinutes = Math.floor(remainingTime / (60 * 1000));
+        const remainingSeconds = Math.floor((remainingTime % (60 * 1000)) / 1000);
+        displayVerificationMessage(`Too many incorrect attempts \nPlease try again in: ${remainingMinutes}m ${remainingSeconds}s`, false); 
+    }
+}
 
 function shake(containerSelector) {
     const codeContainer = document.querySelector(containerSelector);
@@ -281,10 +286,8 @@ function handleCodeInput(event) {
             previousInput.focus();
             previousInput.value = '';
             lastFilledInput = previousInput.previousElementSibling;
-            flagenb = false;
         } else if (isSelectionAtStart) {
             input.setRangeText('', input.selectionStart - 1, input.selectionStart, 'end');
-            flagenb = false;
         }
     }
 
@@ -309,16 +312,14 @@ function handleCodeInput(event) {
         verifyCode(pseudoCorrectCode);
     }
 
-    const allInputsFilled = Array.from(codeInputs).every(input => input.value.trim().length === maxLength);
-    const isValidInput = event.code !== "ArrowLeft" && event.code !== "ArrowRight" && event.code !== "Backspace";
-    if (allInputsFilled && isValidInput) {
-        if (!flagenb) {
+    // --Auto-verify on first attempt
+    const allInputsFilled = Array.from(codeInputs).every(input => input.value.trim().length === (maxLength));
+    if (allInputsFilled && incorrectAttempts === 0) {
             verifyCode(pseudoCorrectCode);
-            flagenb = true;
-        } else if (/^\d$/.test(event.key)) {
-            verifyCode(pseudoCorrectCode);
-        }
     }
+
+    if (allInputsFilled)
+    checkTimestampOnPageLoad();
 }
 
 
