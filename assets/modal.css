@@ -280,7 +280,7 @@
 #successModal {
     transform: translate(0%, 0%);
     width: 250px;
-    max-width: 60%;
+    max-width: 74.5%;
     left: -1200px;
     bottom: 80px;
     height: auto;
@@ -299,7 +299,7 @@
 #successModal .modal-content{
     flex-direction: row;
     height: auto;
-    padding: 0;
+    padding: 10px;
     margin: 0;
     background-color: rgba(27, 27, 27, 0.468);
     color: #dbdbdb;
