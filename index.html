@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="assets/logo/logo.png">
+    <title>XTP Share</title>
+
+    <!--
+    Copyright (c) 2024 Pritam Chakraborty
+    License: MIT
+    -->
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="assets/styles.css">
+    <link rel="stylesheet" href="assets/section3.css">
+    <link rel="stylesheet" href="assets/section4.css">
+    <link rel="stylesheet" href="assets/verify.css">
+    <link rel="stylesheet" href="assets/modal.css">
+    <!-- Theme stylesheets -->
+    <link rel="stylesheet" href="assets/theme/dark-mode.css">
+    <link rel="stylesheet" href="assets/theme/light-mode.css">
+    <!-- Screen resize stylesheets -->
+    <link rel="stylesheet" href="assets/screen-resize/smallscreen.css">
+    <link rel="stylesheet" href="assets/screen-resize/mediumscreen.css">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <!-- External libraries -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+    <script>
+        var deviceType = localStorage.getItem('deviceType') || (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? 'mobile' : 'desktop');
+        localStorage.setItem('deviceType', deviceType);
+        
+        if (deviceType === 'mobile') {
+            window.location.href = 'mobile.html'; 
+        } else {
+            document.addEventListener('DOMContentLoaded', function() {
+                document.querySelector('html').style.display = 'block';
+            });
+        }
+    </script>    
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <!-- Logo and Navigation -->
+        <div class="logo-container">
+            <img id="logo" src="assets/logo/logo.png" alt="Company Logo" style="width: 25px;">
+            <span class="company-name">XTP SHARE</span>
+        </div>
+
+        <!-- Header Buttons -->
+        <div class="header-buttons">
+            <button class="header-button">Mobile App</button>
+            <button class="header-button">Help</button>
+            <button class="header-button">Contact</button>
+            <button class="header-button">About</button>
+        </div>
+        <div class="time" id="remainingTimeDisplay" title="Verified">00m 00s</div>
+        
+        <!-- Dark Mode Toggle -->
+        <div class="toggle-container">
+            <input type="checkbox" id="dark-mode-toggle" class="toggle-checkbox">
+            <label for="dark-mode-toggle" class="toggle-label">
+                <div class="toggle-oval">
+                    <div class="toggle-button">
+                        <div class="ticon">
+                            <img src="assets/logo/brightness.png" alt="Sun" class="sun-icon">
+                            <img src="assets/logo/moon.png" alt="Moon" class="moon-icon">
+                        </div>
+                    </div>
+                </div>
+            </label>
+        </div>
+
+        <!-- Hamburger Menu Button -->
+        <div class="hamburger-menu">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container" id="container">
+        <h1 class="title" id="title">Online File Transfer System</h1>
+        <p class="subtitle" id="title">by XTP</p></div>
+        <span class="back arrow" id="backArrow"></span>
+            <!-- Sections -->
+    <div class="container1" id="container1">
+        <div class="section S1 active" id="S1" ondragover="handleDragOver(event)" ondragenter="handleDragEnter(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
+        <div class="container2" id="C2">
+        <h4 class="description">Securely Send Files Without Compromising Your Account Passwords and Privacy.<br>
+            <span class="highlight" data-text="No LogIn Required">No LogIn Required.</span>
+            <span class="find-out">Find out How! </span>
+        </h4>
+    </div>
+
+<!-- File Drop Area -->
+<div class="file-drop-box" style="height: 200px;" id="fileDropBox">
+    <!-- Placeholder Image -->
+    <img src="assets/logo/folder.png" alt="Placeholder Image" class="placeholder-image" style="width: 50px; margin-top: 35px;">
+    <p class="file-drop-text" style="cursor: default;">Drag folders (to zip) or files here</p>
+    <div class="file-container"style="height: 200px; overflow-y: auto; overflow-x: hidden;"><ul class="file-list" id="selected-files-container" style="height: auto;"></ul></div>
+    <div class="upload">
+    <input type="file" id="file-upload" multiple hidden>
+    <label for="file-upload" class="upload-button" style="cursor: pointer;" id="upload-files"><span>Upload Files </span></label>
+    
+    <input type="file" id="folder-upload" style="display:none;" multiple directory webkitdirectory>
+    <label for="folder-upload" class="upload-button" style="cursor: pointer;" id="upload-folder"><i class="fas fa-folder"></i></label>
+</div>
+    <div class="clear-container" onclick="clearAllFiles()">
+        <button class="clear-all-button" style="cursor: pointer;"><i class="fas fa-trash-alt"></i><span class="clear" id="clear">Remove All</span></button>
+    </div>
+    <div class="add-files-container" onclick="openFileSelection()">
+        <button for="file-upload" class="add-files-button" style="cursor: pointer;"><i class="fas fa-plus"></i><span class="add" id="add">Add More</span></button>
+    </div>
+    <div class="expand" id="expand-files" onclick="showUploadedFiles()">
+        <i class="fas fa-expand-alt"></i>
+    </div>
+</div>
+
+
+
+
+    <!-- Buttons for File Actions -->
+    <div class="button-container">
+        <button id="send-email-button" class="btn"><strong>Send Email</strong></button>
+        <button id="save-cloud-button" class="btn"><strong>Cloud Storage</strong></button>
+    </div>
+</div>
+
+<div class="section S2 next" id="S2">
+    <!-- Div Elements for Code Verification -->
+    <div id="codeVerification" class="codeVerification">
+        <div class="content">
+            
+            <h2>Enter OTP</h2>
+            <p>Please enter the one-time code from the mobile app. This code securely connects you to your accounts.</p>
+            <!-- Code Input Fields -->
+            <div class="code-input-container">
+                <input type="tel" pattern="[0-9]*" inputmode="numeric" maxlength="1" class="code-input" autocomplete="new-code-1" />
+                <input type="tel" pattern="[0-9]*" inputmode="numeric" maxlength="1" class="code-input" autocomplete="new-code-2" />
+                <input type="tel" pattern="[0-9]*" inputmode="numeric" maxlength="1" class="code-input" autocomplete="new-code-3" />
+                <input type="tel" pattern="[0-9]*" inputmode="numeric" maxlength="1" class="code-input" autocomplete="new-code-4" />
+                <input type="tel" pattern="[0-9]*" inputmode="numeric" maxlength="1" class="code-input" autocomplete="new-code-5" />
+                <input type="tel" pattern="[0-9]*" inputmode="numeric" maxlength="1" class="code-input" autocomplete="new-code-6" />
+            </div>
+                        
+            <!-- Verification Message -->
+            <p id="verificationMessage" class="verification-message"></p>
+            <!-- Verify Code Button -->
+            <button id="verifyCodeButton" class="btn"><strong>Verify</strong></button>
+            <p class="find-code-text"><a id="findCodeLink" onclick="toggleCodeInfo()">Where to find the code?</a></p>
+        </div>
+    </div>
+    <div id="codeInfo" class="codeInfo" >
+        <div class="content">
+        <p>You can find the code in our mobile app under the "Generate One-Time Code" section.<br><br>PseudoCorrect Code: 555555</p><p class="download" id="download"><br><a style="cursor: pointer;">Download App</a></p>
+    </div>
+    </div>
+</div>
+
+<!-- Div Elements for choosing Cloud Storage options -->
+    <!-- Section S3 -->
+    <div class="section S3 next" id="S3" >
+        <h2 class="description">Select Cloud Storage Options</h2>
+        <p class="description" style="text-align: center;">You can transfer files to multiple Storage systems at the same time.</p>
+        <div class="platforms-container" id="platformsContainer">
+            <!-- Platforms will be dynamically added here -->
+        </div>
+        <!-- Buttons for File Actions -->
+        <div class="button-container">
+            <button id="start-transfer-button" class="btn">
+                <strong>Start Transfer</strong>
+                <svg id="svg1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" style="margin-left: -3px;" transform="rotate(-90)">
+                    <path d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/>
+                </svg>
+                <svg id="svg2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" style="margin-left: -18px;" transform="rotate(-90)">
+                    <path d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/>
+                </svg>
+            </button>
+        </div>
+        <div class="preview-button"><a class="preview" id="preview">Preview Files</a></div>
+    </div>
+<!-- Div Elements for writing Email -->
+<div class="section S4 next" id="S4">
+    <div class="email-compose-container" ondragover="handleDragOver(event)" ondragenter="handleDragEnter(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
+        <!-- <div class="email-label">E M A I L</div> -->
+        <div class="attachment-container" id="attachment-container">
+        <div class="attach-contain"> 
+           <p class="attachment-text" style="cursor: default;">:No Attachments</p>
+        </div></div>
+        <div class="email-compose">
+            <div class="email-compose-header" id="header-input">
+
+            </div>
+            <div class="email-compose-header">
+                <div class="input-group">
+                    <select required name="from" class="input"></select>
+                    <label class="user-label" id="from">From</label>
+                </div>
+            </div>
+            <div class="email-compose-header">
+                <div class="input-group">
+                    <input required type="text" name="to" autocomplete="off" class="input to-emails" multiple>
+                    <label class="user-label" id="to">To</label>
+                </div>
+            </div>            
+            
+            <div class="email-compose-header">
+                <div class="input-group">
+                    <input required="" type="text" name="subject" autocomplete="off" class="input">
+                    <label class="user-label" id = "subject">Subject</label>
+                </div>
+            </div>
+            <div class="attachment-container" id="attachment-container-toggle">
+                <p class="attachment-text" style="cursor: default;">No Attachments</p>
+            </div>
+            <div id="editorPlaceholder"><p>Write your email here...</p></div>
+            <div id="editor"></div>
+            <div class="email-compose-footer">
+                <div class="formatting-container">
+                    <div class="formatting" id="formatting">
+                        <button class="attachment-button" id="attachment-button" onclick="openFileSelection()" title="add attachments">
+                            <i class="fas fa-paperclip attachment-icon"></i>
+                        </button>
+                        <div id="toolbar">
+                            <button class="ql-bold" title="Bold"><b>Bold</b></button>
+                            <button class="ql-italic" title="Italic"><b>Italic</b></button>
+                            <button class="ql-underline" title="Underline"><b>Underline</b></button>
+                            <button class="ql-code-block" title="Code Block"><b>Code Block</b></button>
+                            <button class="ql-list" value="bullet" title="Bullet List"><b>Bullet List</b></button>
+                            <!-- <button class="ql-link">Link</button> -->
+                            <button class="ql-clean" title="Clear Formatting"><b>Clear Formatting</b></button>
+                        </div>
+                    </div>
+                </div>                
+                <a href="#" class="attachments-link">Show Attachments</a>
+                <button class="email-compose-button">
+                    <div class="svg-wrapper-1">
+                        <div class="svg-wrapper">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                                <path fill="none" d="M0 0h24v24H0z"></path>
+                                <path fill="currentColor" d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <span>Send</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+    <!-- Modal for System Information -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Welcome to XTP Share!</h2>
+            <p class="description" id="step">Our system allows you to securely send files from any public device to your personal accounts without the need to log in. Here's how it works:</p>
+            <div class="steps-container">
+                <!-- Step Buttons -->
+                <div class="step-buttons" id="stepButtons"></div>
+                <div class="steps-content" id="stepsContent"></div>
+            </div>
+            <!-- Currently Supported Platforms -->
+            <p class="description">We currently support sending files to:</p>
+            <div class="wrapper" id="iconWrapper"></div>
+            
+        </div>
+    </div>
+    <!-- No-Subject Modal -->
+    <div id="noSubject" class="modal">
+        <div class="modal-content">
+            <p>Send without a subject?</p>
+            <div class="input-group">
+                <input required="" type="text" name="subject" autocomplete="off" class="input" id="subjectInput">
+                <label class="user-label">Subject</label>
+            </div>
+            <div class="button-container">
+                <button id="confirmBtn" class="btn">Send</button>
+                <button id="cancelBtn" class="btn">Cancel</button>
+            </div>
+        </div>
+    </div>
+<!-- Email-sent Notification -->
+<div id="successModal" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="notification">
+            <div style="display: flex; flex-direction: row; justify-content: center; align-items: center;">
+                <i class="fas fa-bell" style="margin-right: 10px;"></i>
+                <p id="successMessage">Email sent!</p>
+                <p id="viewMessageBtn" class="view-message" onclick="viewmessage()">View Message</p>
+            </div>
+        </div>        
+    <!-- Email-sent message -->
+    <div class="message-email">
+        <p class="message-from">from</p>
+        <p class="message-to">to</p>
+        <p class="message-subject">subject</p>
+        <div class="messageattachment">
+            <p class="message-attachment"></p>
+        </div>
+         <div class="messagecontent">
+            <p class="message-content">content</p>
+        </div>
+    </div>
+    </div>
+</div>
+
+<!-- Zip-Modal -->
+<div id="Zipmodal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="closeZip" >&times;</span>
+        <div id="zip-loader" class="loader"></div>
+      <p id="modal-text"></p>
+      <div class="button-container">
+      <button id="zip-button" class="btn">Convert to Zip</button>
+      <button id="upload-button" class="btn">Individual Files</button>
+      </div>
+    </div>
+  </div>
+  
+<!-- modal to preview uploaded files -->
+<div id="uploaded-files-modal" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <span class="close" id="uploaded-files-modal-close">&times;</span>
+        <div>
+            <h3 id="file-count">0 Files Total size 0 MB</h3>
+            <div class="sort-dropdown">
+                <label for="sort-by">Sort by:</label>
+                <select id="sort-by">
+                    <option value="select">Select</option>
+                    <option value="size-ascending">Size Ascending</option>
+                    <option value="size-descending">Size Descending</option>
+                    <option value="date-sort">Last Modified</option>
+                </select>
+            </div>
+        </div>
+        <h4 id="file-size-error"></h4>
+        <div class="uploaded-files-table-container">
+            <table class="uploaded-files-table">
+                <thead>
+                    <tr>
+                        <th style="border-bottom: 0; width: auto; margin-top: 0;"></th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Size</th>
+                        <th>Last Modified</th>
+                        <th style="border-bottom: 0; width: auto; margin-top: 0;"></th>
+                    </tr>
+                </thead>
+                <tbody class="uploaded-files">
+                    <!-- Rows will be dynamically added here -->
+                </tbody>
+            </table>
+        </div>
+        <div class="file-drop-button">
+            <div class="button-container">
+                <button id="addFiles" class="btn">Add Files</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Transfer-Modal -->
+<div id="transferModal" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+      <h3><span class="transfer-h3">Transfer in progress</span> <span class="dot dot1">.</span><span class="dot dot2">.</span><span class="dot dot3">.</span></h3>
+      <button class="close-transfer" id="close-transfer" onclick="closeTransfer()">Done</button>
+      <div class="transfer">
+        <div class="main active">
+          <div class="details">
+            <table>
+              <tr>
+                <th>Total Files:</th>
+                <td class="transfer-total">0 (0 MB)</td>
+                <td style="display: flex; flex-direction: row;" onclick="toggledetails()"><p style="cursor: pointer;">Details</p> <img src="assets/logo/back-arrow.svg" style="transform: rotate(180deg); width: 17px; height: auto; cursor: pointer; filter: invert(50%); margin-left: 5px;"></td>
+              </tr>
+              <tr>
+                <th>Remaining Files:</th>
+                <td class="transfer-remaining">0 (0 MB)</td>
+                <td><button class="cancel-transfer">Cancel</button></td>
+              </tr>
+              <tr>
+                <th>Est. Time Left:</th>
+                <td class="transfer-time">0 minutes</td>
+              </tr>
+              <tr>
+                <th>Transfer Rate:</th>
+                <td class="transfer-rate">0 MB/s</td>
+              </tr>
+              <tr>
+                <th>Transferring To:</th>
+                <td class="transfer-to">Destination Platform</td>
+                <td style="display: flex; flex-direction: row;" onclick="toggleplatforms()"><p style="cursor: pointer;" id="completed-button">Completed</p> <img src="assets/logo/back-arrow.svg" style="transform: rotate(180deg); width: 17px; height: auto; cursor: pointer; margin-left: 5px; filter: invert(50%);"></td>
+              </tr>
+            </table>
+          </div>
+          <div class="progress-bar" id="transfer-progress-bar">
+            <div class="progress" id="transfer-progress"></div>
+            <div class="progress-text">0%</div>
+          </div>
+        </div>
+        <div class="second next">
+          <span style="display: flex; flex-direction: row; padding: 0; margin-bottom: -50px; margin-top: 20px; margin-left: 80%;" onclick="toggledetails()"><img src="assets/logo/back-arrow.svg" style="width: 17px; height: auto; cursor: pointer; filter: invert(50%); margin-right: 5px;"><p style="cursor: pointer;">Summary</p></span>
+         
+          <div class="filedetails-wrapper">
+            <table class="transfer-details-table">
+                <thead>
+                    <tr>
+                        <th style="border-bottom: 0; width: auto; margin-top: 0;"></th>
+                        <th>File Name</th>
+                        <th>Status</th>
+                        <th>Size</th>
+                        <th>Progress</th>
+                    </tr>
+                </thead>
+                <tbody class="transfer-filedetails">
+                    <!-- Rows will be dynamically added here -->
+                </tbody>
+            </table>
+        </div>
+        
+        </div>
+        <div class="completed next">
+          <span style="display: flex; flex-direction: row; padding: 0; margin-bottom: -50px; margin-top: 20px; margin-left: 80%;" onclick="toggledetails()"><img src="assets/logo/back-arrow.svg" style="width: 17px; height: auto; cursor: pointer; filter: var(--back-invert); margin-right: 5px;"><p style="cursor: pointer;">Summary</p></span>
+          <table class="transfer-platforms-table">
+            <thead>
+                <tr>
+                    <th style="border-bottom: 0; width: 60px; margin-top: 0;"></th>
+                    <th class="transfer-platform-name">Platform</th>
+                    <th class="transfer-platform-status">Status</th>
+                </tr>
+            </thead>
+            <tbody class="transfer-platforms">
+                <!-- Rows will be dynamically added here -->
+            </tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+  </div>
+    
+<!-- Overlay for Modals -->
+<div id="overlay"></div>
+
+    <footer>
+        <p style="cursor: default;">&copy; 2024 XTP Services Inc.</p>
+        <div class="tnc" id="tnc">
+            <span><a>terms of use</a> | <a>privacy policy</a></span>
+         </div>
+    </footer>
+
+    <script>
+        // Dark Mode Toggle
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            darkModeToggle.checked = savedTheme === 'dark';
+        }
+
+        darkModeToggle.addEventListener('change', () => {
+            const theme = darkModeToggle.checked ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+        });
+
+        document.getElementById('logo').addEventListener('click', function() {
+        location.reload();
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const body = document.querySelector('body');
+            body.style.display = 'block';
+        });
+        
+    </script>
+    
+    <div id="script" class="script"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.4/mammoth.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/zip.js/3.1.5/zip.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jszip@latest/dist/jszip.min.js"></script>
+    <script src="https://cdn.quilljs.com/1.3.7/quill.js"></script>
+    <script src="https://cdn.quilljs.com/1.3.7/quill.placeholder.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script src="loadScripts.js"></script>
+</body>
+
+</html>
