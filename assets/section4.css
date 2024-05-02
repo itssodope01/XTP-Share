@@ -354,10 +354,11 @@ cursor: pointer;
 }
 
 .message-email .message-from, .message-email .message-to, .message-email .message-subject{
-    padding: 3px;
     border-bottom: 2px solid #313131;
 }
+
 .message-email{
+    width: 100%;
     margin-left: 40px;
     margin-right: 40px;
 }
@@ -391,11 +392,12 @@ cursor: pointer;
 
 .message-email .messageattachment {
     height: 60px;
-    width: 10px;
+    width: auto;
+    max-width: 600px;
     min-width: 100%;
     margin-bottom: 10px;
 }
-.messageattachment ::-webkit-scrollbar {
+.message-email ::-webkit-scrollbar {
     height: 4px; 
 }
 
