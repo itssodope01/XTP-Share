@@ -58,6 +58,11 @@
         right: 14.2%;
         bottom: 31.6%;
     }
+
+    #successModal {
+        width: 250px;
+        max-width: 80%;
+    }
 }
 
 @media only screen and (min-width: 950px) and (max-width: 1050px) {
