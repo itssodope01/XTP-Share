@@ -71,6 +71,7 @@ function verifyCode(Code) {
                 skipVerificationSection = true;
                 startVerificationTimer();
                 incorrectAttempts = 0;
+                localStorage.removeItem('incorrectAttempts');
             } else if (incorrectAttempts < 5){
                 incorrectAttempts++; // Increment incorrect attempts
                 localStorage.setItem('incorrectAttempts', incorrectAttempts); // Save incorrectAttempts to localStorage
