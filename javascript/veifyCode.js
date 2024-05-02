@@ -15,8 +15,6 @@ let remainingTimeDisplayInterval;
 let lastFilledInput = null;
 let inputDone = false;
 
-// Retrieve incorrectAttempts from localStorage if exists, otherwise set it to 0 (localstorage is for demo)
-// Needs actual User Information from App
 let incorrectAttempts = localStorage.getItem('incorrectAttempts') ? parseInt(localStorage.getItem('incorrectAttempts')) : 0;
 
 function checkTimestampOnPageLoad() {
