@@ -134,14 +134,6 @@
         font-size: 18px;
     }
 
-    .section.S3 p{
-        margin-top: -12px;
-    }
-
-    .section.S3{
-        margin-top: -30px;
-    }
-
     .platforms-container {
         gap: 10px;
         margin-top: 30px;
@@ -260,6 +252,13 @@
 #expand-files {
     right: 12.5%;
     bottom: 19.9%;
+}
+.section.S3 p{
+    margin-top: -12px;
+}
+
+.section.S3{
+    margin-top: -30px;
 }
 
 }
