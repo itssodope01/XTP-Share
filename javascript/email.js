@@ -393,6 +393,9 @@ const message = modalContent.querySelector('.message-email');
 function viewmessage() {
     const viewButton = document.getElementById('viewMessageBtn');
     const lastSentEmail = sentEmails[sentEmails.length - 1];
+    const overlay = document.getElementById("overlay");
+    overlay.style.display = 'block';
+    overlay.style.opacity = '0';
     removeMouseEventr();
     viewButtonClicked = true;
     clearInterval(timer);
@@ -408,9 +411,11 @@ function viewmessage() {
     message.style.display = 'block';
 
     function clickOutsideHandler(event) {
-        if (!modalS.contains(event.target) && event.target !== viewButton) {
+        if (overlay.contains(event.target)) {
             resetNotification();
             document.removeEventListener('click', clickOutsideHandler);
+            overlay.style.opacity = '1';
+            overlay.style.display = 'none';
         }
     }
 
