@@ -50,7 +50,7 @@ document.getElementById('start-transfer-button').addEventListener('click', funct
         displayTemporaryMessage("Please upload some files first", false, 2500);
         return;
     } else if (!platformsSelected()) {
-        if (!confirm("Please select at least one platform")) {
+        if (!alert("Please select at least one platform")) {
             return;
         }
     } else if (limitExceeded()) {
