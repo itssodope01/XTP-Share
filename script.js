@@ -14,6 +14,7 @@ const attachmentToggle = document.querySelector('#attachment-container-toggle');
 const attachmentText = document.querySelector('.attachment-text');
 const selectedFilesContainer = getElement('selected-files-container');
 const transferModal = getElement('transferModal');
+const userAccount = document.getElementById('userAccount');
 
 
 // hamburger menu
@@ -104,6 +105,8 @@ function transitionSections(currentSectionId, previousSectionId, isBackButton = 
             ['.container', '.title', '.subtitle'].forEach(selector => document.querySelector(selector).classList.replace('S', 'transition'));          
         }
 
+
+
         if(currentSection.id === 'S1'){
             document.querySelectorAll('.container, .title, .subtitle').forEach(element => {
                 element.classList.remove('transition');
@@ -172,6 +175,15 @@ window.addEventListener('popstate', handleBrowserBackButton);
 function handleBrowserBackButton() {
     const currentSection = document.querySelector('.section.active');
     const currentSectionID = currentSection.id;
+
+        if (transferHistoryModal.style.display === 'block') {
+        transferHistoryModal.style.left = "200%";
+        setTimeout(() => {
+        closeModal(transferHistoryModal);
+        }, 1000); 
+        history.pushState({ sectionId: S3 }, '');
+        return;
+        }
 
     if (currentSectionID === 'S1') {
         window.history.back();
@@ -243,3 +255,68 @@ $(document).on('dragleave drop', function(e) {
     e.preventDefault();
     e.stopPropagation();
 });
+
+// User account
+    
+    const userDropdownMenu = document.getElementById('userDropdownMenu');
+    const arrowUp = document.getElementById('arrowUp');
+    const darkToggle = document.querySelector(".toggle-container");
+    const logOut = document.querySelector("#logoutLink");
+    const transferHistoryLink = document.getElementById('transferHistoryLink');
+    const transferHistoryModal = document.getElementById('transferHistoryModal');
+    const closeHistoryModal = document.getElementById('history-close');
+
+    userAccount.addEventListener('click', () => {
+        userDropdownMenu.style.display = userDropdownMenu.style.display === 'block' ? 'none' : 'block';
+        if (userDropdownMenu.style.display === 'block') {
+            positionDropdown();
+        }
+    });
+
+    logOut.addEventListener('click', () => {
+        skipVerificationSection = false;
+        userDropdownMenu.style.display = 'none';
+        clearAllFiles();
+        const currentSection = document.querySelector('.section.active');
+        if (currentSection.id === 'S3' || currentSection.id === 'S4') {
+            transitionSections(currentSection.id, 'S2', true);
+            transitionSections('S2', 'S1', true);
+        }
+        setTimeout(() => window.location.reload(), 350);
+    });
+
+    const positionDropdown = () => {
+        const userAccountRect = userAccount.getBoundingClientRect();
+        userDropdownMenu.style.top = `${userAccountRect.bottom + window.scrollY + 15}px`;
+        userDropdownMenu.style.left = `${userAccountRect.left + window.scrollX - userDropdownMenu.offsetWidth / 2 + userAccountRect.width / 2}px`;
+    };
+
+    transferHistoryLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        userDropdownMenu.style.display = 'none';
+        showModal(transferHistoryModal);
+        setTimeout(() => {
+            transferHistoryModal.style.left = "50%";
+        }, 50);          
+    });
+
+    closeHistoryModal.addEventListener('click', () => {
+        transferHistoryModal.style.left = "200%";
+        setTimeout(() => {
+        closeModal(transferHistoryModal);
+        }, 1000); 
+    });   
+
+    // Close dropdown menu if user clicks outside of it
+    window.addEventListener('click', (e) => {
+        if (!userAccount.contains(e.target) && !userDropdownMenu.contains(e.target) && !darkToggle.contains(e.target)) {
+            userDropdownMenu.style.display = 'none';
+        }
+    });
+
+    // Reposition dropdown menu on window resize
+    window.addEventListener('resize', () => {
+        if (userDropdownMenu.style.display === 'block') {
+            positionDropdown();
+        }
+    });
