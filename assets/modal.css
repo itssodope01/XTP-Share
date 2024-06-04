@@ -587,3 +587,94 @@
     height: 30px;
     width: 80px;
 }
+
+#transferHistoryModal {
+  left: 200%;
+  top: 59%;
+  width: 100%;
+  height: 100%;
+  border-radius: 0px;
+  box-shadow: 0 0 0;
+  transition: color 0.1s ease, background-color 0.3s ease, left 0.35s ease;
+}
+
+#transferHistoryModal .modal-content{
+  width: 100%;
+  height: 100%;
+  border-radius: 0px;
+  box-shadow: 0 0 0;
+  transition: color 0.1s ease, background-color 0.3s ease;
+}
+
+#transferHistoryModal .modal-content p{
+display: flex;
+justify-content: center;
+margin-top: 30px;
+margin-right: 20px;
+font-weight: bold;
+cursor: default;
+font-size: large;
+}
+
+#history-close {
+  position: absolute;
+  top: 45px;
+  left: 78px;
+  width: 32px;
+  height: auto;
+  filter: var(--user-invert);
+  /* transform: rotate(180deg); */
+  transition: filter 0.15s ease;
+}
+
+#history-close:hover {
+  filter: var(--user-invert-hover);
+}
+
+/* Table Styles */
+.transfer-history-table {
+  margin-left: 10px;
+  width: 95%;
+  border-collapse: collapse;
+  margin-top: 50px;
+  border-radius: 20px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+  overflow: hidden;
+}
+.transfer-history-table th, .transfer-history-table td {
+  /* border: 1px solid var(--border-color); */
+  padding: 12px;
+  text-align: left;
+  color: var(--text-color);
+  border-bottom: 0 !important;
+}
+.transfer-history-table th {
+  background-color: var(--header-bg);
+  color: var(--header-text);
+  text-transform: uppercase;
+}
+
+.transfer-history-table td {
+  border-bottom: 0 !important;
+}
+.transfer-history-table tr:nth-child(even) {
+  background-color: var(--row-even-bg);
+}
+.transfer-history-table tr:hover {
+  cursor: pointer;
+  background-color: var(--row-hover-bg);
+}
+.transfer-history-table td:last-child {
+  color: #638ECB;
+}
+
+.transfer-history-table tr td:first-child {
+  transition: text-decoration 0.2s ease;
+}
+
+.transfer-history-table tr:hover td:first-child {
+  text-decoration: underline;
+}
+
+
