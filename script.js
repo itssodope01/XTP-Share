@@ -273,23 +273,26 @@ $(document).on('dragleave drop', function(e) {
         }
     });
 
-    logOut.addEventListener('click', () => {
-        skipVerificationSection = false;
-        userDropdownMenu.style.display = 'none';
-        const currentSection = document.querySelector('.section.active');
-        if (currentSection.id === 'S1') {
+logOut.addEventListener('click', () => {
+    skipVerificationSection = false;
+    userDropdownMenu.style.display = 'none';
+    const currentSection = document.querySelector('.section.active');
+    
+    if (currentSection.id === 'S3' || currentSection.id === 'S4') {
+        clearAllFiles();
+        var backArrow = getElement("backArrow");
+        backArrow.style.opacity = "0";
+        backArrow.style.cursor = "";
+        transitionSections(currentSection.id, 'S2', true);
+        transitionSections('S2', 'S1', true);
+        console.log("Reloading after transition.");
+        setTimeout(() => window.location.reload(), 350);
+    } else {
+        console.log("Reloading immediately.");
         window.location.reload();
-        } else if (currentSection.id === 'S3' || currentSection.id === 'S4') {
-            clearAllFiles();
-            var backArrow = getElement("backArrow");
-            backArrow.style.opacity = "0";
-            backArrow.style.cursor = "";
-            transitionSections(currentSection.id, 'S2', true);
-            transitionSections('S2', 'S1', true);
-            setTimeout(() => window.location.reload(), 350);
-            return;
-        }
-    });
+    }
+});
+
 
     const positionDropdown = () => {
         const userAccountRect = userAccount.getBoundingClientRect();
