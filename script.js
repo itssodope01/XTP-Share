@@ -284,8 +284,11 @@ $(document).on('dragleave drop', function(e) {
         if (currentSection.id === 'S3' || currentSection.id === 'S4') {
             transitionSections(currentSection.id, 'S2', true);
             transitionSections('S2', 'S1', true);
+            setTimeout(() => window.location.reload(), 350);
+        } else {
+            setTimeout(() => window.location.reload(), 0);
         }
-        setTimeout(() => window.location.reload(), 350);
+        
     });
 
     const positionDropdown = () => {
