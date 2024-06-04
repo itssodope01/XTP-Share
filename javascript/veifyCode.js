@@ -4,7 +4,7 @@ const codeInputs = document.querySelectorAll('.code-input');
 const SectionS2 = document.querySelector('.S2');
 const remainingTimeDisplay = document.getElementById('remainingTimeDisplay');
 
-let skipVerificationSection = false;
+let _skipVerificationSection = false;
 let lastActivityTime = Date.now(); //last activity time
 let verificationTimer;
 let verificationStartTime;
@@ -39,6 +39,25 @@ function handleUserActivity() {
 ['mousemove', 'keydown', 'scroll', 'click'].forEach(eventName => {
     document.addEventListener(eventName, handleUserActivity);
 });
+
+Object.defineProperty(window, 'skipVerificationSection', {
+    get: function() {
+        return _skipVerificationSection;
+    },
+    set: function(value) {
+        _skipVerificationSection = value;
+        setTimeout(switchUserLogo, 0);
+    }
+});
+
+// Switch user logo function
+function switchUserLogo() {
+    if (_skipVerificationSection) {
+        userAccount.style.display = 'block';
+    } else {
+        userAccount.style.display = 'none';
+    }
+}
 
 function verifyCode(Code) {
     Code = Code.toString();
