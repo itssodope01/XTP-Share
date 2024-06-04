@@ -276,19 +276,18 @@ $(document).on('dragleave drop', function(e) {
     logOut.addEventListener('click', () => {
         skipVerificationSection = false;
         userDropdownMenu.style.display = 'none';
-        clearAllFiles();
-        var backArrow = getElement("backArrow");
-        backArrow.style.opacity = "0";
-        backArrow.style.cursor = "";
         const currentSection = document.querySelector('.section.active');
         if (currentSection.id === 'S3' || currentSection.id === 'S4') {
+            clearAllFiles();
+            var backArrow = getElement("backArrow");
+            backArrow.style.opacity = "0";
+            backArrow.style.cursor = "";
             transitionSections(currentSection.id, 'S2', true);
             transitionSections('S2', 'S1', true);
             setTimeout(() => window.location.reload(), 350);
-        } else {
-            setTimeout(() => window.location.reload(), 0);
-        }
-        
+            return;
+        } 
+        window.location.reload();
     });
 
     const positionDropdown = () => {
