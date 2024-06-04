@@ -273,24 +273,20 @@ $(document).on('dragleave drop', function(e) {
         }
     });
 
-logOut.addEventListener('click', () => {
-    skipVerificationSection = false;
-    userDropdownMenu.style.display = 'none';
-    const currentSection = document.querySelector('.section.active');
-    if (currentSection.id === 'S1'){
-        location.reload(true);
-    }
-    if (currentSection.id === 'S3' || currentSection.id === 'S4') {
+    logOut.addEventListener('click', () => {
+        skipVerificationSection = false;
+        userDropdownMenu.style.display = 'none';
         clearAllFiles();
         var backArrow = getElement("backArrow");
         backArrow.style.opacity = "0";
         backArrow.style.cursor = "";
-        transitionSections(currentSection.id, 'S2', true);
-        transitionSections('S2', 'S1', true);
-        console.log("Reloading after transition.");
-        setTimeout(() => location.reload(true), 360);
-    }
-});
+        const currentSection = document.querySelector('.section.active');
+        if (currentSection.id === 'S3' || currentSection.id === 'S4') {
+            transitionSections(currentSection.id, 'S2', true);
+            transitionSections('S2', 'S1', true);
+        }
+        setTimeout(() => window.location.reload(), 350);
+    });
 
 
     const positionDropdown = () => {
