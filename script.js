@@ -286,8 +286,9 @@ $(document).on('dragleave drop', function(e) {
             transitionSections('S2', 'S1', true);
             setTimeout(() => window.location.reload(), 350);
             return;
-        } 
+        } else {
         window.location.reload();
+        }
     });
 
     const positionDropdown = () => {
