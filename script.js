@@ -286,10 +286,9 @@ logOut.addEventListener('click', () => {
         transitionSections(currentSection.id, 'S2', true);
         transitionSections('S2', 'S1', true);
         console.log("Reloading after transition.");
-        setTimeout(() => window.location.reload(), 350);
+        setTimeout(() => location.reload(true), 360);
     } else {
-        console.log("Reloading immediately.");
-        window.location.reload();
+        location.reload(true);
     }
 });
 
