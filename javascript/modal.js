@@ -4,6 +4,8 @@ generateSteps('desktop');
 const showModal = (modal) => { 
   const Overlay = getElement("overlay");
   modal.style.display = Overlay.style.display = "block";
+  if(modal === transferHistoryModal)
+    Overlay.style.display = "none";
 }
 
 // Close Modal
@@ -24,6 +26,7 @@ const closeAllModal = () => {
 // Modal Close Button
 document.querySelectorAll(".modal .close").forEach(closeButton => closeButton.addEventListener('click', function() {
   const modal = this.closest(".modal");
+  if(modal !== transferHistoryModal)
   closeModal(modal);
 }));
 
