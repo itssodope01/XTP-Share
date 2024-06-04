@@ -288,8 +288,9 @@ $(document).on('dragleave drop', function(e) {
 
     const positionDropdown = () => {
         const userAccountRect = userAccount.getBoundingClientRect();
+        const arrowOffset = 65;
         userDropdownMenu.style.top = `${userAccountRect.bottom + window.scrollY + 15}px`;
-        userDropdownMenu.style.left = `${userAccountRect.left + window.scrollX - userDropdownMenu.offsetWidth / 2 + userAccountRect.width / 2}px`;
+        userDropdownMenu.style.left = `${userAccountRect.left + window.scrollX - userDropdownMenu.offsetWidth / 2 + userAccountRect.width / 2 - arrowOffset}px`;
     };
 
     transferHistoryLink.addEventListener('click', (e) => {
