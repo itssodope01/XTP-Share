@@ -277,7 +277,9 @@ $(document).on('dragleave drop', function(e) {
         skipVerificationSection = false;
         userDropdownMenu.style.display = 'none';
         const currentSection = document.querySelector('.section.active');
-        if (currentSection.id === 'S3' || currentSection.id === 'S4') {
+        if (currentSection.id === 'S1') {
+        window.location.reload();
+        } else if (currentSection.id === 'S3' || currentSection.id === 'S4') {
             clearAllFiles();
             var backArrow = getElement("backArrow");
             backArrow.style.opacity = "0";
@@ -286,8 +288,6 @@ $(document).on('dragleave drop', function(e) {
             transitionSections('S2', 'S1', true);
             setTimeout(() => window.location.reload(), 350);
             return;
-        } else {
-        window.location.reload();
         }
     });
 
