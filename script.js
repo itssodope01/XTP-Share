@@ -277,6 +277,9 @@ $(document).on('dragleave drop', function(e) {
         skipVerificationSection = false;
         userDropdownMenu.style.display = 'none';
         clearAllFiles();
+        var backArrow = getElement("backArrow");
+        backArrow.style.opacity = "0";
+        backArrow.style.cursor = "";
         const currentSection = document.querySelector('.section.active');
         if (currentSection.id === 'S3' || currentSection.id === 'S4') {
             transitionSections(currentSection.id, 'S2', true);
