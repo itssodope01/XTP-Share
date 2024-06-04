@@ -277,7 +277,9 @@ logOut.addEventListener('click', () => {
     skipVerificationSection = false;
     userDropdownMenu.style.display = 'none';
     const currentSection = document.querySelector('.section.active');
-    
+    if (currentSection.id === 'S1'){
+        location.reload(true);
+    }
     if (currentSection.id === 'S3' || currentSection.id === 'S4') {
         clearAllFiles();
         var backArrow = getElement("backArrow");
@@ -287,8 +289,6 @@ logOut.addEventListener('click', () => {
         transitionSections('S2', 'S1', true);
         console.log("Reloading after transition.");
         setTimeout(() => location.reload(true), 360);
-    } else {
-        location.reload(true);
     }
 });
 
