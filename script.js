@@ -299,12 +299,14 @@ $(document).on('dragleave drop', function(e) {
         userDropdownMenu.style.display = 'none';
         showModal(transferHistoryModal);
         setTimeout(() => {
+            transferHistoryModal.style.transition = "color 0.1s ease, background-color 0.3s ease, left 0.35s ease";
             transferHistoryModal.style.left = "50%";
         }, 50);          
     });
 
     closeHistoryModal.addEventListener('click', () => {
         transferHistoryModal.style.left = "200%";
+        transferHistoryModal.style.transition = "color 0.1s ease, background-color 0.3s ease, left 0.35s ease-out";
         setTimeout(() => {
         closeModal(transferHistoryModal);
         }, 1000); 
