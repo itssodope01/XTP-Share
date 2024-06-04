@@ -95,5 +95,16 @@
     --quill-invert:invert(100%);
 
     --preview: #aeaeae;
+
+    --box-shadow: 0;
+    --user-invert: invert(83%);
+    --user-invert-hover: invert(50%);
+
+     /* table transfer history */
+    --header-bg: transparent;
+    --header-text: #ffffff;
+    --row-even-bg: transparent;
+    --row-hover-bg: #1c1c1c;
+    --border-color: #444;
     
 }
