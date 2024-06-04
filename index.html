@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="assets/section4.css">
     <link rel="stylesheet" href="assets/verify.css">
     <link rel="stylesheet" href="assets/modal.css">
+    <link rel="stylesheet" href="assets/user-account.css">
     <!-- Theme stylesheets -->
     <link rel="stylesheet" href="assets/theme/dark-mode.css">
     <link rel="stylesheet" href="assets/theme/light-mode.css">
@@ -62,6 +63,15 @@
             <button class="header-button">About</button>
         </div>
         <div class="time" id="remainingTimeDisplay" title="Verified">00m 00s</div>
+        <div class="userAccount" id="userAccount">
+            <img src="assets/logo/user.png" alt="User Logo">
+        </div>
+        <div class="user-dropdown-menu" id="userDropdownMenu">
+            <div class="arrow-up"></div>
+            <p>Hi, John Doe!</p>
+            <a href="#" id="transferHistoryLink"><i class="fa fa-clock"></i> Transfer History</a>
+            <a href="#" id="logoutLink"><i class="fa fa-sign-out-alt"></i> Log Out</a>
+        </div>
         
         <!-- Dark Mode Toggle -->
         <div class="toggle-container">
@@ -454,6 +464,38 @@
       </div>
     </div>
   </div>
+
+  <!-- s -->
+  <div id="transferHistoryModal" class="modal">
+    <div class="modal-content">
+        <img src="assets/logo/back-arrow.svg" class="close" id="history-close" alt="Close">
+        <p >Transfer History</p>
+        <table class="transfer-history-table" style="margin-top: 50px;">
+            <thead>
+                <tr>
+                    <th>Transfer ID</th>
+                    <th>Time</th>
+                    <th>Platforms</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody class="transfer-history-actual">
+                <tr>
+                    <td>#defRhf45er</td>
+                    <td>13/07/2052 <br> 9:55 PM</td>
+                    <td>GoogleDrive</td>
+                    <td>Complete</td>
+                </tr>
+                <tr>
+                    <td>#reuRh745es</td>
+                    <td>09/04/2027 <br> 2:55 AM</td>
+                    <td>Outlook</td>
+                    <td>Complete</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
     
 <!-- Overlay for Modals -->
 <div id="overlay"></div>
