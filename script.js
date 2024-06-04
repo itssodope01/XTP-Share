@@ -306,7 +306,7 @@ $(document).on('dragleave drop', function(e) {
 
     closeHistoryModal.addEventListener('click', () => {
         transferHistoryModal.style.left = "200%";
-        transferHistoryModal.style.transition = "color 0.1s ease, background-color 0.3s ease, left 0.35s ease-out";
+        transferHistoryModal.style.transition = "color 0.1s ease, background-color 0.3s ease, left 0.35s ease-in-out";
         setTimeout(() => {
         closeModal(transferHistoryModal);
         }, 1000); 
