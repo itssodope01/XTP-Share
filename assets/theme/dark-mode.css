@@ -106,5 +106,9 @@
     --row-even-bg: transparent;
     --row-hover-bg: #1c1c1c;
     --border-color: #444;
+
+    /* user account */
+    --user-dropdown-bg: #1e1e1e;
+    --user-hover: #111111;
     
 }
