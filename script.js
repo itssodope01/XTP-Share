@@ -14,7 +14,6 @@ const attachmentToggle = document.querySelector('#attachment-container-toggle');
 const attachmentText = document.querySelector('.attachment-text');
 const selectedFilesContainer = getElement('selected-files-container');
 const transferModal = getElement('transferModal');
-const userAccount = document.getElementById('userAccount');
 
 
 // hamburger menu
@@ -256,71 +255,3 @@ $(document).on('dragleave drop', function(e) {
     e.stopPropagation();
 });
 
-// User account
-    
-    const userDropdownMenu = document.getElementById('userDropdownMenu');
-    const arrowUp = document.getElementById('arrowUp');
-    const darkToggle = document.querySelector(".toggle-container");
-    const logOut = document.querySelector("#logoutLink");
-    const transferHistoryLink = document.getElementById('transferHistoryLink');
-    const transferHistoryModal = document.getElementById('transferHistoryModal');
-    const closeHistoryModal = document.getElementById('history-close');
-
-    userAccount.addEventListener('click', () => {
-        userDropdownMenu.style.display = userDropdownMenu.style.display === 'block' ? 'none' : 'block';
-        if (userDropdownMenu.style.display === 'block') {
-            positionDropdown();
-        }
-    });
-
-    logOut.addEventListener('click', () => {
-        skipVerificationSection = false;
-        userDropdownMenu.style.display = 'none';
-        clearAllFiles();
-        const currentSection = document.querySelector('.section.active');
-        if (currentSection.id === 'S3' || currentSection.id === 'S4') {
-            transitionSections(currentSection.id, 'S2', true);
-            transitionSections('S2', 'S1', true);
-        }
-        setTimeout(() => window.location.reload(), 350);
-    });
-
-
-    const positionDropdown = () => {
-        const userAccountRect = userAccount.getBoundingClientRect();
-        const arrowOffset = 65;
-        userDropdownMenu.style.top = `${userAccountRect.bottom + window.scrollY + 15}px`;
-        userDropdownMenu.style.left = `${userAccountRect.left + window.scrollX - userDropdownMenu.offsetWidth / 2 + userAccountRect.width / 2 - arrowOffset}px`;
-    };
-
-    transferHistoryLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        userDropdownMenu.style.display = 'none';
-        showModal(transferHistoryModal);
-        setTimeout(() => {
-            transferHistoryModal.style.transition = "color 0.1s ease, background-color 0.3s ease, left 0.35s ease";
-            transferHistoryModal.style.left = "50%";
-        }, 50);          
-    });
-
-    closeHistoryModal.addEventListener('click', () => {
-        transferHistoryModal.style.transition = "color 0.1s ease, background-color 0.3s ease, left 0.35s ease-in-out";
-        transferHistoryModal.style.left = "200%";
-        setTimeout(() => {
-        closeModal(transferHistoryModal);
-        }, 1000); 
-    });   
-
-    // Close dropdown menu if user clicks outside of it
-    window.addEventListener('click', (e) => {
-        if (!userAccount.contains(e.target) && !userDropdownMenu.contains(e.target) && !darkToggle.contains(e.target)) {
-            userDropdownMenu.style.display = 'none';
-        }
-    });
-
-    // Reposition dropdown menu on window resize
-    window.addEventListener('resize', () => {
-        if (userDropdownMenu.style.display === 'block') {
-            positionDropdown();
-        }
-    });
