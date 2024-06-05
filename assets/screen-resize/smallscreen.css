@@ -182,6 +182,19 @@
         width: 250px;
         max-width: 80%;
     }
+
+    .search-and-filter {
+        top: 85px;
+        right: 10%;
+    }
+
+    .toggle-container {
+        right: 0px;
+    }
+
+    #filter-window {
+        top: 20%;
+      }
 }
 
 @media only screen and (max-width: 650px) {
@@ -235,6 +248,13 @@
 }
 
 @media only screen and (min-width: 700px) and (max-width: 950px) {
+    .search-and-filter {
+        top: 85px;
+        right: 10%;
+    }
+    #filter-window {
+        top: 20%;
+      }
 }
 
 @media only screen and (max-width: 500px) {
