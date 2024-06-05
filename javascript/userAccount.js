@@ -250,3 +250,48 @@ document.getElementById('clear-filters').addEventListener('click', () => {
     populateTable(transferHistory);
     searchBar.value = '';
 });
+
+const connectedAccountsContainer = document.getElementById('connectedAccountsContainer');
+const connectedAccountsList = document.getElementById('connectedAccountsList');
+
+
+// Show connected accounts
+function showUserAccounts() {
+    connectedAccountsContainer.classList.toggle('open');
+    if (connectedAccountsContainer.classList.contains('open')) {
+        populateConnectedAccounts(); // Populate the connected accounts dynamically
+    }
+}
+
+const accounts = [
+    { platform: 'OneDrive', account: 'zander.east@outlook.com' },
+    { platform: 'Gmail', account: 'hover-board@gmail.com' },
+    { platform: 'GoogleDrive', account: 'nolan.weise@gmail.com' }
+];
+
+function populateConnectedAccounts() {
+
+    let html = '';
+
+    accounts.forEach(({ platform, account }) => {
+        const platformData = platforms.find(p => p.name === platform);
+        if (!platformData) return;
+
+        html += `
+            <a class="connected-account" style="--hover-color: ${platformData.hover_color}">
+                <div class="icon-container">
+                    <img src="${baseURL}${platformData.src}" alt="${platformData.name} Logo">
+                </div>
+                <span class="account-data">
+                    <span>${account}</span>
+                    <span class="platformName">${platformData.name}</span>
+                </span>
+            </a>
+        `;
+    });
+
+    connectedAccountsList.innerHTML = html;
+    connectedAccountsList.onclick = () => {
+        connectedAccountsContainer.classList.add('open');
+    };
+}
