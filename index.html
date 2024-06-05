@@ -469,52 +469,71 @@
   <!-- s -->
   <div id="transferHistoryModal" class="modal">
     <div class="modal-content">
-        <img src="assets/logo/back-arrow.svg" class="close" id="history-close" alt="Close">
-        <p >Transfer History</p>
-        <table class="transfer-history-table" style="margin-top: 50px;">
-            <thead>
-                <tr>
-                    <th>Transfer ID</th>
-                    <th>Time</th>
-                    <th>Platforms</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody class="transfer-history-actual">
-                <tr>
-                    <td>#defRhf45er</td>
-                    <td>13/07/2052 <br> 9:55 PM</td>
-                    <td>GoogleDrive</td>
-                    <td>Complete</td>
-                </tr>
-                <tr>
-                    <td>#reuRh745es</td>
-                    <td>09/04/2027 <br> 2:55 AM</td>
-                    <td>Outlook</td>
-                    <td>Complete</td>
-                </tr>
-                <tr>
-                    <td>#wexTf564kj</td>
-                    <td>21/12/2028 <br> 11:30 AM</td>
-                    <td>Dropbox</td>
-                    <td>Complete</td>
-                </tr>
-                <tr>
-                    <td>#treUx837kd</td>
-                    <td>14/02/2029 <br> 3:45 PM</td>
-                    <td>OneDrive</td>
-                    <td>Cancelled</td>
-                </tr>
-                <tr>
-                    <td>#efgJy765mn</td>
-                    <td>22/06/2040 <br> 11:55 AM</td>
-                    <td>GoogleDrive</td>
-                    <td>Complete</td>
-                </tr>
-            </tbody>
-        </table>
+      <img src="assets/logo/back-arrow.svg" class="close" id="history-close" alt="Close">
+      <div class="search-and-filter">
+        <input type="text" id="search-bar" placeholder="Search Transfer History">
+        <div id="filter-by">
+          <i class="fas fa-sliders-h"></i>
+          <span class="filter-text">Filter</span>
+        </div>
+      </div>
+      <p>Transfer History</p>
+      <div id="filter-window">
+        <div class="filter-group">
+          <h5 class="filter-title">Platform</h5>
+          <div class="filter-checkboxes">
+            <div class="filter-pair">
+                <label><input type="checkbox" class="platform-filter" value="GoogleDrive"> Google Drive</label>
+                <label><input type="checkbox" class="platform-filter" value="Gmail"> Gmail</label>
+              </div>
+              <div class="filter-pair">
+                <label><input type="checkbox" class="platform-filter" value="OneDrive"> OneDrive</label>
+                <label><input type="checkbox" class="platform-filter" value="Outlook"> Outlook</label>
+              </div>
+          </div>
+        </div>
+        <div class="filter-group">
+          <h5 class="filter-title">Date Range</h5>
+          <div class="date-range">
+            <label for="from-date">From:</label>
+            <input type="date" id="from-date" class="date-input">
+          </div>
+          <div class="date-range">
+            <label for="to-date">To:</label>
+            <input type="date" id="to-date" class="date-input">
+          </div>
+        </div>
+        <div class="filter-group">
+          <h5 class="filter-title">Status</h5>
+          <div class="filter-checkboxes">
+            <div class="filter-pair">
+                <label><input type="checkbox" class="status-filter" value="Complete"> Complete </label>
+                <label><input type="checkbox" class="status-filter" value="Cancelled"> Cancelled</label>
+            </div>
+            <div class="filter-pair">
+                <label><input type="checkbox" class="status-filter" value="Failedk"> Failed </label>
+            </div>
+          </div>
+        </div>
+        <button id="apply-filter" class="filter-button">Apply Filter</button>
+        <button id="clear-filters" class="filter-button">Clear Filters</button>
+
+      </div>
+      <table class="transfer-history-table">
+        <thead style="pointer-events: none;">
+          <tr>
+            <th>Transfer ID</th>
+            <th>Date</th>
+            <th>Platforms</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody class="transfer-history-actual">
+        </tbody>
+      </table>
     </div>
-</div>
+  </div>
+
     
 <!-- Overlay for Modals -->
 <div id="overlay"></div>
