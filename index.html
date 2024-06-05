@@ -70,7 +70,12 @@
             <div class="arrow-up"></div>
             <p>Hi, Pritam.Chakraborty1@outlook.com!</p>
             <a href="#" id="transferHistoryLink"><i class="fa fa-clock"></i> Transfer History</a>
-            <a href="#" id="transferHistoryLink"><i class="fa fa-link"></i> Connected Accounts</a>
+                        <div id="connectedAccountsContainer">
+                <a  id="connectedAccounts" onclick="showUserAccounts()"><i class="fa fa-link"></i> Connected Accounts <div id="connectedAccountsList" class="connected-accounts-list">
+                    <!-- This will be populated dynamically -->
+                </div></a>
+
+            </div>
             <a href="#" id="logoutLink"><i class="fa fa-sign-out-alt"></i> Log Out</a>
         </div>
         
