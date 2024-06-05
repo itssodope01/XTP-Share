@@ -110,5 +110,10 @@
     /* user account */
     --user-dropdown-bg: #1e1e1e;
     --user-hover: #111111;
+
+    --search-image:  url("logo/search-dark.png");
+    --filter-input: #282828;
+    --filter-options: rgb(195, 195, 195);
+    --filter-bg: #181818;
     
 }
