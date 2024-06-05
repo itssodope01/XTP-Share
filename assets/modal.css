@@ -595,7 +595,8 @@
   height: 100%;
   border-radius: 0px;
   box-shadow: 0 0 0;
-  transition: color 0.1s ease, background-color 0.3s ease, left 0.35s ease;
+  background-color: var(--background-color);
+  transition: color 0.1s ease, background-color 0.3s ease, left 0.35s ease-in-out;
 }
 
 #transferHistoryModal .modal-content{
@@ -603,7 +604,7 @@
   height: 100%;
   border-radius: 0px;
   box-shadow: 0 0 0;
-  transition: color 0.1s ease, background-color 0.3s ease;
+  transition: color 0.1s ease, background-color 0.3s ease, width 0.07s ease;
 }
 
 #transferHistoryModal .modal-content p{
@@ -641,7 +642,9 @@ font-size: large;
   border-bottom-left-radius: 0px;
   border-bottom-right-radius: 0px;
   overflow: hidden;
+  transform: translateX(5%);
 }
+
 .transfer-history-table th, .transfer-history-table td {
   /* border: 1px solid var(--border-color); */
   padding: 12px;
@@ -676,5 +679,4 @@ font-size: large;
 .transfer-history-table tr:hover td:first-child {
   text-decoration: underline;
 }
-
 
