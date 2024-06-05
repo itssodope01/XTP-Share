@@ -635,7 +635,7 @@ input[type="file"] {
     border-radius: 20px 0 0 20px;
     padding: 10px;
     width: 90%;
-    z-index: 999;
+    z-index: 12099;
     overflow-x: hidden;
     height: 80%; 
     
