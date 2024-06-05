@@ -7,9 +7,9 @@ const transferHistoryLink = document.getElementById('transferHistoryLink');
 const transferHistoryModal = document.getElementById('transferHistoryModal');
 const closeHistoryModal = document.getElementById('history-close');
 const historyTable = document.querySelector("#transferHistoryModal .modal-content");
-
 let searchOn = false;
 
+//
 // Event listeners
 userAccount.addEventListener('click', toggleDropdown);
 logOut.addEventListener('click', logoutUser);
