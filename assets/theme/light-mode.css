@@ -110,4 +110,9 @@
     /* user account */
     --user-dropdown-bg: #ececec;
     --user-hover: #dddddd;
+
+    --search-image:  url("logo/search.png");
+    --filter-input: #cacaca;
+    --filter-options: rgb(37, 37, 37);
+    --filter-bg: #e4edf0;
 }
