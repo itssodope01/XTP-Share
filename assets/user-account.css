@@ -197,3 +197,69 @@ align-items: center;
     color: #337ab7;
     border-color: #337ab7;
   }
+
+
+.user-dropdown-menu a {
+    cursor: pointer;
+}
+
+.connected-accounts-list {
+    display: none;
+    padding: 0;
+    padding-top: 10px;
+    transition: max-height 0.3s ease;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+#connectedAccountsContainer.open .connected-accounts-list {
+    display: block;
+    max-height: 200px; 
+}
+
+.connected-account{
+    display: flex !important; /* Use flexbox to align items side by side */
+    flex-direction: row !important;
+}
+
+.connected-account .account-data {
+    display: flex;
+    justify-content: center;
+    margin-left: 5px;
+    flex-direction: column;
+}
+
+.connected-accounts-list a:hover {
+background-color: var(--user-dropdown-bg);
+}
+
+.connected-account img {
+    vertical-align: middle; /* Align image vertically */
+}
+
+.icon-container {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 5px; /* Space between icon and text */
+    background-color: rgb(189, 189, 189);
+    transition: background-color 0.3s ease;
+}
+
+.connected-account:hover .icon-container {
+    background-color: var(--hover-color); /* Apply hover color */
+}
+
+.icon-container img {
+    width: 20px; /* Adjust icon size */
+    height: 20px;
+}
+
+.account-data .platformName {
+font-size: 14px;
+color: #7c7c7c;
+}
