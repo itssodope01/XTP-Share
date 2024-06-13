@@ -71,7 +71,7 @@ function verifyCode() {
 
     if (incorrectAttempts < 5) {
         // Send the verification code to the server
-        fetch('https://xtpshareapimanagement.azure-api.net/api/auth/GetByOTC?code=' + actualCode, {
+        fetch(`https://xtpshareapimanagement.azure-api.net/api/auth/GetByOTC?code=${actualCode}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -118,6 +118,7 @@ function verifyCode() {
         return; 
     }
 }
+
 
 
 
