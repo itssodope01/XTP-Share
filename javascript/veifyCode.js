@@ -61,6 +61,7 @@ function switchUserLogo() {
 
 function verifyCode() {
     const verificationCode = [...document.querySelectorAll(".code-input")].map(input => input.value).join(""); // Verification Code from user
+    const actualCode = parseInt(verificationCode); // Convert to integer
     
     if (verificationCode.length < 6 || verificationCode.trim() === "") {
         displayVerificationMessage('Please input a valid code', false);
@@ -70,7 +71,7 @@ function verifyCode() {
 
     if (incorrectAttempts < 5) {
         // Send the verification code to the server
-        fetch('https://xtpshareapimanagement.azure-api.net/api/auth/GetByOTC?code=' + verificationCode, {
+        fetch('https://xtpshareapimanagement.azure-api.net/api/auth/GetByOTC?code=' + actualCode, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -80,32 +81,44 @@ function verifyCode() {
             if (!response.ok) {
                 throw new Error(`Server responded with status ${response.status}`);
             }
-            return response.json();
+            return response.text(); // Receive response as text
         })
         .then(data => {
-            if (data.success) {
-                handleSuccess();
-            } else {
-                handleFailure(data.message);
+            // Parse the response manually
+            try {
+                const jsonData = JSON.parse('[' + data + ']'); // Wrap data in [] to make it a valid JSON array
+                if (jsonData && Array.isArray(jsonData)) {
+                    if (jsonData.length > 0 && jsonData[0].authID) {
+                        handleSuccess();
+                    } else {
+                        handleFailure('Invalid response from server');
+                    }
+                } else {
+                    handleFailure('Invalid response format');
+                }
+            } catch (error) {
+                console.error('Error parsing JSON:', error);
+                handleFailure('An error occurred. Please try again later.');
             }
         })
         .catch(error => {
-            console.error('Error:', error);
-            displayVerificationMessage('An error occurred. Please try again later.', false);
+            console.error('Fetch error:', error);
+            displayVerificationMessage('An error occurred while fetching. Please try again later.', false);
         });
     } else if (incorrectAttempts >= 5) { // 5 incorrect attempts reached
         if (!localStorage.getItem('firstAttemptTimestamp')) {
             // Record the timestamp of the first time 5 incorrect attempts threshold is exceeded
             localStorage.setItem('firstAttemptTimestamp', Date.now());
         }
-        firstAttemptTimestamp = parseInt(localStorage.getItem('firstAttemptTimestamp'));
+        const firstAttemptTimestamp = parseInt(localStorage.getItem('firstAttemptTimestamp'), 10);
         const currentTime = Date.now();
         const elapsedSinceFirstAttempt = currentTime - firstAttemptTimestamp;
-        const remainingTime = (20000) - elapsedSinceFirstAttempt;
+        const remainingTime = 20000 - elapsedSinceFirstAttempt;
         updateTimeStamp(remainingTime);
         return; 
     }
 }
+
 
 
 function handleSuccess() {
