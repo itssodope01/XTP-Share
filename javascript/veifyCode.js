@@ -59,54 +59,89 @@ function switchUserLogo() {
     }
 }
 
-function verifyCode(Code) {
-    Code = Code.toString();
+function verifyCode() {
     const verificationCode = [...document.querySelectorAll(".code-input")].map(input => input.value).join(""); // Verification Code from user
-        if (verificationCode.length < 6 || verificationCode.trim() === "" && incorrectAttempts < 5) {
-            displayVerificationMessage('Please input a valid code', false);
-            shake('.code-input-container');
-            return;
-        } else {
-            if (verificationCode === Code && incorrectAttempts < 5 && incorrectAttempts < 5) {
-                clearTimeout(pageReloadTimer);
-                verificationStartTime = Date.now();
-                if (currentButton === 'send-email-button') {
-                    transitionSections('S2', 'S4');
-                } else if (currentButton === 'save-cloud-button') {
-                    transitionSections('S2', 'S3');
-                    if(transferOpen) {
-                        setTimeout(() => {
-                        showModal(transferModal);
-                    }, 400);
-                    }
-                }
-                setTimeout(() => {
-                    clearCodeFields();
-                }, 1000);
+    
+    if (verificationCode.length < 6 || verificationCode.trim() === "") {
+        displayVerificationMessage('Please input a valid code', false);
+        shake('.code-input-container');
+        return;
+    }
 
-                // Skiping verification section for future transitions
-                skipVerificationSection = true;
-                startVerificationTimer();
-                incorrectAttempts = 0;
-                localStorage.removeItem('incorrectAttempts');
-            } else if (incorrectAttempts < 5){
-                incorrectAttempts++; // Increment incorrect attempts
-                localStorage.setItem('incorrectAttempts', incorrectAttempts); // Save incorrectAttempts to localStorage
-                displayVerificationMessage('Incorrect verification code', false);
-                shake('.code-input-container');
-            }  else if (incorrectAttempts >= 5) { // 5 incorrect attempts reached
-                if (!localStorage.getItem('firstAttemptTimestamp')) {
-                    // Record the timestamp of the first time 5 incorrect attempts threshold is exceeded
-                    localStorage.setItem('firstAttemptTimestamp', Date.now());
-                }
-                firstAttemptTimestamp = parseInt(localStorage.getItem('firstAttemptTimestamp'));
-                const currentTime = Date.now();
-                const elapsedSinceFirstAttempt = currentTime - firstAttemptTimestamp;
-                const remainingTime = (20000) - elapsedSinceFirstAttempt;
-                updateTimeStamp(remainingTime);
-                return; 
+    if (incorrectAttempts < 5) {
+        // Send the verification code to the server
+        fetch('https://xtpshareapimanagement.azure-api.net/api/auth/GetByOTC?code=' + verificationCode, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
             }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Server responded with status ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                handleSuccess();
+            } else {
+                handleFailure(data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            displayVerificationMessage('An error occurred. Please try again later.', false);
+        });
+    } else if (incorrectAttempts >= 5) { // 5 incorrect attempts reached
+        if (!localStorage.getItem('firstAttemptTimestamp')) {
+            // Record the timestamp of the first time 5 incorrect attempts threshold is exceeded
+            localStorage.setItem('firstAttemptTimestamp', Date.now());
         }
+        firstAttemptTimestamp = parseInt(localStorage.getItem('firstAttemptTimestamp'));
+        const currentTime = Date.now();
+        const elapsedSinceFirstAttempt = currentTime - firstAttemptTimestamp;
+        const remainingTime = (20000) - elapsedSinceFirstAttempt;
+        updateTimeStamp(remainingTime);
+        return; 
+    }
+}
+
+
+function handleSuccess() {
+    clearTimeout(pageReloadTimer);
+    verificationStartTime = Date.now();
+    fetchLinkedEmails(); // Fetch User Email-IDs
+    fetchLinkedClouds(); // Fetch User Cloud Platforms
+    displayCloudPlatforms();
+    if (currentButton === 'send-email-button') {
+        transitionSections('S2', 'S4');
+    } else if (currentButton === 'save-cloud-button') {
+        transitionSections('S2', 'S3');
+        if(transferOpen) {
+            setTimeout(() => {
+            showModal(transferModal);
+        }, 400);
+        }
+    }
+    setTimeout(() => {
+        clearCodeFields();
+    }, 1000);
+
+    // Skiping verification section for future transitions
+    skipVerificationSection = true;
+    startVerificationTimer();
+    incorrectAttempts = 0;
+    localStorage.removeItem('incorrectAttempts');
+}
+
+function handleFailure(message) {
+    if (incorrectAttempts < 5){
+        incorrectAttempts++; // Increment incorrect attempts
+        localStorage.setItem('incorrectAttempts', incorrectAttempts); // Save incorrectAttempts to localStorage
+        displayVerificationMessage('Incorrect verification code', false);
+        shake('.code-input-container');
+    }  
 }
 
 function updateTimeStamp(remainingTime) {
