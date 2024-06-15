@@ -4,6 +4,7 @@ const codeInputs = document.querySelectorAll('.code-input');
 const SectionS2 = document.querySelector('.S2');
 const remainingTimeDisplay = document.getElementById('remainingTimeDisplay');
 let userEnteredCode = '';
+let displayName = '';
 
 let _skipVerificationSection = false;
 let lastActivityTime = Date.now(); //last activity time
@@ -86,7 +87,8 @@ function verifyCode() {
         })
         .then(data => {
             // Handle the response
-            if (Array.isArray(data) && data.length > 0 && data[0].authID) {
+            if (Array.isArray(data) && data.length > 0 && data[0].displayName) {
+                displayName = data[0].displayName;
                 handleSuccess();
             } else {
                 handleFailure('Invalid response from server');
