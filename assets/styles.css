@@ -327,6 +327,7 @@ input[type="file"] {
     align-items: center;
     position: relative;
     margin-right: 5px;
+    border: 1.5px solid transparent;
   }
 
    .attachment-container {
@@ -342,11 +343,6 @@ input[type="file"] {
 
   .file-item{
     border: 1.5px solid var(--file-drop-box-border);
-    border-radius: 10px;
-  }
-
-  .noBorder{
-    border: 1.5px solid transparent;
     border-radius: 10px;
   }
 

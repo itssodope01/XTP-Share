@@ -131,9 +131,14 @@ function createPreviewItem(file) {
 
 
 // Function to create file item element and set initial attributes
-function createFileItemElement(file) {
+function createFileItemElement(file, isAttachment = false) {
     const fileItem = document.createElement('li');
+    
+    if(!isAttachment)
     fileItem.classList.add('file-item');
+    else
+    fileItem.classList.add('attachment-item');
+
     fileItem.setAttribute('data-full-name', file.name);
     return fileItem;
 }
@@ -364,7 +369,7 @@ function updateUI(selectedFilesContainer) {
 
 // Function to create an attachment item
 function createAttachmentItem(file) {
-    const attachmentItem = createFileItemElement(file);
+    const attachmentItem = createFileItemElement(file, true);
     attachmentItem.classList.add("noBorder");
 
     const attachmentIcon = document.createElement('i');
