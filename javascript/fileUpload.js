@@ -54,7 +54,7 @@ function uploadFile(code, selectedPlatforms, uploadedFiles) {
   const url = "https://xtpshareapimanagement.azure-api.net/api/transfer/Start";
   const formData = new FormData();
 
-  formData.append('otc', verificationCodeGlobal);
+  formData.append('otc', code);
 
   selectedPlatforms.forEach(authID => formData.append('authIDs', authID));
 
