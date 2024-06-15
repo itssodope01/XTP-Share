@@ -1,6 +1,10 @@
 .section.S4{
     top:-3.8%;
 }
+
+.edge .section.S4{
+    top: -3.6%;
+}
 .email-compose-container {
     background-color: var(--email-bg);
     border: 2.5px solid var(--email-border-color);
