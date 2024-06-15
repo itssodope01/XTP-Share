@@ -3,6 +3,7 @@ const pseudoCorrectCode = 555555; // Pseudo Correct Code
 const codeInputs = document.querySelectorAll('.code-input');
 const SectionS2 = document.querySelector('.S2');
 const remainingTimeDisplay = document.getElementById('remainingTimeDisplay');
+let userEnteredCode = '';
 
 let _skipVerificationSection = false;
 let lastActivityTime = Date.now(); //last activity time
@@ -60,8 +61,8 @@ function switchUserLogo() {
 }
 
 function verifyCode() {
-    let theCode = '';
     const verificationCode = [...document.querySelectorAll(".code-input")].map(input => input.value).join(""); // Verification Code from user
+    userEnteredCode = verificationCode;
 
     if (verificationCode.length < 6 || verificationCode.trim() === "") {
         displayVerificationMessage('Please input a valid code', false);
@@ -86,7 +87,6 @@ function verifyCode() {
         .then(data => {
             // Handle the response
             if (Array.isArray(data) && data.length > 0 && data[0].authID) {
-                theCode = verificationCode;
                 handleSuccess();
             } else {
                 handleFailure('Invalid response from server');
@@ -108,17 +108,7 @@ function verifyCode() {
         updateTimeStamp(remainingTime);
         return;
     }
-
-    return {
-        getCode: function() {
-            return theCode;
-        }
-    };
 }
-
-
-
-
 
 function handleSuccess() {
     clearTimeout(pageReloadTimer);
