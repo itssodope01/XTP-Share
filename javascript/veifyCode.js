@@ -115,7 +115,7 @@ function handleSuccess() {
     clearTimeout(pageReloadTimer);
     verificationStartTime = Date.now();
     const displayNamep = document.querySelector('#displayName')
-    displayNamep.textContent = `Hi! ${displayName}!`
+    displayNamep.textContent = `Hi, ${displayName}!`
     if (currentButton === 'send-email-button') {
         transitionSections('S2', 'S4');
     } else if (currentButton === 'save-cloud-button') {
