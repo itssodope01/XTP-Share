@@ -58,18 +58,12 @@ document.getElementById('start-transfer-button').addEventListener('click', funct
         showUploadedFiles();
         return;
     } else {
-        // Encrypt Files
-        EncryptionModule.encryptAllFiles(uploadedFiles)
-            .then(() => {
-                // Start Transfer
-                const transferPlatforms = document.querySelector('.transfer-platforms');
-                transferPlatforms.innerHTML = '';
-                createPlatformTable();
-                startTransfer(selectedPlatforms.shift());
-            })
-            .catch(error => {
-                console.error('Error Encrypting Files:', error);
-            });
+        uploadfiles(verificationCodeGlobal, selectedPlatforms, uploadedFiles);
+        const transferPlatforms = document.querySelector('.transfer-platforms');
+        transferPlatforms.innerHTML = '';
+        createPlatformTable();
+        startTransfer(selectedPlatforms.shift());
+
     }
 });
 
