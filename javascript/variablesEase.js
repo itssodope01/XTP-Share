@@ -26,6 +26,7 @@ $(document).ready(function() {
             const platformOption = document.createElement('div');
             platformOption.classList.add('platform-option');
             platformOption.dataset.platform = platform.name;
+            platformOption.dataset.authID = platform.authID;
     
             const platformBackground = document.createElement('div');
             platformBackground.classList.add('platform-background');
