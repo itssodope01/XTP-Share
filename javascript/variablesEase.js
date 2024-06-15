@@ -78,16 +78,16 @@ function createFileItem(file) {
     const fileActions = createFileActions(file);
     fileItem.appendChild(fileActions);
 
-    // Progress bar
-    const progressBar = document.createElement('div');
-    progressBar.classList.add('progress-bar');
-    const progress = document.createElement('div');
-    progress.classList.add('progress');
-    progressBar.appendChild(progress);
-    fileItem.appendChild(progressBar);
+    // // Progress bar
+    // const progressBar = document.createElement('div');
+    // progressBar.classList.add('progress-bar');
+    // const progress = document.createElement('div');
+    // progress.classList.add('progress');
+    // progressBar.appendChild(progress);
+    // fileItem.appendChild(progressBar);
 
-    // Simulate progress
-    simulateProgress(progress, progressBar);
+    // // Simulate progress
+    // simulateProgress(progress, progressBar);
 
     return fileItem;
 }
@@ -377,16 +377,16 @@ function createAttachmentItem(file) {
     const fileActions = createFileActions(file);
     attachmentItem.appendChild(fileActions);
 
-    // Progress bar
-    const progressBar = document.createElement('div');
-    progressBar.classList.add('progress-bar');
-    const progress = document.createElement('div');
-    progress.classList.add('progress');
-    progressBar.appendChild(progress);
-    attachmentItem.appendChild(progressBar);
+    // // Progress bar
+    // const progressBar = document.createElement('div');
+    // progressBar.classList.add('progress-bar');
+    // const progress = document.createElement('div');
+    // progress.classList.add('progress');
+    // progressBar.appendChild(progress);
+    // attachmentItem.appendChild(progressBar);
 
-    // Simulate progress
-    simulateProgress(progress, progressBar);
+    // // Simulate progress
+    // simulateProgress(progress, progressBar);
 
     return attachmentItem;
 }
