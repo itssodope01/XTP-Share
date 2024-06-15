@@ -49,6 +49,36 @@ function appendFileItems(file) {
   uploadedFilesList.appendChild(previewItem);
 }
 
+// Function to upload selected files to the server
+function uploadFile(code, selectedPlatforms, uploadedFiles) {
+  const url = "https://xtpshareapimanagement.azure-api.net/api/transfer/Start";
+  const formData = new FormData();
+
+  formData.append('otc', verificationCodeGlobal);
+
+  selectedPlatforms.forEach(authID => formData.append('authIDs', authID));
+
+  uploadedFiles.forEach(file => formData.append('files', file, file.name));
+
+  // Send the request to the server
+  fetch(url, {
+      method: 'POST',
+      body: formData
+  })
+  .then(response => {
+      if (!response.ok) {
+          throw new Error(`Server responded with status ${response.status}`);
+      }
+      return response.json();
+  })
+  .then(data => {
+      console.log('Upload successful:', data);
+  })
+  .catch(error => {
+      console.error('Upload error:', error);
+  });
+}
+
 
 // Sorting Files
 function handleSortChange() {
