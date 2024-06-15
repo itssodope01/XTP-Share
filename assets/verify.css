@@ -28,6 +28,7 @@
     background-size: contain;
     background-repeat: no-repeat; 
     filter: invert(45%);
+    z-index: 100;
     transition: opacity 0.3s ease, filter 0.1s ease, left 0.3s ease;;
 }
 
