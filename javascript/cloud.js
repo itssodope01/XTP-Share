@@ -59,10 +59,10 @@ document.getElementById('start-transfer-button').addEventListener('click', funct
         return;
     } else {
         uploadfiles(verificationCodeGlobal, selectedPlatforms, uploadedFiles);
-        const transferPlatforms = document.querySelector('.transfer-platforms');
-        transferPlatforms.innerHTML = '';
-        createPlatformTable();
-        startTransfer(selectedPlatforms.shift());
+        // const transferPlatforms = document.querySelector('.transfer-platforms');
+        // transferPlatforms.innerHTML = '';
+        // createPlatformTable();
+        // startTransfer(selectedPlatforms.shift());
 
     }
 });
