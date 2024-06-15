@@ -53,6 +53,7 @@ function appendFileItems(file) {
 function uploadFile(code, selectedPlatforms, uploadedFiles) {
   const url = "https://xtpshareapimanagement.azure-api.net/api/transfer/Start";
   const formData = new FormData();
+  code = parseInt(code);
 
   formData.append('otc', code);
 
