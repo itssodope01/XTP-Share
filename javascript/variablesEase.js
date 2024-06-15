@@ -365,7 +365,7 @@ function updateUI(selectedFilesContainer) {
 // Function to create an attachment item
 function createAttachmentItem(file) {
     const attachmentItem = createFileItemElement(file);
-    attachmentItem.style.border = '';
+    attachmentItem.classList.add("noBorder");
 
     const attachmentIcon = document.createElement('i');
     attachmentIcon.classList.add('fas', 'fa-file-alt', 'attachment-iconn');
