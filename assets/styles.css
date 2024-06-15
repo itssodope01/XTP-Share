@@ -341,7 +341,7 @@ input[type="file"] {
   }
 
   .file-item{
-    border: var(--file-drop-box-border);
+    border: 1.5px solid var(--file-drop-box-border);
     border-radius: 10px;
   }
   .edge .file-item{
