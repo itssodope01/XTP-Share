@@ -3,6 +3,7 @@ const pseudoCorrectCode = 555555; // Pseudo Correct Code
 const codeInputs = document.querySelectorAll('.code-input');
 const SectionS2 = document.querySelector('.S2');
 const remainingTimeDisplay = document.getElementById('remainingTimeDisplay');
+let verificationCodeGlobal = '';
 
 let _skipVerificationSection = false;
 let lastActivityTime = Date.now(); //last activity time
@@ -85,6 +86,7 @@ function verifyCode() {
         .then(data => {
             // Handle the response
             if (Array.isArray(data) && data.length > 0 && data[0].authID) {
+                verificationCodeGlobal = verificationCode;
                 handleSuccess();
             } else {
                 handleFailure('Invalid response from server');
