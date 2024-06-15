@@ -114,9 +114,8 @@ function verifyCode() {
 function handleSuccess() {
     clearTimeout(pageReloadTimer);
     verificationStartTime = Date.now();
-    // fetchLinkedEmails(); // Fetch User Email-IDs
-    // fetchLinkedClouds(); // Fetch User Cloud Platforms
-    // displayCloudPlatforms();
+    const displayNamep = document.querySelector('#displayName')
+    displayNamep.textContent = `Hi! ${displayName}!`
     if (currentButton === 'send-email-button') {
         transitionSections('S2', 'S4');
     } else if (currentButton === 'save-cloud-button') {
