@@ -80,7 +80,7 @@ function verifyCode() {
         })
         .then(response => {
             if (!response.ok) {
-                throw new Error(`Server responded with status ${response.status}`);
+                handleFailure('Invalid response from server');
             }
             return response.json(); // Parse response as JSON
         })
@@ -93,7 +93,6 @@ function verifyCode() {
             }
         })
         .catch(error => {
-            console.error('Fetch error:', error);
             handleFailure('An error occurred. Please try again later.');
         });
     } else if (incorrectAttempts >= 5) {
