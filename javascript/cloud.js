@@ -58,7 +58,7 @@ document.getElementById('start-transfer-button').addEventListener('click', funct
         showUploadedFiles();
         return;
     } else {
-        uploadfiles(verificationCodeGlobal, selectedPlatforms, uploadedFiles);
+        uploadFile(verificationCodeGlobal, selectedPlatforms, uploadedFiles);
         // const transferPlatforms = document.querySelector('.transfer-platforms');
         // transferPlatforms.innerHTML = '';
         // createPlatformTable();
