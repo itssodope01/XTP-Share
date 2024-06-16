@@ -22,7 +22,7 @@ platformOptions.forEach(function(option) {
 
 platformOptions.forEach(function(option) {
     option.addEventListener('click', function() {
-        var platform = this.dataset.authID;
+        var platform = parseInt(this.dataset.authID);
         var index = selectedPlatforms.indexOf(platform);
         if (index === -1) {
             selectedPlatforms.push(platform);
