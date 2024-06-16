@@ -58,8 +58,8 @@ function uploadFile(code, selectedPlatforms, uploadedFiles) {
 
   // Raw Data
   console.log(`UserEnterd OTC: ${code}`);
-  console.log(`SelectedPlatforms: ${selectedPlatforms}`);
-  console.log(`UploadedFiles: ${uploadedFiles} \n`);
+  console.log(selectedPlatforms);
+  console.log(uploadedFiles);
 
   // Creating FormData
   const data = new FormData();
