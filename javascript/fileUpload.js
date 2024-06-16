@@ -61,6 +61,11 @@ function uploadFile(code, selectedPlatforms, uploadedFiles) {
   Array.from(selectedPlatforms).forEach(id => data.append('authIDs', id));
   Array.from(uploadedFiles).forEach(file => data.append('files', file));
   
+  // Debugging: Log the FormData content
+  for (let pair of data.entries()) {
+    console.log(pair[0] + ', ' + pair[1]);
+  }
+
   axios.post('https://xtpshareapimanagement.azure-api.net/api/transfer/Start', data, {
     headers: {
       'Content-Type': 'multipart/form-data'
