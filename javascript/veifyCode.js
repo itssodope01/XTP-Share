@@ -3,7 +3,6 @@ const pseudoCorrectCode = 555555; // Pseudo Correct Code
 const codeInputs = document.querySelectorAll('.code-input');
 const SectionS2 = document.querySelector('.S2');
 const remainingTimeDisplay = document.getElementById('remainingTimeDisplay');
-let userEnteredCode = '';
 let displayName = '';
 
 let _skipVerificationSection = false;

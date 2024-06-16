@@ -1,6 +1,7 @@
 let uploadedFiles = []; //non-encrypted client side copy
 let encryptedFiles = []; //encrypted files
 let currentButton = '';
+let userEnteredCode = '';
 let transferButtonClicked = false;
 let transferstarted = false;
 let transferOpen = false;

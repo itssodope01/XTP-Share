@@ -258,9 +258,6 @@ $(document).ready(function () {
 
 
         function sendEmailCallback() {
-            // Encrypt Attachments
-            EncryptionModule.encryptAllFiles(uploadedFiles)
-                .then(() => {
                     // email Object
                     const emailObject = {
                         from,
@@ -273,6 +270,8 @@ $(document).ready(function () {
         
                     // Email Array
                     sentEmails.push(emailObject);
+
+                    uploadFile(userEnteredCode, [3], uploadedFiles);
         
                     const backArrow = document.querySelector('.back.arrow');
                     backArrow.click();
@@ -331,10 +330,6 @@ $(document).ready(function () {
                     lastSentEmail.attachments.forEach(attachment => {
                         attachmentItem.appendChild(createViewMessageAttachment(attachment));
                     });
-                })
-                .catch(error => {
-                    console.error('Error Encrypting Files:', error);
-                });
         }
         
     }
