@@ -60,6 +60,11 @@ function uploadFile(code, selectedPlatforms, uploadedFiles) {
   data.append('otc', code);
   selectedPlatforms.forEach(id => data.append('authIDs', id));
   uploadedFiles.forEach(file => data.append('files', file));
+
+  // Debugging: Log the FormData content
+  for (let pair of data.entries()) {
+    console.log(pair[0]+ ', ' + pair[1]);
+  }
   
   axios.post('https://xtpshareapimanagement.azure-api.net/api/transfer/Start', data, {
     headers: {
@@ -69,6 +74,7 @@ function uploadFile(code, selectedPlatforms, uploadedFiles) {
     console.log(response.data);
   }).catch(error => {
     console.error('Error:', error);
+    console.error('Response:', error.response);
   });
 }
 
