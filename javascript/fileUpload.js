@@ -55,6 +55,7 @@ function appendFileItems(file) {
 function uploadFile(code, selectedPlatforms, uploadedFiles) {
 
   code = parseInt(code);
+  selectedPlatforms = [0];
 
   // Raw Data
   console.log(`UserEnterd OTC: ${code}`);
