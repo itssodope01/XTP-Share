@@ -54,28 +54,37 @@ function appendFileItems(file) {
 // Function to upload selected files to the server
 function uploadFile(code, selectedPlatforms, uploadedFiles) {
 
-  code = parseInt(code);
+    // Parse code to integer
+    code = parseInt(code);
 
-  const data = new FormData();
-  data.append('otc', code);
-  selectedPlatforms.forEach(id => data.append('authIDs', id));
-  uploadedFiles.forEach(file => data.append('files', file));
+    // Create a new FormData instance
+    const data = new FormData();
+    data.append('otc', code);
 
-  // Debugging: Log the FormData content
-  for (let pair of data.entries()) {
-    console.log(pair[0]+ ', ' + pair[1]);
-  }
-  
-  axios.post('https://xtpshareapimanagement.azure-api.net/api/transfer/Start', data, {
-    headers: {
-      'Content-Type': 'multipart/form-data'
+    // Append each platform ID to the FormData instance
+    selectedPlatforms.forEach(id => data.append('authIDs[]', id));
+
+    // Append each file to the FormData instance
+    Array.from(uploadedFiles).forEach(file => data.append('files[]', file));
+
+    // Debugging: Log the FormData content
+    for (let pair of data.entries()) {
+        console.log(pair[0] + ', ' + pair[1]);
     }
-  }).then(response => {
-    console.log(response.data);
-  }).catch(error => {
-    console.error('Error:', error);
-    console.error('Response:', error.response);
-  });
+
+    // Use axios to send a POST request
+    axios.post('https://xtpshareapimanagement.azure-api.net/api/transfer/Start', data, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    }).then(response => {
+        console.log(response.data);
+    }).catch(error => {
+        console.error('Error:', error);
+        if (error.response) {
+            console.error('Response:', error.response.data);  // Log the server response for more details
+        }
+    });
 }
 
 
