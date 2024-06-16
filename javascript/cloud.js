@@ -26,7 +26,6 @@ platformOptions.forEach(function(option) {
         var index = selectedPlatforms.indexOf(platform);
         if (index === -1) {
             selectedPlatforms.push(platform);
-            console.log(selectedPlatforms);
             this.classList.add('selected');
             this.classList.remove('active');
         } else {
