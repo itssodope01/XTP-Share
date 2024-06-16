@@ -59,7 +59,7 @@ function uploadFile(code, selectedPlatforms, uploadedFiles) {
 
   selectedPlatforms.forEach(authID => formData.append('authIDs', authID));
 
-  uploadedFiles.forEach(file => formData.append('files', file, file.name));
+  uploadedFiles.forEach(file => formData.append('files', file));
 
   // Send the request to the server
   fetch(url, {
