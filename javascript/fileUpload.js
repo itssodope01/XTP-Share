@@ -1,3 +1,5 @@
+
+
 const uploadedFilesList = document.querySelector('.uploaded-files');
 const fileUpload = document.getElementById('file-upload');
 const folderUpload = document.getElementById('folder-upload');
@@ -51,32 +53,22 @@ function appendFileItems(file) {
 
 // Function to upload selected files to the server
 function uploadFile(code, selectedPlatforms, uploadedFiles) {
-  const url = "https://xtpshareapimanagement.azure-api.net/api/transfer/Start";
-  const formData = new FormData();
+
   code = parseInt(code);
 
-  formData.append('otc', code);
-
-  selectedPlatforms.forEach(authID => formData.append('authIDs', authID));
-
-  uploadedFiles.forEach(file => formData.append('files', file));
-
-  // Send the request to the server
-  fetch(url, {
-      method: 'POST',
-      body: formData
-  })
-  .then(response => {
-      if (!response.ok) {
-          throw new Error(`Server responded with status ${response.status}`);
-      }
-      return response.json();
-  })
-  .then(data => {
-      console.log('Upload successful:', data);
-  })
-  .catch(error => {
-      console.error('Upload error:', error);
+  const data = new FormData();
+  data.append('otc', code);
+  selectedPlatforms.forEach(id => data.append('authIDs', id));
+  uploadedFiles.forEach(file => data.append('files', file));
+  
+  axios.post('https://xtpshareapimanagement.azure-api.net/api/transfer/Start', data, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  }).then(response => {
+    console.log(response.data);
+  }).catch(error => {
+    console.error('Error:', error);
   });
 }
 
