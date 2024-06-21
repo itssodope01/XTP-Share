@@ -18,43 +18,45 @@ function generateIcons() {
 generateIcons();
 
 // Cloud platforms
-$(document).ready(function() {
+function loadCloudAccounts() {
     const platformsContainer = document.getElementById('platformsContainer');
+    platformsContainer.innerHTML = ''; // Clear existing content
+
+    const userCloudAuthIDs = userClouds.map(cloud => cloud.auth);
 
     platforms.forEach(platform => {
-        if (platform.class === "cloud") {
+        if (platform.class === "cloud" && userCloudAuthIDs.includes(platform.authID)) {
             const platformOption = document.createElement('div');
             platformOption.classList.add('platform-option');
             platformOption.dataset.platform = platform.name;
             platformOption.dataset.authID = platform.authID;
-    
+
             const platformBackground = document.createElement('div');
             platformBackground.classList.add('platform-background');
             platformBackground.style.backgroundColor = platform.hover_color;
-    
+
             const platformDiv = document.createElement('div');
             platformDiv.classList.add('platform');
-    
+
             const platformIcon = document.createElement('img');
             platformIcon.classList.add('platform-icon');
             platformIcon.src = baseURL + platform.src;
             platformIcon.style.width = '90px';
             platformIcon.style.height = '90px';
-    
+
             const platformName = document.createElement('span');
             platformName.classList.add('platform-name');
             platformName.textContent = platform.name;
-    
+
             platformOption.appendChild(platformBackground);
             platformDiv.appendChild(platformIcon);
             platformDiv.appendChild(platformName);
             platformOption.appendChild(platformDiv);
-    
+
             platformsContainer.appendChild(platformOption);
         }
     });
-    
-});
+}
 
 
 // File Upload and Element Creations
