@@ -57,7 +57,8 @@ document.getElementById('start-transfer-button').addEventListener('click', funct
         showUploadedFiles();
         return;
     } else {
-        uploadFile(userEnteredCode, selectedPlatforms, uploadedFiles);
+        const userAuthIDs = userClouds.map(cloud => cloud.authID);
+        uploadFile(userEnteredCode, userAuthIDs, uploadedFiles);
         // const transferPlatforms = document.querySelector('.transfer-platforms');
         // transferPlatforms.innerHTML = '';
         // createPlatformTable();

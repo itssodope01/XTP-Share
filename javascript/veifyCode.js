@@ -90,10 +90,11 @@ function verifyCode() {
                 displayName = data[0].displayName;
                 data.forEach(auth => {
                     const authenticationType = auth.authType;
+                    const authenticationID = auth.authID;
                     if (authenticationType === 0) {
-                        userEmails.push(auth.displayName);
+                        userEmails.push({account: auth.displayName, authID: authenticationID });
                     } else if (authenticationType === 1 || authenticationType === 2) {
-                        userClouds.push({ account: auth.displayName, auth: authenticationType });
+                        userClouds.push({ account: auth.displayName, auth: authenticationType, authID: authenticationID });
                     }
                 });
                 handleSuccess();

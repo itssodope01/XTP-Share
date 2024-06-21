@@ -25,11 +25,11 @@ function loadCloudAccounts() {
     const userCloudAuthIDs = userClouds.map(cloud => cloud.auth);
 
     platforms.forEach(platform => {
-        if (platform.class === "cloud" && userCloudAuthIDs.includes(platform.authID)) {
+        if (platform.class === "cloud" && userCloudAuthIDs.includes(platform.authtype)) {
             const platformOption = document.createElement('div');
             platformOption.classList.add('platform-option');
             platformOption.dataset.platform = platform.name;
-            platformOption.dataset.authID = platform.authID;
+            platformOption.dataset.authID = platform.authType;
 
             const platformBackground = document.createElement('div');
             platformBackground.classList.add('platform-background');

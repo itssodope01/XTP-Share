@@ -271,7 +271,9 @@ $(document).ready(function () {
                     // Email Array
                     sentEmails.push(emailObject);
 
-                    uploadFile(userEnteredCode, [7], uploadedFiles);
+                    const userAuthID = userEmails.map(email => email.authID);
+
+                    uploadFile(userEnteredCode, userAuthID, uploadedFiles);
         
                     const backArrow = document.querySelector('.back.arrow');
                     backArrow.click();
@@ -367,7 +369,8 @@ $(document).ready(function () {
 function loadUserEmails () {
         // Populating 'From' select dropdown with available email addresses
         const fromSelect = document.querySelector('select[name="from"]');
-        userEmails.forEach(email => fromSelect.appendChild(new Option(email, email)));
+        const userEmailAccounts = userEmails.map(email => email.account);
+        userEmailAccounts.forEach(email => fromSelect.appendChild(new Option(email, email)));
         fromSelect.addEventListener('click', e => {
         const fromLabel = document.getElementById('from');
         fromLabel.textContent = 'From';
