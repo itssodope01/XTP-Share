@@ -29,7 +29,7 @@ function loadCloudAccounts() {
             const platformOption = document.createElement('div');
             platformOption.classList.add('platform-option');
             platformOption.dataset.platform = platform.name;
-            platformOption.dataset.authID = platform.authType;
+            platformOption.dataset.authType = platform.authType;
 
             const platformBackground = document.createElement('div');
             platformBackground.classList.add('platform-background');
