@@ -3,7 +3,7 @@ let totaldataUploaded = 0;
 
 
 // JavaScript for adding dynamic behavior
-$(document).ready(function() {
+function addCloudEventListners() {
 var platformOptions = document.querySelectorAll('.platform-option');
 
 platformOptions.forEach(function(option) {
@@ -35,7 +35,7 @@ platformOptions.forEach(function(option) {
         }
     });
 });
-});
+}
 
 // Function to check if at least one platform is selected
 function platformsSelected() {

@@ -128,6 +128,7 @@ function handleSuccess() {
     displayNamep.textContent = `Hi, ${displayName}!`
     loadUserEmails();
     loadCloudAccounts();
+    addCloudEventListners();
     if (currentButton === 'send-email-button') {
         transitionSections('S2', 'S4');
     } else if (currentButton === 'save-cloud-button') {
