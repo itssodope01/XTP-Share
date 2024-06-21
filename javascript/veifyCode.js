@@ -435,12 +435,13 @@ document.addEventListener('keydown', function(event) {
 });
 
 
-// Function to extract and capitalize domain name
+// Function to extract and capitalize domain name without TLD
 function getCapitalizedDomain(displayName) {
     const emailParts = displayName.split('@');
     if (emailParts.length === 2) {
       const domain = emailParts[1];
-      return domain.charAt(0).toUpperCase() + domain.slice(1);
+      const mainDomain = domain.split('.')[0];
+      return mainDomain.charAt(0).toUpperCase() + mainDomain.slice(1);
     }
     return null;
-  }
+}
