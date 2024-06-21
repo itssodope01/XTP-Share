@@ -88,6 +88,14 @@ function verifyCode() {
             // Handle the response
             if (Array.isArray(data) && data.length > 0 && data[0].displayName) {
                 displayName = data[0].displayName;
+                data.forEach(auth => {
+                    const authenticationType = auth.authType;
+                    if (authenticationType === 0) {
+                        userEmails.push(auth.displayName);
+                    } else if (authenticationType === 1 || authenticationType === 2) {
+                        userClouds.push({ account: auth.displayName, auth: authenticationType });
+                    }
+                });
                 handleSuccess();
             } else {
                 handleFailure('Invalid response from server');
@@ -115,6 +123,7 @@ function handleSuccess() {
     verificationStartTime = Date.now();
     const displayNamep = document.querySelector('#displayName')
     displayNamep.textContent = `Hi, ${displayName}!`
+    
     if (currentButton === 'send-email-button') {
         transitionSections('S2', 'S4');
     } else if (currentButton === 'save-cloud-button') {

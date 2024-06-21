@@ -5,6 +5,8 @@ let userEnteredCode = '';
 let transferButtonClicked = false;
 let transferstarted = false;
 let transferOpen = false;
+let userEmails = [];
+let userClouds = [];
 
 const getElement = id => document.getElementById(id);
 
