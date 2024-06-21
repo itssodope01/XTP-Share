@@ -357,22 +357,24 @@ $(document).ready(function () {
         };
     }
 
-    // Populating 'From' select dropdown with available email addresses
-    const fromSelect = document.querySelector('select[name="from"]');
-    userEmails.forEach(email => fromSelect.appendChild(new Option(email, email)));
-    fromSelect.addEventListener('click', e => {
-        const fromLabel = document.getElementById('from');
-        fromLabel.textContent = 'From';
-        fromLabel.style.color = '';
-        fromLabel.style.borderColor = '';
-    });
-
     document.querySelector('.email-compose-button').addEventListener('click', e => {
         sendButtonClicked = true;
         sendEmail();
         updateAttachmentContainerBorderColor();
     });
 });
+
+function loadUserEmails () {
+        // Populating 'From' select dropdown with available email addresses
+        const fromSelect = document.querySelector('select[name="from"]');
+        userEmails.forEach(email => fromSelect.appendChild(new Option(email, email)));
+        fromSelect.addEventListener('click', e => {
+        const fromLabel = document.getElementById('from');
+        fromLabel.textContent = 'From';
+        fromLabel.style.color = '';
+        fromLabel.style.borderColor = '';
+    });
+}
 
 document.querySelectorAll("#attachment-container, #attachment-container-toggle")
 .forEach(item => item.addEventListener("click", openFileSelection));
