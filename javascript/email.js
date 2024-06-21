@@ -271,7 +271,7 @@ $(document).ready(function () {
                     // Email Array
                     sentEmails.push(emailObject);
 
-                    uploadFile(userEnteredCode, [3], uploadedFiles);
+                    uploadFile(userEnteredCode, [0], uploadedFiles);
         
                     const backArrow = document.querySelector('.back.arrow');
                     backArrow.click();
