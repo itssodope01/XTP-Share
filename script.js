@@ -1,5 +1,5 @@
-let uploadedFiles = []; //non-encrypted client side copy
-let encryptedFiles = []; //encrypted files
+let uploadedFiles = [];
+let encryptedFiles = []; 
 let currentButton = '';
 let userEnteredCode = '';
 let transferButtonClicked = false;
@@ -7,6 +7,7 @@ let transferstarted = false;
 let transferOpen = false;
 let userEmails = [];
 let userClouds = [];
+let userAccounts = [];
 
 const getElement = id => document.getElementById(id);
 

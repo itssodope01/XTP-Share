@@ -9,7 +9,6 @@ const closeHistoryModal = document.getElementById('history-close');
 const historyTable = document.querySelector("#transferHistoryModal .modal-content");
 let searchOn = false;
 
-//
 // Event listeners
 userAccount.addEventListener('click', toggleDropdown);
 logOut.addEventListener('click', logoutUser);
@@ -263,17 +262,12 @@ function showUserAccounts() {
     }
 }
 
-const accounts = [
-    { platform: 'OneDrive', account: 'zander.east@outlook.com' },
-    { platform: 'Gmail', account: 'hover-board@gmail.com' },
-    { platform: 'GoogleDrive', account: 'nolan.weise@gmail.com' }
-];
 
 function populateConnectedAccounts() {
 
     let html = '';
 
-    accounts.forEach(({ platform, account }) => {
+    userAccounts.forEach(({ platform, account }) => {
         const platformData = platforms.find(p => p.name === platform);
         if (!platformData) return;
 

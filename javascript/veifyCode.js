@@ -96,6 +96,8 @@ function verifyCode() {
                         const domain = getCapitalizedDomain(auth.displayName);
                     } else if (authenticationType === 1 || authenticationType === 2) {
                         userClouds.push({ account: auth.displayName, auth: authenticationType, authID: authenticationID });
+                        const userPlatform = (authenticationType === 1) ? 'OneDrive' : 'GoogleDrive';
+                        userAccounts.push({platform: userPlatform, account: auth.displayName});
                     }
                 });
                 handleSuccess();
