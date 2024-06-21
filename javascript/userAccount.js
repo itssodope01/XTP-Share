@@ -268,7 +268,7 @@ function populateConnectedAccounts() {
     let html = '';
 
     userAccounts.forEach(({ platform, account }) => {
-        const platformData = platforms.find(p => p.name === platform);
+        const platformData = platforms.find(p => p.name == platform);
         if (!platformData) return;
 
         html += `
