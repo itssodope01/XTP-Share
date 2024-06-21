@@ -7,7 +7,6 @@ let transferstarted = false;
 let transferOpen = false;
 let userEmails = [];
 let userClouds = [];
-let account = [];
 
 const getElement = id => document.getElementById(id);
 

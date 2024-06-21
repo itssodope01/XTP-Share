@@ -94,7 +94,6 @@ function verifyCode() {
                     if (authenticationType === 0) {
                         userEmails.push({account: auth.displayName, authID: authenticationID });
                         const domain = getCapitalizedDomain(auth.displayName);
-                        accounts.push({account: auth.displayName, platform: domain});
                     } else if (authenticationType === 1 || authenticationType === 2) {
                         userClouds.push({ account: auth.displayName, auth: authenticationType, authID: authenticationID });
                     }

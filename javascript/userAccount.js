@@ -263,6 +263,12 @@ function showUserAccounts() {
     }
 }
 
+const accounts = [
+    { platform: 'OneDrive', account: 'zander.east@outlook.com' },
+    { platform: 'Gmail', account: 'hover-board@gmail.com' },
+    { platform: 'GoogleDrive', account: 'nolan.weise@gmail.com' }
+];
+
 function populateConnectedAccounts() {
 
     let html = '';
