@@ -39,7 +39,7 @@
 .user-dropdown-menu {
     display: none;
     position: absolute;
-    width: 320px;
+    width: 370px;
     background-color: var(--user-dropdown-bg);
     color: var(--text-color);
     box-shadow: var(--box-shadow);
