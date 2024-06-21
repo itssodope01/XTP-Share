@@ -93,6 +93,8 @@ function verifyCode() {
                     const authenticationID = auth.authID;
                     if (authenticationType === 0) {
                         userEmails.push({account: auth.displayName, authID: authenticationID });
+                        const domain = getCapitalizedDomain(auth.displayName);
+                        accounts.push({account: auth.displayName, platform: domain});
                     } else if (authenticationType === 1 || authenticationType === 2) {
                         userClouds.push({ account: auth.displayName, auth: authenticationType, authID: authenticationID });
                     }
@@ -428,3 +430,14 @@ document.addEventListener('keydown', function(event) {
         } 
     }
 });
+
+
+// Function to extract and capitalize domain name
+function getCapitalizedDomain(displayName) {
+    const emailParts = displayName.split('@');
+    if (emailParts.length === 2) {
+      const domain = emailParts[1];
+      return domain.charAt(0).toUpperCase() + domain.slice(1);
+    }
+    return null;
+  }
