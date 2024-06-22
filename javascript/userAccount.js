@@ -205,10 +205,10 @@ function filterTransferHistory(platforms, statuses, fromDate, toDate) {
     }
     searchOn = false;
     searchBar.value = '';
-    if (filteredData) {
-    populateTable(filteredData);
-    } else if (filteredData.length < 1){
+    if (filteredData.length < 1){
         handleTransferHistoryFailure("No Matching Records Found.")
+    } else {
+        populateTable(filteredData);
     }
 }
 
