@@ -167,7 +167,9 @@ function closeFilterWindowOnClickOutside(event) {
 
 function applyFilters() {
     const platforms = Array.from(platformFilters).filter(cb => cb.checked).map(cb => cb.value);
-    const statuses = Array.from(statusFilters).filter(cb => cb.checked).map(cb => cb.value);
+    const statuses = Array.from(statusFilters)
+    .filter(cb => cb.checked)
+    .map(cb => (cb.value === "InProgress" ? "In Progress" : cb.value));
     const fromDate = fromDateInput.value;
     const toDate = toDateInput.value;
 
