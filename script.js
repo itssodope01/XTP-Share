@@ -21,6 +21,7 @@ const selectedFilesContainer = getElement('selected-files-container');
 const transferModal = getElement('transferModal');
 const transferHistoryErrorDiv = document.querySelector(".transferHistoryError");
 const transferHistoryTable = document.querySelector(".transfer-history-table");
+const theContainer = getElement('container1');
 
 
 // hamburger menu
@@ -108,16 +109,20 @@ function transitionSections(currentSectionId, previousSectionId, isBackButton = 
     var backArrow = getElement("backArrow");
     if (currentSection && previousSection) {
         if (previousSection.id === 'S1') {
-            ['.container', '.title', '.subtitle'].forEach(selector => document.querySelector(selector).classList.replace('S', 'transition'));          
+            ['.container', '.title', '.subtitle'].forEach(selector => document.querySelector(selector).classList.replace('S', 'transition')); 
+            setTimeout(function() {
+                theContainer.style.height = '450px';
+            }, 150);         
         }
-
-
 
         if(currentSection.id === 'S1'){
             document.querySelectorAll('.container, .title, .subtitle').forEach(element => {
                 element.classList.remove('transition');
                 element.classList.add('S');
-            });   
+            }); 
+            setTimeout(function() {
+                theContainer.style.height = '580px';
+            }, 150);  
         }
         currentSection.classList.replace('active', isBackButton ? 'next' : 'prev');
         previousSection.classList.replace('prev', 'next');
