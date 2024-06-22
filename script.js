@@ -328,8 +328,7 @@ function getPlatformName(authType, displayName) {
 }
 
 function handleTransferHistoryFailure(message) {
-    const table = document.querySelector(".transfer-history-table");
-    table.innerHTML = `
-        <h3 style="display: flex; justify-content: center; align-items: center;">${message}</h3>
-    `;
+    const errorDiv = document.querySelector(".transferHistoryError");
+    errorDiv.textContent = '';
+    errorDiv.textContent = `${message}`;
 }
