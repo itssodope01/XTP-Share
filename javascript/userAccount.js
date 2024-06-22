@@ -207,7 +207,7 @@ function filterTransferHistory(platforms, statuses, fromDate, toDate) {
     searchBar.value = '';
     if (filteredData) {
     populateTable(filteredData);
-    } else {
+    } else if (filteredData.length < 1){
         handleTransferHistoryFailure("No Matching Records Found.")
     }
 }
