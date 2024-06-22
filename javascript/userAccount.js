@@ -79,14 +79,11 @@ function openTransferHistoryModal(e) {
     e.preventDefault();
     clearFilters();
     getTransferHistory(userEnteredCode);
-    setTimeout( ()=> {
-        populateTable(transferHistory);
-        userDropdownMenu.style.display = 'none';
-        showModal(transferHistoryModal);
-        setTimeout(() => {
-            transferHistoryModal.style.left = "50%";
-        }, 50);
-    }, 80);
+    userDropdownMenu.style.display = 'none';
+    showModal(transferHistoryModal);
+    setTimeout(() => {
+        transferHistoryModal.style.left = "50%";
+    }, 50);
 }
 
 function closeTransferHistoryModal() {

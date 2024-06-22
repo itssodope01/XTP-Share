@@ -308,6 +308,7 @@ function getTransferHistory(code) {
                 };
             });
             transferHistory = transferHistory.reverse();
+            populateTable(transferHistory);
         } else {
             handleTransferHistoryFailure('No transfer history');
         }
