@@ -1,22 +1,57 @@
-MIT License
+Proprietary Lisence
 
-Copyright (c) 2024 Pritam Chakraborty
+Copyright (c) 2024 Pritam Chakraborty, Sava Ivković, Mikołaj Głód, Wojciech Bronisz
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy and modify subject to the following conditions:
+XTP SHARE Software License Agreement
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+This Software License Agreement ("Agreement") is made and entered into by and between [Pritam Chakraborty, Sava Ivković, Mikołaj Głód, Wojciech Bronisz] ("Licensor") and the user ("Licensee"). This Agreement sets forth the terms and conditions under which the Licensee may use the XTP SHARE ("Software") provided by the Licensor.
 
-**Attribution Requirement**: If you copy, use or modify this software, you must include the following attribution in your project and website:
-"Original Author: Pritam Chakraborty (GitHub: itssodope01)"
+1. Grant of License
+The Licensor grants the Licensee a non-exclusive, non-transferable, limited license to use the Software solely for the purpose of transferring files as intended by the Software, in accordance with the terms of this Agreement.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+2. Restrictions
+The Licensee shall not copy, modify, distribute, sell, or lease any part of the Software.
+The Licensee shall not reverse engineer, decompile, disassemble, or attempt to derive the source code of the Software, except to the extent that such activity is expressly permitted by applicable law.
+The Licensee shall not use the Software to develop any software or product that competes with the Software.
+The Licensee shall not sublicense, rent, lease, or lend the Software to any third party.
+
+3. Ownership
+The Software is licensed, not sold. The Licensor retains all rights, title, and interest in and to the Software, including all intellectual property rights.
+The Licensee acknowledges that the Software contains proprietary and confidential information of the Licensor and agrees to maintain the confidentiality of such information.
+
+4. Disclaimer of Warranties
+The Software is provided "as is" without warranty of any kind, express or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, and non-infringement.
+The Licensor does not warrant that the Software will be error-free or that its operation will be uninterrupted.
+
+5. Limitation of Liability
+In no event shall the Licensor be liable for any indirect, incidental, special, or consequential damages, or any loss of profits or revenues, arising out of or in connection with the use or inability to use the Software.
+The Licensor's total liability under this Agreement, whether in contract, tort, or otherwise, shall not exceed the amount paid by the Licensee for the Software.
+
+6. Termination
+This Agreement is effective until terminated. The Licensee may terminate this Agreement at any time by discontinuing use of the Software and destroying all copies of the Software in their possession.
+The Licensor may terminate this Agreement immediately if the Licensee breaches any of the terms and conditions of this Agreement.
+Upon termination, the Licensee must cease all use of the Software and destroy all copies of the Software.
+
+7. Governing Law
+This Agreement shall be governed by and construed in accordance with the laws of [Poland], without regard to its conflict of laws principles.
+Any disputes arising out of or relating to this Agreement shall be resolved in the courts of [Poland].
+
+8. Entire Agreement
+This Agreement constitutes the entire agreement between the parties with respect to the subject matter hereof and supersedes all prior or contemporaneous understandings, agreements, representations, and warranties, whether written or oral.
+
+9. Amendments
+The Licensor reserves the right to amend or modify this Agreement at any time by providing notice to the Licensee. Continued use of the Software following any such amendment shall constitute the Licensee's acceptance of the amended terms.
+By using the Software, the Licensee agrees to be bound by the terms and conditions of this Agreement.
+
+Licensor:
+
+Pritam Chakraborty
+Sava Ivković
+Mikołaj Głód
+Wojciech Bronisz
+
+Contact:
+Pritam.Chakraborty1@outlook.com
+Savai@student.agh.edu.pl
+mikiglod@student.agh.edu.pl
+wotming123@gmail.com
