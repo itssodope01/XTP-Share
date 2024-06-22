@@ -220,7 +220,10 @@ function clearFilters() {
 
 // Function to populate the transfer history table
 function populateTable(data) {
-    if (data.length <=0) return;
+    if (data.length <=0) {
+        handleTransferHistoryFailure("No matching records found.");
+        return;
+    }
     const tableBody = document.querySelector(".transfer-history-actual");
     tableBody.innerHTML = ""; // Clear existing content
 
