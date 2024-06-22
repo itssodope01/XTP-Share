@@ -308,7 +308,7 @@ function getTransferHistory(code) {
                 };
             });
             transferHistory = transferHistory.reverse();
-            populateTable(transferHistory);
+            document.getElementById('clear-filters').click();
         } else {
             handleTransferHistoryFailure('No transfer history');
         }

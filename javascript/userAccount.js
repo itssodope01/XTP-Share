@@ -78,7 +78,6 @@ function logoutUser() {
 function openTransferHistoryModal(e) {
     e.preventDefault();
     getTransferHistory(userEnteredCode);
-    document.getElementById('clear-filters').click();
     userDropdownMenu.style.display = 'none';
     showModal(transferHistoryModal);
     setTimeout(() => {
