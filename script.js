@@ -259,3 +259,70 @@ $(document).on('dragleave drop', function(e) {
     e.stopPropagation();
 });
 
+//Transfer History
+// Function to convert date and time
+function formatDateAndTime(dateTimeStr) {
+    const dateTime = new Date(dateTimeStr);
+    const date = dateTime.toLocaleDateString('en-GB'); // dd/mm/yyyy
+    const time = dateTime.toLocaleTimeString('en-US'); // hh:mm AM/PM
+    return { date, time };
+}
+
+// Transfer History
+function getTransferHistory(code) {
+    fetch(`https://xtpshareapimanagement.azure-api.net/api/transfer/GetHistoryByOTC?code=${encodeURIComponent(code)}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            handleTransferHistoryFailure('Invalid response from server');
+        }
+        return response.json();
+    })
+    .then(data => {
+        // Handle the response
+        if (Array.isArray(data) && data.length > 0) {
+            const transferHistory = data.map(item => {
+                const { date, time } = formatDateAndTime(item.transferStartTime);
+                const platform = item.authentications.length > 0 ? getPlatformName(item.authentications[0].authType, item.authentications[0].displayName) : "Unknown";
+                return {
+                    id: `#${item.transferID}`,
+                    date: date,
+                    time: time,
+                    platform: platform,
+                    status: item.transferState
+                };
+            });
+            // Here you can use transferHistory as needed
+            console.log(transferHistory);
+        } else {
+            handleTransferHistoryFailure('No transfer history');
+        }
+    })
+    .catch(error => {
+        handleTransferHistoryFailure('An error occurred. Please try again later.');
+    });
+}
+
+function getPlatformName(authType, displayName) {
+    switch (authType) {
+        case 0:
+            return getCapitalizedDomain(displayName);
+        case 1:
+            return 'OneDrive';
+        case 2:
+            return 'GoogleDrive';
+        default:
+            return 'Unknown';
+    }
+}
+
+function handleTransferHistoryFailure(message) {
+    const table = document.querySelector(".transfer-history-table");
+    table.innerHTML = `
+        <h3 style="display: flex; justify-content: center; align-items: center;">${message}</h3>
+    `;
+}

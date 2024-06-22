@@ -259,6 +259,7 @@ function showUserAccounts() {
     connectedAccountsContainer.classList.toggle('open');
     if (connectedAccountsContainer.classList.contains('open')) {
         populateConnectedAccounts(); // Populate the connected accounts dynamically
+        getTransferHistory(userEnteredCode);
     }
 }
 
