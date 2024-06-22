@@ -17,7 +17,6 @@ closeHistoryModal.addEventListener('click', closeTransferHistoryModal);
 
 window.addEventListener('click', closeDropdownOnClickOutside);
 window.addEventListener('resize', handleWindowResize);
-window.addEventListener('load', positionDropdown);
 
 // Elements for filtering
 const searchBar = document.getElementById("search-bar");
@@ -57,24 +56,17 @@ function toggleDropdown() {
 }
 
 function getScaleFactor() {
+    if (zoomChanged) return 1;
     const currentZoom = Math.round(window.devicePixelRatio * 100);
-    return currentZoom < 125 ? 125 / currentZoom : 1;
+    return (currentZoom < 125 && currentZoom > 90) ? (125 / currentZoom) : 1;
 }
 
 function positionDropdown() {
     const scaleFactor = getScaleFactor();
     const userAccountRect = userAccount.getBoundingClientRect();
     const arrowOffset = 65;
-
-    // Calculate the original top and left values without scaling
-    const originalTop = userAccountRect.bottom + window.scrollY + 15;
-    const originalLeft = userAccountRect.left + window.scrollX - userDropdownMenu.offsetWidth / 2 + userAccountRect.width / 2 - arrowOffset;
-
-    // Apply the scale factor to adjust the position
-    userDropdownMenu.style.transform = `scale(${1 / scaleFactor})`;
-    userDropdownMenu.style.transformOrigin = 'top left';
-    userDropdownMenu.style.top = `${originalTop}px`;
-    userDropdownMenu.style.left = `${originalLeft}px`;
+    userDropdownMenu.style.top = `${((userAccountRect.bottom / scaleFactor) + (window.scrollY / scaleFactor) + 15)}px`;
+    userDropdownMenu.style.left = `${((userAccountRect.left / scaleFactor) + (window.scrollX / scaleFactor) - userDropdownMenu.offsetWidth / 2 + (userAccountRect.width / scaleFactor) / 2 - arrowOffset)}px`;
 }
 
 

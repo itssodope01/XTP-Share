@@ -578,23 +578,34 @@
         
     </script>
     <script>
+        let zoomChanged = false;
+        let lastDevicePixelRatio;
         function adjustZoom() {
-          const currentZoom = Math.round(window.devicePixelRatio * 100);
-          
-          if (currentZoom < 125 && currentZoom > 90) {
-            const scaleFactor = 125 / currentZoom;
-            document.body.style.transform = `scale(${scaleFactor})`;
-            document.body.style.width = `${100 / scaleFactor}vw`;
-            document.body.style.height = `${100 / scaleFactor}vh`;
-          } else {
-            document.body.style.transform = 'scale(1)';
-            document.body.style.width = '100vw';
-            document.body.style.height = '100vh';
-          }
-        }
-    
+            const currentZoom = Math.round(window.devicePixelRatio * 100);
+              
+            if (currentZoom < 125 && currentZoom > 90 && zoomChanged == false) {
+                const scaleFactor = 125 / currentZoom;
+                document.body.style.transform = `scale(${scaleFactor})`;
+                document.body.style.width = `${100 / scaleFactor}vw`;
+                document.body.style.height = `${100 / scaleFactor}vh`;
+            } else {
+                document.body.style.transform = 'scale(1)';
+                document.body.style.width = '100vw';
+                document.body.style.height = '100vh';
+            }
+            lastDevicePixelRatio = window.devicePixelRatio;
+            }
+        
         // window.addEventListener('resize', adjustZoom);
         window.addEventListener('load', adjustZoom);
+
+        window.addEventListener('resize', () => {
+            if (window.devicePixelRatio !== lastDevicePixelRatio && zoomChanged == false) {
+                 zoomChanged = true;
+            }
+            adjustZoom();
+        });
+
     </script>
     
     <div id="script" class="script"></div>
