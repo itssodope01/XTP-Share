@@ -20,6 +20,7 @@ const attachmentText = document.querySelector('.attachment-text');
 const selectedFilesContainer = getElement('selected-files-container');
 const transferModal = getElement('transferModal');
 const transferHistoryErrorDiv = document.querySelector(".transferHistoryError");
+const transferHistoryTable = document.querySelector(".transfer-history-table");
 
 
 // hamburger menu
@@ -329,6 +330,7 @@ function getPlatformName(authType, displayName) {
 }
 
 function handleTransferHistoryFailure(message) {
+    transferHistoryTable.style.visibility = 'hidden';
     transferHistoryErrorDiv.textContent = '';
     transferHistoryErrorDiv.textContent = `${message}`;
 }

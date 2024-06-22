@@ -129,6 +129,9 @@ function searchData() {
     }
     clearFilters();
     populateTable(filteredData);
+    if (filteredData.length < 1){
+        handleTransferHistoryFailure("No Matching Records Found.")
+    } 
 }
 
 function resetSearch() {
@@ -226,6 +229,7 @@ function clearFilters() {
 // Function to populate the transfer history table
 function populateTable(data) {
     if (data.length > 0) {
+        transferHistoryTable.style.visibility = 'visible';
         transferHistoryErrorDiv.textContent = '';
     }
     const tableBody = document.querySelector(".transfer-history-actual");
