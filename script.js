@@ -260,17 +260,22 @@ $(document).on('dragleave drop', function(e) {
     e.stopPropagation();
 });
 
-//Transfer History
+
 // Function to convert date and time
 function formatDateAndTime(dateTimeStr) {
     const dateTime = new Date(dateTimeStr);
+    
+    const timeOptions = { hour: '2-digit', minute: '2-digit' };
+    const time = dateTime.toLocaleTimeString('en-US', timeOptions); // hh:mm
+  
     const date = dateTime.toLocaleDateString('en-GB'); // dd/mm/yyyy
-    const time = dateTime.toLocaleTimeString('en-US'); // hh:mm AM/PM
     return { date, time };
 }
 
+
 // Transfer History
 function getTransferHistory(code) {
+    if (transferHistory.length > 0) return;
     fetch(`https://xtpshareapimanagement.azure-api.net/api/transfer/GetHistoryByOTC?code=${encodeURIComponent(code)}`, {
         method: 'GET',
         headers: {
@@ -284,16 +289,19 @@ function getTransferHistory(code) {
         return response.json();
     })
     .then(data => {
+        transferHistory = [];
         // Handle the response
         if (Array.isArray(data) && data.length > 0) {
             transferHistory = data.map(item => {
                 const { date, time } = formatDateAndTime(item.transferStartTime);
-                const platform = item.authentications.length > 0 ? getPlatformName(item.authentications[0].authType, item.authentications[0].displayName) : "Unknown";
+                const platforms = item.authentications.length > 0 
+                    ? item.authentications.map(auth => getPlatformName(auth.authType, auth.displayName)).join(', ')
+                    : "Unknown";
                 return {
                     id: `#${item.transferID}`,
                     date: date,
                     time: time,
-                    platform: platform,
+                    platform: platforms,
                     status: item.transferState
                 };
             });
