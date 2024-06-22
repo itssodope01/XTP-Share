@@ -581,7 +581,7 @@
         function adjustZoom() {
           const currentZoom = Math.round(window.devicePixelRatio * 100);
           
-          if (currentZoom < 125 && currentZoom > 89) {
+          if (currentZoom < 125 && currentZoom > 90) {
             const scaleFactor = 125 / currentZoom;
             document.body.style.transform = `scale(${scaleFactor})`;
             document.body.style.width = `${100 / scaleFactor}vw`;
