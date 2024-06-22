@@ -48,7 +48,6 @@ filterApply.addEventListener('click', applyFilters);
 
 document.addEventListener('click', closeFilterWindowOnClickOutside);
 
-// Function definitions
 function toggleDropdown() {
     userDropdownMenu.style.display = userDropdownMenu.style.display === 'block' ? 'none' : 'block';
     if (userDropdownMenu.style.display === 'block') {
@@ -56,11 +55,18 @@ function toggleDropdown() {
     }
 }
 
+function getScaleFactor() {
+    const currentZoom = Math.round(window.devicePixelRatio * 100);
+    return currentZoom < 125 ? 125 / currentZoom : 1;
+}
+
 function positionDropdown() {
+    const scaleFactor = getScaleFactor();
     const userAccountRect = userAccount.getBoundingClientRect();
     const arrowOffset = 65;
-    userDropdownMenu.style.top = `${userAccountRect.bottom + window.scrollY + 15}px`;
-    userDropdownMenu.style.left = `${userAccountRect.left + window.scrollX - userDropdownMenu.offsetWidth / 2 + userAccountRect.width / 2 - arrowOffset}px`;
+
+    userDropdownMenu.style.top = `${(userAccountRect.bottom + window.scrollY + 15) / scaleFactor}px`;
+    userDropdownMenu.style.left = `${(userAccountRect.left + window.scrollX - userDropdownMenu.offsetWidth / 2 + userAccountRect.width / 2 - arrowOffset) / scaleFactor}px`;
 }
 
 function logoutUser() {
