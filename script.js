@@ -277,7 +277,10 @@ function formatDateAndTime(dateTimeStr) {
 
 // Transfer History
 function getTransferHistory(code) {
-    if (transferHistory.length > 0) return;
+    if (transferHistory.length > 0) {
+        document.getElementById('clear-filters').click();
+        return;
+    }
     transferHistory = [];
     fetch(`https://xtpshareapimanagement.azure-api.net/api/transfer/GetHistoryByOTC?code=${encodeURIComponent(code)}`, {
         method: 'GET',
@@ -308,7 +311,7 @@ function getTransferHistory(code) {
                 };
             });
             transferHistory = transferHistory.reverse();
-            document.getElementById('clear-filters').click();
+            populateTable(transferHistory);
         } else {
             handleTransferHistoryFailure('No transfer history');
         }
