@@ -307,6 +307,7 @@ function getTransferHistory(code) {
                     status: item.transferState
                 };
             });
+            transferHistory = transferHistory.reverse();
         } else {
             handleTransferHistoryFailure('No transfer history');
         }

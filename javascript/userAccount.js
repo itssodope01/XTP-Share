@@ -77,6 +77,7 @@ function logoutUser() {
 
 function openTransferHistoryModal(e) {
     e.preventDefault();
+    clearFilters();
     getTransferHistory(userEnteredCode);
     setTimeout( ()=> {
         populateTable(transferHistory);
