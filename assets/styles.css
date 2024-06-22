@@ -5,6 +5,7 @@ body {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+    transform-origin: top left;
     transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
