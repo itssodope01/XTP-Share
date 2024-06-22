@@ -57,17 +57,25 @@ function toggleDropdown() {
 
 function getScaleFactor() {
     const currentZoom = Math.round(window.devicePixelRatio * 100);
-    return currentZoom < 125 ? 125 / currentZoom : 1;
+    return (currentZoom < 125 && currentZoom > 90) ? 125 / currentZoom : 1;
 }
 
 function positionDropdown() {
     const scaleFactor = getScaleFactor();
-    const userAccountRect = userAccount.getBoundingClientRect();
     const arrowOffset = 65;
 
-    userDropdownMenu.style.top = `${(userAccountRect.bottom + window.scrollY + 15) / scaleFactor}px`;
-    userDropdownMenu.style.left = `${(userAccountRect.left + window.scrollX - userDropdownMenu.offsetWidth / 2 + userAccountRect.width / 2 - arrowOffset) / scaleFactor}px`;
+    if (scaleFactor !== 1) {
+        userDropdownMenu.style.transform = `scale(${1 / scaleFactor})`;
+        userDropdownMenu.style.transformOrigin = 'top left';
+    } else {
+        userDropdownMenu.style.transform = 'none';
+    }
+
+    const scaledRect = userAccount.getBoundingClientRect();
+    userDropdownMenu.style.top = `${(scaledRect.bottom + window.scrollY + 15)}px`;
+    userDropdownMenu.style.left = `${(scaledRect.left + window.scrollX - userDropdownMenu.offsetWidth / 2 + scaledRect.width / 2 - arrowOffset)}px`;
 }
+
 
 function logoutUser() {
     skipVerificationSection = false;
