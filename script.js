@@ -276,6 +276,7 @@ function formatDateAndTime(dateTimeStr) {
 // Transfer History
 function getTransferHistory(code) {
     if (transferHistory.length > 0) return;
+    transferHistory = [];
     fetch(`https://xtpshareapimanagement.azure-api.net/api/transfer/GetHistoryByOTC?code=${encodeURIComponent(code)}`, {
         method: 'GET',
         headers: {
@@ -289,7 +290,6 @@ function getTransferHistory(code) {
         return response.json();
     })
     .then(data => {
-        transferHistory = [];
         // Handle the response
         if (Array.isArray(data) && data.length > 0) {
             transferHistory = data.map(item => {
