@@ -57,7 +57,7 @@ function toggleDropdown() {
 
 function getScaleFactor() {
     const currentZoom = Math.round(window.devicePixelRatio * 100);
-    return (currentZoom < 125 && currentZoom > 90) ? 125 / currentZoom : 1;
+    return (currentZoom < 124 && currentZoom > 89) ? 125 / currentZoom : 1;
 }
 
 function positionDropdown() {

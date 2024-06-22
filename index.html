@@ -581,7 +581,7 @@
         function adjustZoom() {
           const currentZoom = Math.round(window.devicePixelRatio * 100);
           
-          if (currentZoom < 125 && currentZoom > 90) {
+          if (currentZoom < 125 && currentZoom > 89) {
             const scaleFactor = 125 / currentZoom;
             document.body.style.transform = `scale(${scaleFactor})`;
             document.body.style.width = `${100 / scaleFactor}vw`;
@@ -593,8 +593,8 @@
           }
         }
     
-        window.addEventListener('resize', adjustZoom);
-        // window.addEventListener('load', adjustZoom);
+        // window.addEventListener('resize', adjustZoom);
+        window.addEventListener('load', adjustZoom);
     </script>
     
     <div id="script" class="script"></div>
