@@ -77,12 +77,15 @@ function logoutUser() {
 
 function openTransferHistoryModal(e) {
     e.preventDefault();
-    populateTable(transferHistory);
-    userDropdownMenu.style.display = 'none';
-    showModal(transferHistoryModal);
-    setTimeout(() => {
-        transferHistoryModal.style.left = "50%";
-    }, 50);
+    getTransferHistory(userEnteredCode);
+    setTimeout( ()=> {
+        populateTable(transferHistory);
+        userDropdownMenu.style.display = 'none';
+        showModal(transferHistoryModal);
+        setTimeout(() => {
+            transferHistoryModal.style.left = "50%";
+        }, 50);
+    }, 80);
 }
 
 function closeTransferHistoryModal() {
@@ -249,7 +252,6 @@ function showUserAccounts() {
     connectedAccountsContainer.classList.toggle('open');
     if (connectedAccountsContainer.classList.contains('open')) {
         populateConnectedAccounts(); // Populate the connected accounts dynamically
-        getTransferHistory(userEnteredCode);
     }
 }
 
