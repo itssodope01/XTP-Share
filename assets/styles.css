@@ -830,3 +830,9 @@ font-size: 18px;
     100% { transform: rotate(360deg); }
   }
   
+.transferHistoryError {
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+}

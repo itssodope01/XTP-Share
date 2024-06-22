@@ -225,6 +225,9 @@ function clearFilters() {
 
 // Function to populate the transfer history table
 function populateTable(data) {
+    if (data.length > 0) {
+        transferHistoryErrorDiv.textContent = '';
+    }
     const tableBody = document.querySelector(".transfer-history-actual");
     tableBody.innerHTML = ""; // Clear existing content
 
