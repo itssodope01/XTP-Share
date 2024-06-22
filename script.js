@@ -8,6 +8,7 @@ let transferOpen = false;
 let userEmails = [];
 let userClouds = [];
 let userAccounts = [];
+let transferHistory = [];
 
 const getElement = id => document.getElementById(id);
 
@@ -285,7 +286,7 @@ function getTransferHistory(code) {
     .then(data => {
         // Handle the response
         if (Array.isArray(data) && data.length > 0) {
-            const transferHistory = data.map(item => {
+            transferHistory = data.map(item => {
                 const { date, time } = formatDateAndTime(item.transferStartTime);
                 const platform = item.authentications.length > 0 ? getPlatformName(item.authentications[0].authType, item.authentications[0].displayName) : "Unknown";
                 return {
@@ -296,8 +297,6 @@ function getTransferHistory(code) {
                     status: item.transferState
                 };
             });
-            // Here you can use transferHistory as needed
-            console.log(transferHistory);
         } else {
             handleTransferHistoryFailure('No transfer history');
         }

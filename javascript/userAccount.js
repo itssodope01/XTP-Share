@@ -18,16 +18,6 @@ closeHistoryModal.addEventListener('click', closeTransferHistoryModal);
 window.addEventListener('click', closeDropdownOnClickOutside);
 window.addEventListener('resize', handleWindowResize);
 
-// Transfer history data
-const transferHistory = [
-    { id: "#defRhf45er", date: "13/07/2052", time: "9:55 PM", platform: "GoogleDrive", status: "Complete" },
-    { id: "#reuRh745es", date: "09/04/2027", time: "2:55 AM", platform: "Outlook", status: "Complete" },
-    { id: "#wexTf564kj", date: "21/12/2028", time: "11:30 AM", platform: "Dropbox", status: "Complete" },
-    { id: "#treUx837kd", date: "14/02/2029", time: "3:45 PM", platform: "OneDrive", status: "Cancelled" },
-    { id: "#efgJy765mn", date: "22/06/2040", time: "11:55 AM", platform: "GoogleDrive", status: "Complete" },
-    { id: "#efgJy765mn", date: "22/06/2040", time: "11:55 AM", platform: "GoogleDrive", status: "Complete" }
-];
-
 // Elements for filtering
 const searchBar = document.getElementById("search-bar");
 const filterWindow = document.querySelector('#filter-window');
