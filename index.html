@@ -577,6 +577,25 @@
         });
         
     </script>
+    <script>
+        function adjustZoom() {
+          const currentZoom = Math.round(window.devicePixelRatio * 100);
+          
+          if (currentZoom < 125) {
+            const scaleFactor = 125 / currentZoom;
+            document.body.style.transform = `scale(${scaleFactor})`;
+            document.body.style.width = `${100 / scaleFactor}vw`;
+            document.body.style.height = `${100 / scaleFactor}vh`;
+          } else {
+            document.body.style.transform = 'scale(1)';
+            document.body.style.width = '100vw';
+            document.body.style.height = '100vh';
+          }
+        }
+    
+        window.addEventListener('resize', adjustZoom);
+        window.addEventListener('load', adjustZoom);
+    </script>
     
     <div id="script" class="script"></div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.4/mammoth.browser.min.js"></script>
