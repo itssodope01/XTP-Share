@@ -78,7 +78,7 @@
     }
 
     .email-compose-container .email-compose {
-        width: 59%;
+        width: 100%;
     }
 
     #editorPlaceholder{
@@ -101,7 +101,7 @@
     }
 
     .email-compose-container .email-compose {
-        width: 65%;
+        width: 100%;
     }
 
     #editorPlaceholder{

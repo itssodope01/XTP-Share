@@ -46,7 +46,7 @@ function appendFileItems(file) {
   const previewItem = createPreviewItem(file);
 
   selectedFilesContainer.appendChild(fileItem);
-  attachment.appendChild(createAttachmentItem(file));
+  attachment.appendChild(createFileItem(file));
   uploadedFilesList.appendChild(previewItem);
 }
 
