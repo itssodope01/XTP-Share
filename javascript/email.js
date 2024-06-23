@@ -1,21 +1,3 @@
-// Array of available email addresses
-const availableEmails = ["tron-galaxy@gmail.com", "hover-board@outlook.com", "xandar-east@gmail.com"]; // Email accounts user has linked with the app
-
-// Initializing Quill editor
-const quill = new Quill('#editor', { theme: 'snow', modules: { toolbar: '#toolbar' } });
-
-const Placeholder = document.getElementById("editorPlaceholder");
-
-// Handling focus and blur events
-quill.root.addEventListener('focus', () => {
-    Placeholder.style.display = 'none';
-});
-
-quill.root.addEventListener('blur', () => {
-    if (!quill.root.textContent.trim()) {
-        Placeholder.style.display = 'block';
-    }
-});
 
 // Gmail-outlook combined restricted files
 const restrictedFileTypes = [
@@ -30,32 +12,12 @@ const restrictedFileTypes = [
     'shs', 'theme', 'vbp', 'vsmacros', 'vsw', 'webpnp', 'website', 'ws', 'xbap'
 ];
 
-// File size limits for different email domains
-const sizeLimits = {
-    // 25MB
-    'gmail': 25 * 1024 * 1024,
-    'yahoo': 25 * 1024 * 1024,
-    'icloud': 25 * 1024 * 1024,
-    'me': 25 * 1024 * 1024,
-    'aol': 25 * 1024 * 1024,
-    'mail': 25 * 1024 * 1024,
-    // 20MB
-    'outlook': 20 * 1024 * 1024,
-    'hotmail': 20 * 1024 * 1024,
-    'live': 20 * 1024 * 1024,
-    'msn': 20 * 1024 * 1024
-};
-
-// Default size limit
-const defaultSizeLimit = 10 * 1024 * 1024; // 10MB
+// size limit
+const SizeLimit = 20 * 1024 * 1024; // 20MB
 
 // Function to calculate total file size of attachments
 async function calculateTotalFileSize() {
     return uploadedFiles.reduce((totalSize, file) => totalSize + file.size, 0);
-}
-
-function isValidEmail(email) {
-    return /^[a-zA-Z0-9._%+-]+@(?!.*(\.[^\s@]+)\1)[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
 }
 
 //Zip-File Extract
@@ -112,29 +74,6 @@ const hasRestrictedFiles = async (uploadedFiles) => {
      return false;
 };
 
-//Maximum Subject Length
-function isSubjectValid(subject, email) {
-    const emailDomain = email.split('@')[1]?.split('.')[0];
-    const maxSubjectLength = {
-        'gmail': 78,
-        'outlook': 255,
-        'yahoo': 100,
-        'icloud': 64,
-        'me': 100,
-        'aol': 64,
-        'mail': 256,
-        'hotmail': 104,
-        'live': 104,
-        'msn': 104
-    };    
-    
-
-    if (subject.length > (maxSubjectLength[emailDomain] || 60)) {
-        return false;
-    }
-    return true;
-}
-
 
 let sendButtonClicked = false;
 let sentEmails = []; // Email Array
@@ -142,130 +81,44 @@ let timer;
 
 $(document).ready(function () {
     const overlay = document.getElementById("overlay");
-    const toField = document.querySelector('input[name="to"]');
-    const toLabel = document.getElementById('to');
-    const subjectField = document.querySelector('input[name="subject"]');
-    const subjectLabel = document.getElementById('subject');
-
-    toField.addEventListener('keydown', function (event) {
-        if (event.key === 'Enter' || event.key === ';' || event.key === ',') {
-            event.preventDefault();
-            const currentValue = toField.value.trim();
-            if (currentValue !== '') {
-                toField.value = currentValue + ', ';
-            }
-        }
-        toLabel.textContent = 'To';
-        toLabel.style.color = '';
-        toField.style.borderColor = '';
-    });
-
-    subjectField.addEventListener('keydown', function (event) {
-        subjectLabel.textContent = 'Subject';
-        subjectLabel.style.color = '';
-        subjectField.style.borderColor = '';
-    });
 
     async function sendEmail() {
-        const content = quill.root.innerHTML;
         const from = document.querySelector('select[name="from"]').value;
-        let subject = document.querySelector('input[name="subject"]').value;
-        const toField = document.querySelector('input[name="to"]');
-        const subjectField = document.querySelector('input[name="subject"]');
 
         // recipients array
-        let to = toField.value.split(/[;,]/)
-            .map(email => email.trim())
-            .filter(email => email !== '');
+        // let to = toField.value.split(/[;,]/)
+        //     .map(email => email.trim())
+        //     .filter(email => email !== '');
 
-        const toLabel = document.getElementById('to');
         const fromLabel = document.getElementById('from');
-        const subjectLabel = document.getElementById('subject');
         const totalFileSize = await calculateTotalFileSize(); // Total file size of attachments
 
-        const displayError = (message, from = false, subject = false) => {
-            if (!from && !subject) {
-                toLabel.textContent = message;
-                toLabel.style.color = '#d95b76';
-                shake('input[name="to"]');
-            } else if (from){
-                fromLabel.textContent = message;
-                fromLabel.style.color = '#d95b76';
-                shake('#attachment-container');
-                shake('#attachment-container-toggle');
-            } else {
-                subjectLabel.textContent = message;
-                subjectField.style.borderColor = '#d95b76';
-                subjectLabel.style.color = '#d95b76';
-                shake('input[name="subject"]');
-            }
+        const displayError = (message) => {
+            fromLabel.textContent = message;
+            fromLabel.style.color = '#d95b76';
+            shake('#attachment-container');
         };
 
-
-        const emailDomain = from.split('@')[1]?.split('.')[0];
-        const sizeLimit = sizeLimits[emailDomain] ?? defaultSizeLimit;
-
-        if (!toField.value.trim()) {
-            toField.style.borderColor = '#d95b76';
-            setTimeout(() => {displayError('To (Please fill in the field)'); shake('#to');}, 60);
-        } else if (to.some(email => !isValidEmail(email))) {
-            let originalTo = toField.value;
-            setTimeout(() => {
-                if (to.length > 1)
-                    displayError(`To (Please enter valid email addresses)`);
-                else
-                    displayError(`To (Please enter valid email address)`);
-            }, 85);
-            toField.style.borderColor = '#d95b76';
-            toField.value = originalTo;
-
-        } else if (!(to.some(email => !isValidEmail(email)))) {
             try {
                 const hasRestricted = await hasRestrictedFiles(uploadedFiles);
                 if (hasRestricted) { // Restricted file check
-                    displayError(`Attachments contain restricted files for ${emailDomain}`, true, false);
-                } else if (totalFileSize > sizeLimit) { // Size-limit check
-                    displayError(`(Total attachment size for ${emailDomain} exceeds limit: ${(sizeLimit / 1024) / 1024}MB)`, true, false);
-                } else if (!subject) {
-                    showModal((confirmation, subjectValue) => {
-                        if (confirmation) {
-                            subject = subjectValue || "(No Subject)";
-                            if((!isSubjectValid(subject, from))){
-                                subjectField.value = subject;
-                                displayError(`Subject length exceeds maximum for ${emailDomain}`, false, true);
-                                return;
-                            } else {
-                                sendEmailCallback();
-                            }
-                        }
-                        if (!confirmation) {
-                            overlay.style.display = "none";
-                        }
-                    });
+                    displayError(`Attachments contain restricted files`);
+                } else if (totalFileSize > SizeLimit) { // Size-limit check
+                    displayError(`(Total attachment size exceeds limit: 20 MB)`);
                 } else {
-                    if((!isSubjectValid(subject, from))){ //Subject-Length Check
-                        displayError(`Subject length exceeds maximum for ${emailDomain}`, false, true); 
-                        return;
-                    } else {
-                        sendEmailCallback();
-                    }
+                    sendEmailCallback();
                 }
             } catch (error) {
                 console.error("Error checking for restricted files:", error);
                 displayError("Error checking for restricted files", true);
             }
-        }
 
 
         function sendEmailCallback() {
                     // email Object
                     const emailObject = {
                         from,
-                        to,  // array of recipients
-                        subject,
-                        content,
                         attachments: uploadedFiles,
-                        encryptedAttachments: encryptedFiles
                     };
         
                     // Email Array
@@ -318,45 +171,16 @@ $(document).ready(function () {
                     const lastSentEmail = sentEmails[sentEmails.length - 1];
                     const messageDiv = document.querySelector('.message-email');
                     const fromDiv = messageDiv.querySelector('.message-from');
-                    const toDiv = messageDiv.querySelector('.message-to');
-                    const subjectDiv = messageDiv.querySelector('.message-subject');
-                    const contentDiv = messageDiv.querySelector('.message-content');
                     const attachmentDiv = messageDiv.querySelector('.messageattachment');
                     const attachmentItem = attachmentDiv.querySelector('.message-attachment');
         
                     fromDiv.textContent = 'From: ' + lastSentEmail.from;
-                    toDiv.textContent = 'To: ' + lastSentEmail.to.join(', ');
-                    subjectDiv.textContent = lastSentEmail.subject;
-                    contentDiv.innerHTML = lastSentEmail.content;
                     attachmentItem.innerHTML = '';
                     lastSentEmail.attachments.forEach(attachment => {
                         attachmentItem.appendChild(createViewMessageAttachment(attachment));
                     });
         }
         
-    }
-
-    function showModal(callback) {
-        const modal = document.getElementById("noSubject");
-        const confirmBtn = document.getElementById("confirmBtn");
-        const cancelBtn = document.getElementById("cancelBtn");
-        const subjectInput = document.getElementById("subjectInput");
-
-        modal.style.display = "block";
-        overlay.style.display = "block";
-
-        subjectInput.focus();
-
-        confirmBtn.onclick = function () {
-            closeModal(modal);
-            callback(true, subjectInput.value);
-        };
-
-        cancelBtn.onclick = function () {
-            closeModal(modal);
-            document.getElementById('subjectInput').value = '';
-            callback(false, null);
-        };
     }
 
     document.querySelector('.email-compose-button').addEventListener('click', e => {
@@ -379,7 +203,7 @@ function loadUserEmails () {
     });
 }
 
-document.querySelectorAll("#attachment-container, #attachment-container-toggle")
+document.querySelectorAll("#attachment-container")
 .forEach(item => item.addEventListener("click", openFileSelection));
 
 //View-Email-message
@@ -391,7 +215,6 @@ const notification = modalContent.querySelector('.notification');
 const message = modalContent.querySelector('.message-email');
 
 function viewmessage() {
-    const viewButton = document.getElementById('viewMessageBtn');
     const lastSentEmail = sentEmails[sentEmails.length - 1];
     const overlay = document.getElementById("overlay");
     overlay.style.display = 'block';

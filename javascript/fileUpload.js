@@ -47,7 +47,6 @@ function appendFileItems(file) {
 
   selectedFilesContainer.appendChild(fileItem);
   attachment.appendChild(createAttachmentItem(file));
-  attachmentToggle.appendChild(createAttachmentItem(file));
   uploadedFilesList.appendChild(previewItem);
 }
 

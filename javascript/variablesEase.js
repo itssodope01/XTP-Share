@@ -315,7 +315,6 @@ function updateUI(selectedFilesContainer) {
     const Border = document.querySelector('.file-drop-box');
     const fileDropText = document.querySelector('.file-drop-text');
     const attachmentText = document.querySelector('.attachment-text');
-    const attachmentTextT = document.querySelector('#attachment-container-toggle .attachment-text');
 
     const numFiles = selectedFilesContainer.children.length;
 
@@ -326,19 +325,17 @@ function updateUI(selectedFilesContainer) {
         fileDropText.style.display = 'none';
         placeholderImage.style.display = 'none';
         attachmentText.style.display = 'none';
-        attachmentTextT.style.display = 'none';
         Border.style.border = '3px solid var(--file-drop-box-border)';
-        [attachmentContainer, attachmentToggle]
+        [attachmentContainer]
         .forEach(item => item.removeEventListener("click", openFileSelection));
         
     } else {
         fileDropText.style.display = 'block';
         placeholderImage.style.display = 'block';
         attachmentText.style.display = 'block';
-        attachmentTextT.style.display = 'block';
         Border.style.border = '3px dashed var(--file-drop-box-border)';
         setTimeout(() => {
-            [attachmentContainer, attachmentToggle]
+            [attachmentContainer]
                 .forEach(item => item.addEventListener("click", openFileSelection));
         }, 200);        
     }
@@ -427,20 +424,17 @@ function createViewMessageAttachment(file) {
 
 //Function to visually indicate restricted files and file size limit
 async function updateAttachmentContainerBorderColor() {
-    const to = document.querySelector('input[name="to"]').value.split(',').map(email => email.trim());
-    const from = document.querySelector('select[name="from"]').value;
     const totalFileSize = await calculateTotalFileSize();
-    const emailDomain = (from.split('@')[1] || '').split('.')[0];
-    const sizeLimit = sizeLimits[emailDomain] ?? defaultSizeLimit;
+    const sizeLimit = 20 * 1024 * 1024;
     const fromLabel = document.getElementById('from');
 
     try {
         const hasRestricted = await hasRestrictedFiles(uploadedFiles);
 
-        if (to.every(isValidEmail) && totalFileSize > sizeLimit && !hasRestricted && sendButtonClicked) {
+        if ( totalFileSize > sizeLimit && !hasRestricted && sendButtonClicked) {
             changeBorderAndColor('#d95b76', '.file-size', file => file.size > sizeLimit);
             return;
-        } else if (to.every(isValidEmail) && hasRestricted) {
+        } else if (hasRestricted) {
             changeBorderAndColor('#d95b76', '.file-name', file => restrictedFileTypes.includes(file.name.split('.').pop().toLowerCase()));
 
             if (uploadedFiles.filter(file => restrictedFileTypes.includes(file.name.split('.').pop().toLowerCase())).length < 2) {
@@ -463,10 +457,10 @@ async function updateAttachmentContainerBorderColor() {
     }
 
     function changeBorderAndColor(Color, selector, condition) {
-        attachmentContainer.style.borderColor = attachmentToggle.style.borderColor = Color;
-        [attachment, attachmentToggle].forEach(container => {
+        attachmentContainer.style.borderColor = Color;
+        [attachment].forEach(container => {
             uploadedFiles.forEach(file => {
-                const fileItem = container.querySelector(`.file-item[data-full-name="${file.name}"] ${selector}`);
+                const fileItem = container.querySelector(`.attachment-item[data-full-name="${file.name}"] ${selector}`);
                 if (fileItem && condition(file)) {
                     fileItem.style.color = Color;
                 }
@@ -475,60 +469,19 @@ async function updateAttachmentContainerBorderColor() {
     }
 
     function changeColor(selector, fileName, color) {
-        const fileItem = attachment.querySelector(`.file-item[data-full-name="${fileName}"] ${selector}`);
+        const fileItem = attachment.querySelector(`.attachment-item[data-full-name="${fileName}"] ${selector}`);
         if (fileItem) {
             fileItem.style.color = color;
         }
     }
 
     function resetStyles() {
-        attachmentContainer.style.borderColor = attachmentToggle.style.borderColor = 'var(--email-border-color)';
+        attachmentContainer.style.borderColor = 'var(--email-border-color)';
         fromLabel.textContent = 'From';
         fromLabel.style.color = '';
         fromLabel.style.borderColor = '';
     }
 }
-
-
-// Function to toggle attachment container visibility
-const toggleAttachment = () => {
-
-    const isActive = attachmentContainer.classList.toggle('active');
-
-    if (isActive) {
-        // Showing attachment container and hiding editor
-        editor.style.display = 'none';
-        getElement("editorPlaceholder").style.display = 'none';
-        attachmentToggle.style.display = 'block';
-        attachmentToggle.style.cssText = `list-style: none; display: flex; flex-wrap: wrap; justify-content: space-between;`;
-        document.querySelector('.attachments-link').textContent = 'Hide Attachments';
-    } else {
-        // Hiding attachment container and showing editor
-        if (!quill.root.textContent.trim()) {
-            getElement("editorPlaceholder").style.display = 'block';
-        }
-        attachmentToggle.style.display = 'none';
-        editor.style.display = 'block';
-        document.querySelector('.attachments-link').textContent = 'Show Attachments';
-    }
-};
-
-// Event listener for toggling attachment visibility
-document.querySelector('.attachments-link').addEventListener('click', e => {
-    e.preventDefault();
-    toggleAttachment();
-});
-
-// Event listener for window resize to handle attachment container visibility
-window.addEventListener('resize', () => {
-    const windowWidth = window.innerWidth;
-    if (windowWidth > 650 && attachmentContainer.classList.contains('active')) {
-        attachmentContainer.classList.remove('active');
-        document.querySelector('.attachments-link').textContent = 'Show Attachments';
-        attachmentToggle.style.display = 'none';
-        editor.style.display = 'block';
-    }
-});
 
 $(document).ready(function() {
     $('#start-transfer-button').hover(function() {

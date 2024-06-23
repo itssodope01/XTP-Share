@@ -206,7 +206,7 @@
         </div>
         <div class="preview-button"><a class="preview" id="preview">Preview Files</a></div>
     </div>
-<!-- Div Elements for writing Email -->
+<!-- Div Elements for Email -->
 <div class="section S4 next" id="S4">
     <div class="email-compose-container" ondragover="handleDragOver(event)" ondragenter="handleDragEnter(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
         <!-- <div class="email-label">E M A I L</div> -->
@@ -216,50 +216,14 @@
         </div></div>
         <div class="email-compose">
             <div class="email-compose-header" id="header-input">
-
             </div>
             <div class="email-compose-header">
                 <div class="input-group">
                     <select required name="from" class="input"></select>
                     <label class="user-label" id="from">From</label>
                 </div>
-            </div>
-            <div class="email-compose-header">
-                <div class="input-group">
-                    <input required type="text" name="to" autocomplete="off" class="input to-emails" multiple>
-                    <label class="user-label" id="to">To</label>
-                </div>
-            </div>            
-            
-            <div class="email-compose-header">
-                <div class="input-group">
-                    <input required="" type="text" name="subject" autocomplete="off" class="input">
-                    <label class="user-label" id = "subject">Subject</label>
-                </div>
-            </div>
-            <div class="attachment-container" id="attachment-container-toggle">
-                <p class="attachment-text" style="cursor: default;">No Attachments</p>
-            </div>
-            <div id="editorPlaceholder"><p>Write your email here...</p></div>
-            <div id="editor"></div>
-            <div class="email-compose-footer">
-                <div class="formatting-container">
-                    <div class="formatting" id="formatting">
-                        <button class="attachment-button" id="attachment-button" onclick="openFileSelection()" title="add attachments">
-                            <i class="fas fa-paperclip attachment-icon"></i>
-                        </button>
-                        <div id="toolbar">
-                            <button class="ql-bold" title="Bold"><b>Bold</b></button>
-                            <button class="ql-italic" title="Italic"><b>Italic</b></button>
-                            <button class="ql-underline" title="Underline"><b>Underline</b></button>
-                            <button class="ql-code-block" title="Code Block"><b>Code Block</b></button>
-                            <button class="ql-list" value="bullet" title="Bullet List"><b>Bullet List</b></button>
-                            <!-- <button class="ql-link">Link</button> -->
-                            <button class="ql-clean" title="Clear Formatting"><b>Clear Formatting</b></button>
-                        </div>
-                    </div>
-                </div>                
-                <a href="#" class="attachments-link">Show Attachments</a>
+            </div>           
+            <div class="email-compose-footer">               
                 <button class="email-compose-button">
                     <div class="svg-wrapper-1">
                         <div class="svg-wrapper">

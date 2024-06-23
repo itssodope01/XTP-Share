@@ -15,7 +15,6 @@ const getElement = id => document.getElementById(id);
 const attachmentContainer = document.querySelector('.attachment-container');
 const attachment = document.querySelector('.attach-contain');
 const editor = document.querySelector('#editor');
-const attachmentToggle = document.querySelector('#attachment-container-toggle');
 const attachmentText = document.querySelector('.attachment-text');
 const selectedFilesContainer = getElement('selected-files-container');
 const transferModal = getElement('transferModal');
