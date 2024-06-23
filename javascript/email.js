@@ -100,6 +100,11 @@ $(document).ready(function () {
             shake('#attachment-container');
         };
 
+        if(!filesUploaded) {
+            displayError(`Please Upload Files.`);
+            return;
+        }
+
         try {
             const hasRestricted = await hasRestrictedFiles(uploadedFiles);
             if (hasRestricted) { // Restricted file check
