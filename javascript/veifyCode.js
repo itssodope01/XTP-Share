@@ -279,7 +279,7 @@ function clearCodeFields() {
 ['send-email-button', 'save-cloud-button'].forEach(id => {
     const button = getElement(id);
     button.addEventListener('click', () => {
-        if (id === 'save-cloud-button' && !filesUploaded()) {
+        if (!filesUploaded()) {
             // For save cloud button, check if files are uploaded
             displayTemporaryMessage("Please upload files", false, 1200);
             return; 
