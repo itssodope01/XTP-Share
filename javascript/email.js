@@ -65,7 +65,7 @@ const hasRestrictedFiles = async (uploadedFiles) => {
                         }
                     } catch (error) {
                         console.error("Error extracting zip file:", error);
-                        return true; 
+                        return false; 
                     }
                 } else if (restrictedFileTypes.includes(fileExtension)) {
                     return true; // Found a restricted file
@@ -100,19 +100,19 @@ $(document).ready(function () {
             shake('#attachment-container');
         };
 
-            try {
-                const hasRestricted = await hasRestrictedFiles(uploadedFiles);
-                if (hasRestricted) { // Restricted file check
-                    displayError(`Attachments contain restricted files`);
-                } else if (totalFileSize > SizeLimit) { // Size-limit check
-                    displayError(`(Total attachment size exceeds limit: 20 MB)`);
-                } else {
-                    sendEmailCallback();
-                }
-            } catch (error) {
-                console.error("Error checking for restricted files:", error);
-                displayError("Error checking for restricted files");
+        try {
+            const hasRestricted = await hasRestrictedFiles(uploadedFiles);
+            if (hasRestricted) { // Restricted file check
+                displayError(`Attachments contain restricted files.`);
+            } else if (totalFileSize > SizeLimit) { // Size-limit check
+                displayError(`Total attachment size exceeds limit: 20 MB.`);
+            } else {
+                sendEmailCallback();
             }
+        } catch (error) {
+            console.error("Error checking for restricted files:", error);
+            displayError("Error checking for restricted files");
+        }
 
 
         function sendEmailCallback() {

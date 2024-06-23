@@ -22,6 +22,10 @@ function loadCloudAccounts() {
     const platformsContainer = document.getElementById('platformsContainer');
     platformsContainer.innerHTML = ''; // Clear existing content
 
+    if (!userClouds) {
+        platformsContainer.innerHTML = '<p>You have no cloud accounts linked.</p>';
+    }
+
     const userCloudAuthIDs = userClouds.map(cloud => cloud.auth);
 
     platforms.forEach(platform => {
