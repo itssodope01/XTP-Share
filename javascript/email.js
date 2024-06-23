@@ -83,7 +83,7 @@ $(document).ready(function () {
     const overlay = document.getElementById("overlay");
 
     async function sendEmail() {
-        const from = document.querySelector('select[name="from"]').value;
+        const to = document.querySelector('select[name="to"]').value;
         const emailError = document.querySelector('.emailError');
 
         // recipients array
@@ -91,7 +91,7 @@ $(document).ready(function () {
         //     .map(email => email.trim())
         //     .filter(email => email !== '');
 
-        const fromLabel = document.getElementById('from');
+        const toLabel = document.getElementById('to');
         const totalFileSize = await calculateTotalFileSize(); // Total file size of attachments
 
         const displayError = (message) => {
@@ -118,7 +118,7 @@ $(document).ready(function () {
         function sendEmailCallback() {
                     // email Object
                     const emailObject = {
-                        from,
+                        to,
                         attachments: uploadedFiles,
                     };
         
@@ -170,11 +170,11 @@ $(document).ready(function () {
                     // View-message
                     const lastSentEmail = sentEmails[sentEmails.length - 1];
                     const messageDiv = document.querySelector('.message-email');
-                    const fromDiv = messageDiv.querySelector('.message-from');
+                    const toDiv = messageDiv.querySelector('.message-to');
                     const attachmentDiv = messageDiv.querySelector('.messageattachment');
                     const attachmentItem = attachmentDiv.querySelector('.message-attachment');
         
-                    fromDiv.textContent = 'From: ' + lastSentEmail.from;
+                    toDiv.textContent = 'to: ' + lastSentEmail.to;
                     attachmentItem.innerHTML = '';
                     lastSentEmail.attachments.forEach(attachment => {
                         attachmentItem.appendChild(createViewMessageAttachment(attachment));
@@ -191,15 +191,15 @@ $(document).ready(function () {
 });
 
 function loadUserEmails () {
-        // Populating 'From' select dropdown with available email addresses
-        const fromSelect = document.querySelector('select[name="from"]');
+        // Populating 'to' select dropdown with available email addresses
+        const toSelect = document.querySelector('select[name="to"]');
         const userEmailAccounts = userEmails.map(email => email.account);
-        userEmailAccounts.forEach(email => fromSelect.appendChild(new Option(email, email)));
-        fromSelect.addEventListener('click', e => {
-        const fromLabel = document.getElementById('from');
-        fromLabel.textContent = 'From';
-        fromLabel.style.color = '';
-        fromLabel.style.borderColor = '';
+        userEmailAccounts.forEach(email => toSelect.appendChild(new Option(email, email)));
+        toSelect.addEventListener('click', e => {
+        const toLabel = document.getElementById('to');
+        toLabel.textContent = 'to';
+        toLabel.style.color = '';
+        toLabel.style.borderColor = '';
     });
 }
 
