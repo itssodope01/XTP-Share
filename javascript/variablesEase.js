@@ -418,7 +418,6 @@ function createViewMessageAttachment(file) {
 
 //Function to visually indicate restricted files and file size limit
 async function updateAttachmentContainerBorderColor() {
-    const emailError = document.querySelector('.emailError');
     const totalFileSize = await calculateTotalFileSize();
     const sizeLimit = 20 * 1024 * 1024;
 

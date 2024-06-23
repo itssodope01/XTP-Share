@@ -80,11 +80,8 @@ let sentEmails = []; // Email Array
 let timer;
 
 $(document).ready(function () {
-    const overlay = document.getElementById("overlay");
-
     async function sendEmail() {
         const to = document.querySelector('select[name="to"]').value;
-        const emailError = document.querySelector('.emailError');
 
         const displayError = (message) => {
             emailError.style.color = '#d95b76';
@@ -92,23 +89,27 @@ $(document).ready(function () {
             shake('#attachment-container');
         };
 
-        if(!filesUploaded()) {
-            emailError.innerHTML = `<span style=​"color:​ rgb(217, 91, 118)​;​">Please Upload Files.​</span>​`;
-            shake('#attachment-container');
-        } else {
-            try {
+        try {
+            if(!filesUploaded()) {
+                displayError(`Please Upload Files.`);
+            } else {
                 const hasRestricted = await hasRestrictedFiles(uploadedFiles);
                 const totalFileSize = await calculateTotalFileSize();
-                if (hasRestricted) { // Restricted file check
-                    displayError(`Attachments contain restricted files.`);
-                } else if (totalFileSize > SizeLimit) { // Size-limit check
-                    displayError(`Total attachment size exceeds limit: 20 MB.`);
-                } else {
-                    sendEmailCallback();
+                try {
+                    if (hasRestricted) { // Restricted file check
+                        displayError(`Attachments contain restricted files.`);
+                    } else if (totalFileSize > SizeLimit) { // Size-limit check
+                            displayError(`Total attachment size exceeds limit: 20 MB.`);
+                    } else {
+                        sendEmailCallback();
+                    }
+                } catch (err) {
+                    console.error("Error checking for restricted files");
                 }
-            } catch (error) {
-                console.error("Error checking for restricted files");
             }
+
+        } catch (error) {
+            console.error("Error checking for files");
         }
 
         function sendEmailCallback() {
@@ -192,7 +193,6 @@ function loadUserEmails () {
         const userEmailAccounts = userEmails.map(email => email.account);
         userEmailAccounts.forEach(email => toSelect.appendChild(new Option(email, email)));
         toSelect.addEventListener('click', e => {
-        const emailError = document.querySelector('.emailError');
         emailError.textContent = '';
     });
 }

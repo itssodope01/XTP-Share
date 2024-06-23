@@ -21,6 +21,7 @@ const transferModal = getElement('transferModal');
 const transferHistoryErrorDiv = document.querySelector(".transferHistoryError");
 const transferHistoryTable = document.querySelector(".transfer-history-table");
 const theContainer = getElement('container1');
+const emailError = document.querySelector('.emailError');
 
 
 // hamburger menu
