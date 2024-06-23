@@ -101,88 +101,87 @@ $(document).ready(function () {
 
         if(!filesUploaded()) {
             displayError(`Please Upload Files.`);
-            return;
-        }
-
-        try {
-            const hasRestricted = await hasRestrictedFiles(uploadedFiles);
-            if (hasRestricted) { // Restricted file check
-                displayError(`Attachments contain restricted files.`);
-            } else if (totalFileSize > SizeLimit) { // Size-limit check
-                displayError(`Total attachment size exceeds limit: 20 MB.`);
-            } else {
-                sendEmailCallback();
+        } else {
+            try {
+                const hasRestricted = await hasRestrictedFiles(uploadedFiles);
+                if (hasRestricted) { // Restricted file check
+                    displayError(`Attachments contain restricted files.`);
+                } else if (totalFileSize > SizeLimit) { // Size-limit check
+                    displayError(`Total attachment size exceeds limit: 20 MB.`);
+                } else {
+                    sendEmailCallback();
+                }
+            } catch (error) {
+                console.error("Error checking for restricted files:", error);
+                displayError("Error checking for restricted files");
             }
-        } catch (error) {
-            console.error("Error checking for restricted files:", error);
-            displayError("Error checking for restricted files");
         }
 
 
         function sendEmailCallback() {
-                    // email Object
-                    const emailObject = {
-                        to,
-                        attachments: uploadedFiles,
-                    };
+            // email Object
+            const emailObject = {
+                to,
+                attachments: uploadedFiles,
+            };
         
-                    // Email Array
-                    sentEmails.push(emailObject);
+            // Email Array
+            sentEmails.push(emailObject);
 
-                    const userAuthID = userEmails.map(email => email.authID);
+            const userAuthID = userEmails.map(email => email.authID);
 
-                    uploadFile(userEnteredCode, userAuthID, uploadedFiles);
+            uploadFile(userEnteredCode, userAuthID, uploadedFiles);
 
-                    clearAllFiles(); 
+            clearAllFiles(); 
         
-                    const backArrow = document.querySelector('.back.arrow');
-                    backArrow.click();
+            const backArrow = document.querySelector('.back.arrow');
+            backArrow.click();
         
-                    // Showing Email-sent notification
-                    const successModal = document.getElementById('successModal');
-                    const modalContent = successModal.querySelector('.modal-content');
-                    const notification = modalContent.querySelector('.notification');
-                    const message = modalContent.querySelector('.message-email');
-                    successModal.style.display = 'block';
-                    setTimeout(() => {
-                        message.style.display = 'none';
-                        notification.style.display = 'block';
-                        successModal.classList.add('show');
-                    }, 100);
+            // Showing Email-sent notification
+            const successModal = document.getElementById('successModal');
+            const modalContent = successModal.querySelector('.modal-content');
+            const notification = modalContent.querySelector('.notification');
+            const message = modalContent.querySelector('.message-email');
+            successModal.style.display = 'block';
+            setTimeout(() => {
+                message.style.display = 'none';
+                notification.style.display = 'block';
+                successModal.classList.add('show');
+            }, 100);
         
-                    mouseEvent();
+            mouseEvent();
         
-                    // Hide Email-sent notification
-                    timer = setTimeout(() => {
-                        successModal.classList.remove('show');
-                        setTimeout(() => {
-                            successModal.style.display = 'none';
-                        }, 200);
-                    }, 2300);
-                    skipVerificationSection = false;
-                    clearCodeFields();
+            // Hide Email-sent notification
+            timer = setTimeout(() => {
+                successModal.classList.remove('show');
+                setTimeout(() => {
+                    successModal.style.display = 'none';
+                }, 200);
+            }, 2300);
+            skipVerificationSection = false;
+            clearCodeFields();
         
-                    // Clear Email Fields
-                    document.querySelector('input[name="to"]').value = '';
-                    document.querySelector('input[name="subject"]').value = '';
-                    document.querySelector('#attachment-container-toggle').style.display = 'none';
-                    document.getElementById('subjectInput').value = '';
+            // Clear Email Fields
+            document.querySelector('input[name="to"]').value = '';
+            document.querySelector('input[name="subject"]').value = '';
+            document.querySelector('#attachment-container-toggle').style.display = 'none';
+            document.getElementById('subjectInput').value = '';
         
-                    clearTimeout(verificationTimer);
-                    clearInterval(remainingTimeDisplayInterval);
+            clearTimeout(verificationTimer);
+            clearInterval(remainingTimeDisplayInterval);
         
-                    // View-message
-                    const lastSentEmail = sentEmails[sentEmails.length - 1];
-                    const messageDiv = document.querySelector('.message-email');
-                    const toDiv = messageDiv.querySelector('.message-to');
-                    const attachmentDiv = messageDiv.querySelector('.messageattachment');
-                    const attachmentItem = attachmentDiv.querySelector('.message-attachment');
+            // View-message
+            const lastSentEmail = sentEmails[sentEmails.length - 1];
+            const messageDiv = document.querySelector('.message-email');
+            const toDiv = messageDiv.querySelector('.message-to');
+            const attachmentDiv = messageDiv.querySelector('.messageattachment');
+            const attachmentItem = attachmentDiv.querySelector('.message-attachment');
         
-                    toDiv.textContent = 'to: ' + lastSentEmail.to;
-                    attachmentItem.innerHTML = '';
-                    lastSentEmail.attachments.forEach(attachment => {
-                        attachmentItem.appendChild(createViewMessageAttachment(attachment));
-                    });
+            toDiv.textContent = 'to: ' + lastSentEmail.to;
+            attachmentItem.innerHTML = '';
+            lastSentEmail.attachments.forEach(attachment => {
+                attachmentItem.appendChild(createViewMessageAttachment(attachment));
+            });
         }
         
     }
