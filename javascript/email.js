@@ -74,6 +74,11 @@ const hasRestrictedFiles = async (uploadedFiles) => {
      return false;
 };
 
+const displayError = (message) => {
+    emailError.style.color = '#d95b76';
+    emailError.textContent = message;
+    shake('#attachment-container');
+};
 
 let sendButtonClicked = false;
 let sentEmails = []; // Email Array
@@ -82,12 +87,6 @@ let timer;
 $(document).ready(function () {
     async function sendEmail() {
         const to = document.querySelector('select[name="to"]').value;
-
-        const displayError = (message) => {
-            emailError.style.color = '#d95b76';
-            emailError.textContent = message;
-            shake('#attachment-container');
-        };
 
         try {
             if(!filesUploaded()) {
