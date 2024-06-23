@@ -388,7 +388,7 @@ document.querySelectorAll('.placeholder-image, .file-drop-text').forEach(element
 
 // Function to check if any files are uploaded
 function filesUploaded() {
-    return selectedFilesContainer.children.length > 0;
+    return uploadedFiles.length > 0;
 }
 
 // MutationObserver

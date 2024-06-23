@@ -86,20 +86,20 @@ $(document).ready(function () {
         const to = document.querySelector('select[name="to"]').value;
         const emailError = document.querySelector('.emailError');
 
-        console.log("emailError:", emailError); // Check if the emailError element is selected
-
         const totalFileSize = await calculateTotalFileSize(); // Total file size of attachments
 
         const displayError = (message) => {
             emailError.style.color = '#d95b76';
             emailError.textContent = message;
-            console.log("Displaying error:", message); // Log the message
             shake('#attachment-container');
         };
 
         if(!filesUploaded()) {
-            console.log("No files uploaded"); // Log if files are not uploaded
-            displayError(`Please Upload Files.`);
+            try {
+                displayError(`Please Upload Files.`);
+            } catch (error) {
+                console.error("Error checking for files upload");
+            }
         } else {
             try {
                 const hasRestricted = await hasRestrictedFiles(uploadedFiles);
@@ -111,8 +111,7 @@ $(document).ready(function () {
                     sendEmailCallback();
                 }
             } catch (error) {
-                console.error("Error checking for restricted files:", error);
-                displayError("Error checking for restricted files");
+                console.error("Error checking for restricted files");
             }
         }
 
