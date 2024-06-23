@@ -91,7 +91,6 @@ $(document).ready(function () {
         //     .map(email => email.trim())
         //     .filter(email => email !== '');
 
-        const toLabel = document.getElementById('to');
         const totalFileSize = await calculateTotalFileSize(); // Total file size of attachments
 
         const displayError = (message) => {
@@ -201,10 +200,8 @@ function loadUserEmails () {
         const userEmailAccounts = userEmails.map(email => email.account);
         userEmailAccounts.forEach(email => toSelect.appendChild(new Option(email, email)));
         toSelect.addEventListener('click', e => {
-        const toLabel = document.getElementById('to');
-        toLabel.textContent = 'To';
-        toLabel.style.color = '';
-        toLabel.style.borderColor = '';
+        const emailError = document.querySelector('.emailError');
+        emailError.textContent = '';
     });
 }
 

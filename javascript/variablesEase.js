@@ -418,9 +418,9 @@ function createViewMessageAttachment(file) {
 
 //Function to visually indicate restricted files and file size limit
 async function updateAttachmentContainerBorderColor() {
+    const emailError = document.querySelector('.emailError');
     const totalFileSize = await calculateTotalFileSize();
     const sizeLimit = 20 * 1024 * 1024;
-    const toLabel = document.getElementById('to');
 
     try {
         const hasRestricted = await hasRestrictedFiles(uploadedFiles);
@@ -469,9 +469,7 @@ async function updateAttachmentContainerBorderColor() {
     }
 
     function resetStyles() {
-        toLabel.textContent = 'To';
-        toLabel.style.color = '';
-        toLabel.style.borderColor = '';
+        emailError.textContent = '';
     }
 }
 
