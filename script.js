@@ -164,11 +164,7 @@ document.addEventListener('click', event => {
     {
         transferButtonClicked = false;
         transitionSections(currentSectionID, 'S2', true, true);
-        var attachmentsLink = document.querySelector('.attachments-link');
         transitionSections('S2' , 'S1', true, true);
-        if ((currentSectionID === 'S4') && (attachmentsLink.textContent === 'Hide Attachments')) {
-            attachmentsLink.click();
-        } 
         return;
     }
         const previousSection = getElement(previousSectionID);

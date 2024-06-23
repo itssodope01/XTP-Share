@@ -84,6 +84,7 @@ $(document).ready(function () {
 
     async function sendEmail() {
         const from = document.querySelector('select[name="from"]').value;
+        const emailError = document.querySelector('.emailError');
 
         // recipients array
         // let to = toField.value.split(/[;,]/)
@@ -94,8 +95,8 @@ $(document).ready(function () {
         const totalFileSize = await calculateTotalFileSize(); // Total file size of attachments
 
         const displayError = (message) => {
-            fromLabel.textContent = message;
-            fromLabel.style.color = '#d95b76';
+            emailError.textContent = message;
+            emailError.style.color = '#d95b76';
             shake('#attachment-container');
         };
 
@@ -110,7 +111,7 @@ $(document).ready(function () {
                 }
             } catch (error) {
                 console.error("Error checking for restricted files:", error);
-                displayError("Error checking for restricted files", true);
+                displayError("Error checking for restricted files");
             }
 
 
@@ -127,6 +128,8 @@ $(document).ready(function () {
                     const userAuthID = userEmails.map(email => email.authID);
 
                     uploadFile(userEnteredCode, userAuthID, uploadedFiles);
+
+                    clearAllFiles(); 
         
                     const backArrow = document.querySelector('.back.arrow');
                     backArrow.click();
@@ -158,11 +161,8 @@ $(document).ready(function () {
                     // Clear Email Fields
                     document.querySelector('input[name="to"]').value = '';
                     document.querySelector('input[name="subject"]').value = '';
-                    Placeholder.style.display = 'block';
-                    quill.root.innerHTML = '';
                     document.querySelector('#attachment-container-toggle').style.display = 'none';
                     document.getElementById('subjectInput').value = '';
-                    clearAllFiles(); // Clear Uploaded Files Array
         
                     clearTimeout(verificationTimer);
                     clearInterval(remainingTimeDisplayInterval);
