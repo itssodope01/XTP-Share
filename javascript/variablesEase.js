@@ -24,6 +24,7 @@ function loadCloudAccounts() {
 
     if (!userClouds) {
         platformsContainer.innerHTML = '<p>You have no cloud accounts linked.</p>';
+        return;
     }
 
     const userCloudAuthIDs = userClouds.map(cloud => cloud.auth);
@@ -386,17 +387,6 @@ function createAttachmentItem(file) {
     const fileActions = createFileActions(file);
     attachmentItem.appendChild(fileActions);
 
-    // // Progress bar
-    // const progressBar = document.createElement('div');
-    // progressBar.classList.add('progress-bar');
-    // const progress = document.createElement('div');
-    // progress.classList.add('progress');
-    // progressBar.appendChild(progress);
-    // attachmentItem.appendChild(progressBar);
-
-    // // Simulate progress
-    // simulateProgress(progress, progressBar);
-
     return attachmentItem;
 }
 
@@ -430,7 +420,7 @@ function createViewMessageAttachment(file) {
 async function updateAttachmentContainerBorderColor() {
     const totalFileSize = await calculateTotalFileSize();
     const sizeLimit = 20 * 1024 * 1024;
-    const fromLabel = document.getElementById('from');
+    const toLabel = document.getElementById('to');
 
     try {
         const hasRestricted = await hasRestrictedFiles(uploadedFiles);
@@ -461,10 +451,9 @@ async function updateAttachmentContainerBorderColor() {
     }
 
     function changeBorderAndColor(Color, selector, condition) {
-        attachmentContainer.style.borderColor = Color;
         [attachment].forEach(container => {
             uploadedFiles.forEach(file => {
-                const fileItem = container.querySelector(`.attachment-item[data-full-name="${file.name}"] ${selector}`);
+                const fileItem = container.querySelector(`.file-item[data-full-name="${file.name}"] ${selector}`);
                 if (fileItem && condition(file)) {
                     fileItem.style.color = Color;
                 }
@@ -473,17 +462,16 @@ async function updateAttachmentContainerBorderColor() {
     }
 
     function changeColor(selector, fileName, color) {
-        const fileItem = attachment.querySelector(`.attachment-item[data-full-name="${fileName}"] ${selector}`);
+        const fileItem = attachment.querySelector(`.file-item[data-full-name="${fileName}"] ${selector}`);
         if (fileItem) {
             fileItem.style.color = color;
         }
     }
 
     function resetStyles() {
-        attachmentContainer.style.borderColor = 'var(--email-border-color)';
-        fromLabel.textContent = 'From';
-        fromLabel.style.color = '';
-        fromLabel.style.borderColor = '';
+        toLabel.textContent = 'to';
+        toLabel.style.color = '';
+        toLabel.style.borderColor = '';
     }
 }
 
