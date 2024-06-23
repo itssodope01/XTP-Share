@@ -93,11 +93,8 @@ $(document).ready(function () {
         };
 
         if(!filesUploaded()) {
-            try {
-                displayError(`Please Upload Files.`);
-            } catch (error) {
-                console.error("Error checking for files upload");
-            }
+            emailError.innerHTML = `<span style=​"color:​ rgb(217, 91, 118)​;​">Please Upload Files.​</span>​`;
+            shake('#attachment-container');
         } else {
             try {
                 const hasRestricted = await hasRestrictedFiles(uploadedFiles);
