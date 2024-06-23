@@ -100,7 +100,7 @@ $(document).ready(function () {
             shake('#attachment-container');
         };
 
-        if(!filesUploaded) {
+        if(!filesUploaded()) {
             displayError(`Please Upload Files.`);
             return;
         }
@@ -202,7 +202,7 @@ function loadUserEmails () {
         userEmailAccounts.forEach(email => toSelect.appendChild(new Option(email, email)));
         toSelect.addEventListener('click', e => {
         const toLabel = document.getElementById('to');
-        toLabel.textContent = 'to';
+        toLabel.textContent = 'To';
         toLabel.style.color = '';
         toLabel.style.borderColor = '';
     });

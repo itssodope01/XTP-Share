@@ -428,7 +428,7 @@ async function updateAttachmentContainerBorderColor() {
         if ( totalFileSize > sizeLimit && !hasRestricted && sendButtonClicked) {
             changeBorderAndColor('#d95b76', '.file-size', file => file.size > sizeLimit);
             return;
-        } else if (hasRestricted) {
+        } else if (hasRestricted && sendButtonClicked) {
             changeBorderAndColor('#d95b76', '.file-name', file => restrictedFileTypes.includes(file.name.split('.').pop().toLowerCase()));
 
             if (uploadedFiles.filter(file => restrictedFileTypes.includes(file.name.split('.').pop().toLowerCase())).length < 2) {
@@ -469,7 +469,7 @@ async function updateAttachmentContainerBorderColor() {
     }
 
     function resetStyles() {
-        toLabel.textContent = 'to';
+        toLabel.textContent = 'To';
         toLabel.style.color = '';
         toLabel.style.borderColor = '';
     }
