@@ -86,8 +86,6 @@ $(document).ready(function () {
         const to = document.querySelector('select[name="to"]').value;
         const emailError = document.querySelector('.emailError');
 
-        const totalFileSize = await calculateTotalFileSize(); // Total file size of attachments
-
         const displayError = (message) => {
             emailError.style.color = '#d95b76';
             emailError.textContent = message;
@@ -103,6 +101,7 @@ $(document).ready(function () {
         } else {
             try {
                 const hasRestricted = await hasRestrictedFiles(uploadedFiles);
+                const totalFileSize = await calculateTotalFileSize();
                 if (hasRestricted) { // Restricted file check
                     displayError(`Attachments contain restricted files.`);
                 } else if (totalFileSize > SizeLimit) { // Size-limit check
