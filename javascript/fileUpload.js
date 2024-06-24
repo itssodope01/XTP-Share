@@ -96,7 +96,6 @@ function uploadFile(code, selectedPlatforms, uploadedFiles) {
         }
     }).then(response => {
         console.log(response.data);
-        // Wait for server processing time to be simulated before closing the transfer
         setTimeout(() => {
             updateProgressBar(100);
             closeTransfer();
@@ -135,8 +134,6 @@ function cancelTransfer() {
     }
     closeTransfer();
 }
-
-
 
 // Sorting Files
 function handleSortChange() {
