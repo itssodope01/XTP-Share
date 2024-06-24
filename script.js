@@ -345,10 +345,6 @@ function handleTransferHistoryFailure(message) {
 function addUniqueItem(arr, newItem) {
     const existingItemIndex = arr.findIndex((item) => {
         return Object.keys(newItem).every((key) => {
-            // Allow duplication only if the key/property name is platform
-            if (key === 'platform') {
-                return true;
-            }
             return item[key] === newItem[key];
         });
     });
