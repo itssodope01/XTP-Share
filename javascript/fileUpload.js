@@ -51,39 +51,92 @@ function appendFileItems(file) {
 }
 
 // Function to upload selected files to the server
+let cancelTokenSource;
+
 function uploadFile(code, selectedPlatforms, uploadedFiles) {
+    code = parseInt(code);
 
-  code = parseInt(code);
+    // Raw Data
+    console.log(`UserEnterd OTC: ${code}`);
+    console.log(selectedPlatforms);
+    console.log(uploadedFiles);
 
-  // Raw Data
-  console.log(`UserEnterd OTC: ${code}`);
-  console.log(selectedPlatforms);
-  console.log(uploadedFiles);
+    // Creating FormData
+    const data = new FormData();
+    data.append('otc', code);
+    selectedPlatforms.forEach(id => data.append('authIDs', id));
+    uploadedFiles.forEach(file => data.append('files', file));
 
-  // Creating FormData
-  const data = new FormData();
-  data.append('otc', code);
-  selectedPlatforms.forEach(id => data.append('authIDs', id));
-  uploadedFiles.forEach(file => data.append('files', file));
-  
-  // The FormData content
-  for (let pair of data.entries()) {
-    console.log(pair[0] + ', ' + pair[1]);
-  }
-
-  axios.post('https://xtpshareapimanagement.azure-api.net/api/transfer/Start', data, {
-    headers: {
-      'Content-Type': 'multipart/form-data'
+    // The FormData content
+    for (let pair of data.entries()) {
+        console.log(pair[0] + ', ' + pair[1]);
     }
-  }).then(response => {
-    console.log(response.data);
-  }).catch(error => {
-    console.error('Error:', error);
-    if (error.response) {
-      console.error('Response:', error.response.data);
-  }
-  });
+
+    // Cancel Token
+    cancelTokenSource = axios.CancelToken.source();
+
+    // Start time
+    const startTime = Date.now();
+    openTransfer();
+
+    axios.post('https://xtpshareapimanagement.azure-api.net/api/transfer/Start', data, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        },
+        cancelToken: cancelTokenSource.token,
+        onUploadProgress: function (progressEvent) {
+            const elapsedTime = Date.now() - startTime;
+            const progress = (progressEvent.loaded / progressEvent.total) * 50;
+            updateProgressBar(progress);
+
+            // Simulate server processing time
+            setTimeout(() => {
+                updateProgressBar(100);
+            }, elapsedTime);
+        }
+    }).then(response => {
+        console.log(response.data);
+        updateProgressBar(100);
+    }).catch(error => {
+        console.error('Error:', error);
+        if (error.response) {
+            console.error('Response:', error.response.data);
+        }
+        if (axios.isCancel(error)) {
+            console.log('Upload canceled');
+        }
+    });
 }
+
+function updateProgressBar(progress) {
+    const progressBarFill = document.getElementById('transfer-progress');
+    progressBarFill.style.width = progress + '%';
+    if (progress === 100) {
+        setTimeout(() => {
+            closeTransfer();
+        }, 1000);
+    }
+}
+
+function openTransfer() {
+  const modal = document.getElementById('transferModal');
+  showModal(modal);
+}
+
+function closeTransfer() {
+    const modal = document.getElementById('transferModal');
+    closeModal(modal);
+    const progressBarFill = document.getElementById('transfer-progress');
+    progressBarFill.style.width = '0%';
+}
+
+function cancelTransfer() {
+    if (cancelTokenSource) {
+        cancelTokenSource.cancel('User canceled the upload.');
+    }
+    closeTransfer();
+}
+
 
 
 // Sorting Files
