@@ -411,7 +411,7 @@ codeInputs.forEach(function(input) {
 
 
 document.getElementById('verifyCodeButton').addEventListener('click', () => {
-    verifyCode(pseudoCorrectCode);
+    verifyCode();
 });
 
 // Accounts for if the user accidentally de-focuses the input fields
