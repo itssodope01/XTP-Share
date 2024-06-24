@@ -22,7 +22,7 @@ platformOptions.forEach(function(option) {
 
 platformOptions.forEach(function(option) {
     option.addEventListener('click', function() {
-        var platform = parseInt(this.dataset.authType);
+        var platform = parseInt(this.dataset.authId);
         var index = selectedPlatforms.indexOf(platform);
         if (index === -1) {
             selectedPlatforms.push(platform);
@@ -58,7 +58,8 @@ document.getElementById('start-transfer-button').addEventListener('click', funct
         return;
     } else {
         const userAuthIDs = userClouds.map(cloud => cloud.authID);
-        uploadFile(userEnteredCode, userAuthIDs, uploadedFiles);
+        console.log("selected platforms:", selectedPlatforms);
+        uploadFile(userEnteredCode, selectedPlatforms, uploadedFiles);
         // const transferPlatforms = document.querySelector('.transfer-platforms');
         // transferPlatforms.innerHTML = '';
         // createPlatformTable();
