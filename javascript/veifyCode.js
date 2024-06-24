@@ -378,13 +378,13 @@ function handleCodeInput(event) {
 
     if (event.key === "Enter") {
         event.preventDefault();
-        verifyCode(pseudoCorrectCode);
+        verifyCode();
     }
 
     // --Auto-verify on first attempt
     const allInputsFilled = Array.from(codeInputs).every(input => input.value.trim().length === (maxLength));
     if (allInputsFilled && incorrectAttempts === 0) {
-            verifyCode(pseudoCorrectCode);
+            verifyCode();
     }
 
     if (allInputsFilled)
