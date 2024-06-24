@@ -102,9 +102,7 @@ $(document).ready(function () {
                     } else {
                         sendEmailCallback();
                     }
-                } catch (err) {
-                    console.error("Error checking for restricted files");
-                }
+                } catch (err) {}
             }
 
         } catch (error) {

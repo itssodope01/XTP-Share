@@ -340,3 +340,13 @@ function handleTransferHistoryFailure(message) {
     transferHistoryErrorDiv.textContent = '';
     transferHistoryErrorDiv.textContent = `${message}`;
 }
+
+//Unique values Array
+function uniqueArray(array, a, b) {
+    const existingPairIndex = array.findIndex((user) => user.a === a || user.b === b);
+    if (existingPairIndex === -1) {
+        array.push({ a, b });
+        return true; // Successfully added
+    }
+    console.log(array);
+}
