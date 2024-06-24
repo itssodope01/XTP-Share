@@ -353,3 +353,16 @@ function addUniqueItem(arr, newItem) {
         arr.push(newItem);
     } 
 }
+
+const main = document.querySelector('.main');
+const completed = document.querySelector('.completed');
+
+function toggle(active, nextstatus, nonactive, currentstatus) {
+    active.classList.replace('active', nextstatus);
+    nonactive.classList.replace(currentstatus, 'active');
+  }
+  
+  function toggledetails() {
+    if (main.classList.contains('active')) 
+      toggle(main, 'prev', completed, 'next');
+  }

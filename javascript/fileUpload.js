@@ -52,6 +52,9 @@ function appendFileItems(file) {
 
 
 // Function to upload selected files to the server
+const cancelButton = document.querySelector('.cancel-transfer');
+const closeButton = document.querySelector('.close-transfer');
+
 let cancelTokenSource;
 
 function uploadFile(code, selectedPlatforms, uploadedFiles) {
@@ -119,7 +122,7 @@ function updateProgressBar(progress) {
     progressBarFill.style.width = progress + '%';
     if (progress === 100) {
         setTimeout(() => {
-            closeTransfer();
+          completeTransfer();
         }, 1000);
     }
 }
@@ -134,6 +137,19 @@ function closeTransfer() {
     closeModal(modal);
     const progressBarFill = document.getElementById('transfer-progress');
     progressBarFill.style.width = '0%';
+    skipVerificationSection = false;
+    clearCodeFields();
+    startVerificationTimer();
+
+    setTimeout(() => {
+      dots('visible');
+      headerMessage ('Transfer in progress');
+      cancelButton.style.visibility = 'visible';
+      if(!(SectionS2.classList.contains('active'))) {
+      clearAllFiles();
+      backArrow.click();
+      }
+    }, 200);
 }
 
 function cancelTransfer() {
@@ -141,6 +157,29 @@ function cancelTransfer() {
         cancelTokenSource.cancel('User canceled the upload.');
     }
     closeTransfer();
+}
+
+function completeTransfer() {
+  skipVerificationSection = false;
+  startVerificationTimer();
+  clearCodeFields();
+  setTimeout(() => {
+    toggledetails();
+    dots('hidden');
+    headerMessage ('Transfer Complete');
+    closeButton.style.display = 'block';
+    cancelButton.style.display = 'none';
+  }, 350);
+}
+
+function dots(visibility) {
+  const dots = document.querySelectorAll('#transferModal .modal-content h3 .dot');
+  dots.forEach(dot => dot.style.visibility = `${visibility}`);
+}
+
+function headerMessage (message) {
+  const header = document.querySelector('.transfer-h3');
+  header.textContent = message;
 }
 
 

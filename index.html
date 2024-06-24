@@ -361,10 +361,15 @@
     <div class="modal-background"></div>
     <div class="modal-content">
         <h3><span class="transfer-h3">Transfer in progress</span> <span class="dot dot1">.</span><span class="dot dot2">.</span><span class="dot dot3">.</span></h3>
+        <button class="close-transfer" id="close-transfer" onclick="closeTransfer()">Done</button>
+        <div class="main active">
         <div id="transfer-progress-bar">
             <div class="progress-bar-fill" id="transfer-progress"></div>
         </div>
-        <button class="close-transfer" id="close-transfer" onclick="closeTransfer()">Done</button>
+        </div>
+        <div class="completed next">
+            <span><img src="assets/logo/checked.png" alt="loading" style="width: 24px; height: 24px; margin-right: 10px;">Transfer Complete</span>
+        </div>
         <button class="cancel-transfer" id="cancel-transfer" onclick="cancelTransfer()">Cancel</button>
     </div>
 </div>
