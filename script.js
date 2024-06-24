@@ -363,6 +363,9 @@ function toggle(active, nextstatus, nonactive, currentstatus) {
   }
   
   function toggledetails() {
-    if (main.classList.contains('active')) 
+    if (main.classList.contains('active')) { 
       toggle(main, 'prev', completed, 'next');
+  } else {
+    toggle(completed, 'next', main, 'prev');
+  }
   }
