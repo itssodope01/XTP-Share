@@ -425,109 +425,111 @@
     height: 20vh;
   } */
 
-  /* Transfer Modal */
-  #transferModal{
-    height: 25%;
-  }
-  #transferModal h3 {
-    position: relative;
-    top: -10px;
-    left: 5px;
-    background-color: transparent;
-    padding: 0 !important;
-    margin: 0 ;
-    z-index: 10000;
-  }
-
-  #transferModal .modal-content {
-    background-color: #22304558;
-    color: whitesmoke;
-    height: 78%;
-  }
-
-  .details {
-    margin-left: 20px;
-  }
-
-  table {
-    width: 92%;
-    border-collapse: collapse;
-    margin-top: 40px;
-    margin-left: 10px;
-    
-  }
-
-  th, td {
-    padding: 8px;
-    text-align: left;
-    border-bottom: 1px solid grey;
-  }
-
-  .main th, .main td {
-      border-bottom: 0;
-  }
-
-  .dot {
-    font-size: 2rem;
-    animation: dotAnimation 1s infinite;
-  }
-
-  .dot1 { animation-delay: 0s; }
-  .dot2 { animation-delay: 0.33s; }
-  .dot3 { animation-delay: 0.66s; }
-
-  @keyframes dotAnimation {
-    0%, 60%, 100% { opacity: 0.3; }
-    20% { opacity: 1; }
-  }
-
-  #transfer-progress-bar {
-    position: relative;
-    width: 95%;
-    height: 20px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    margin-left: 20px;
-    transition: width 0.5s ease-in-out;
-    background-color: #858585;
-    border-radius: 10px;
-    overflow: hidden;
-  }
-
-  #transfer-progress {
-    height: 101%;
-    background-image: linear-gradient(to right, #8AAEE0, #638ECB, #395886);
-    width: 0%;
-    position: relative;
-    transition: width 0.2s ease-in-out;
-  }
-
-  .progress-text {
-    position: absolute;
-    top: 15%;
-    left: 50%;
-    transform: translateX(-50%);
-    color: rgb(0, 0, 0);
-    font-size: 0.8rem;
-    font-weight: bold;
-  }
-
-  .cancel-transfer {
-    font-size: 1rem;
-    padding: 0;
-    background-color: #d2516d;
-    border: 1px solid #d2516d;
-    color: whitesmoke;
-    border-radius: 7px;
-    cursor: pointer;
-    position: absolute;
-    margin-left: -6px;
-    height: 30px;
-    width: 80px;
-    right: 5%;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
-  }
+    /* Transfer Modal */
+    #transferModal{
+      height: 25%;
+      overflow: hidden;
+    }
+    #transferModal h3 {
+      position: relative;
+      top: -10px;
+      left: 5px;
+      background-color: transparent;
+      padding: 0 !important;
+      margin: 0 ;
+      z-index: 10000;
+    }
   
+    #transferModal .modal-content {
+      background-color: #22304558;
+      color: whitesmoke;
+      height: 78%;
+    }
+  
+    .details {
+      margin-left: 20px;
+    }
+  
+    table {
+      width: 92%;
+      border-collapse: collapse;
+      margin-top: 40px;
+      margin-left: 10px;
+      
+    }
+  
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid grey;
+    }
+  
+    .main th, .main td {
+        border-bottom: 0;
+    }
+  
+    .dot {
+      font-size: 2rem;
+      animation: dotAnimation 1s infinite;
+    }
+  
+    .dot1 { animation-delay: 0s; }
+    .dot2 { animation-delay: 0.33s; }
+    .dot3 { animation-delay: 0.66s; }
+  
+    @keyframes dotAnimation {
+      0%, 60%, 100% { opacity: 0.3; }
+      20% { opacity: 1; }
+    }
+  
+    #transfer-progress-bar {
+      position: relative;
+      width: 95%;
+      height: 20px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      margin-left: 20px;
+      transition: width 0.5s ease-in-out;
+      background-color: #858585;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+  
+    #transfer-progress {
+      height: 101%;
+      background-image: linear-gradient(to right, #8AAEE0, #638ECB, #395886);
+      width: 0%;
+      position: relative;
+      transition: width 0.2s ease-in-out;
+    }
+  
+    .progress-text {
+      position: absolute;
+      top: 15%;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgb(0, 0, 0);
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+  
+    .cancel-transfer {
+      font-size: 1rem;
+      padding: 0;
+      background-color: #d2516d;
+      border: 1px solid #d2516d;
+      color: whitesmoke;
+      border-radius: 7px;
+      cursor: pointer;
+      position: absolute;
+      margin-left: -6px;
+      height: 30px;
+      width: 80px;
+      right: 5%;
+      bottom: 10%;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
   .cancel-transfer:hover {
     background-color: #af4058;
     border-color: #af4058;
