@@ -85,14 +85,8 @@ function uploadFile(code, selectedPlatforms, uploadedFiles) {
         },
         cancelToken: cancelTokenSource.token,
         onUploadProgress: function (progressEvent) {
-            const elapsedTime = Date.now() - startTime;
             const progress = (progressEvent.loaded / progressEvent.total) * 50;
             updateProgressBar(progress);
-
-            // Simulate server processing time
-            setTimeout(() => {
-                updateProgressBar(100);
-            }, elapsedTime);
         }
     }).then(response => {
         console.log(response.data);
