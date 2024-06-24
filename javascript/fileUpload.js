@@ -122,7 +122,9 @@ function updateProgressBar(progress) {
     progressBarFill.style.width = progress + '%';
     if (progress === 100) {
         setTimeout(() => {
-          completeTransfer();
+          setTimeout (() => {
+            completeTransfer();
+          }, 300);
         }, 1000);
     }
 }
