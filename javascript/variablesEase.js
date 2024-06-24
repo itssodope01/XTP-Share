@@ -17,6 +17,7 @@ function generateIcons() {
 
 generateIcons();
 
+// Cloud platforms
 function loadCloudAccounts() {
     const platformsContainer = document.getElementById('platformsContainer');
     platformsContainer.innerHTML = ''; // Clear existing content
@@ -29,17 +30,11 @@ function loadCloudAccounts() {
     const userCloudAuthTypes = userClouds.map(cloud => cloud.auth);
 
     platforms.forEach(platform => {
-        if (platform.class === "cloud" && userCloudAuthTypes.includes(platform.authType)) {
+        if (platform.class === "cloud" && userCloudAuthTypes.includes(platform.authtype)) {
             const platformOption = document.createElement('div');
             platformOption.classList.add('platform-option');
             platformOption.dataset.platform = platform.name;
             platformOption.dataset.authType = platform.authType;
-
-            // Find the corresponding user cloud to get the authID
-            const userCloud = userClouds.find(cloud => cloud.auth === platform.authType);
-            if (userCloud) {
-                platformOption.dataset.authId = userCloud.authID;
-            }
 
             const platformBackground = document.createElement('div');
             platformBackground.classList.add('platform-background');
