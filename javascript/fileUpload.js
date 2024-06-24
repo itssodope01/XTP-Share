@@ -50,78 +50,40 @@ function appendFileItems(file) {
   uploadedFilesList.appendChild(previewItem);
 }
 
+// Function to upload selected files to the server
 function uploadFile(code, selectedPlatforms, uploadedFiles) {
+
   code = parseInt(code);
 
+  // Raw Data
+  console.log(`UserEnterd OTC: ${code}`);
+  console.log(selectedPlatforms);
+  console.log(uploadedFiles);
+
+  // Creating FormData
   const data = new FormData();
   data.append('otc', code);
   selectedPlatforms.forEach(id => data.append('authIDs', id));
   uploadedFiles.forEach(file => data.append('files', file));
-
-  // Initialize progress UI
-  document.querySelector('.transfer-total').innerText = `${uploadedFiles.length} (${calculateTotalSize(uploadedFiles)} MB)`;
-  document.querySelector('.transfer-remaining').innerText = `${uploadedFiles.length} (${calculateTotalSize(uploadedFiles)} MB)`;
-  document.querySelector('.transfer-time').innerText = `Calculating...`;
-  document.querySelector('.transfer-rate').innerText = `Calculating...`;
-  const progressBar = document.getElementById('transfer-progress');
-  const progressText = document.querySelector('.progress-text');
-
-  let cancelToken;
-  const CancelToken = axios.CancelToken;
   
-  // Start the upload with Axios
+  // The FormData content
+  for (let pair of data.entries()) {
+    console.log(pair[0] + ', ' + pair[1]);
+  }
+
   axios.post('https://xtpshareapimanagement.azure-api.net/api/transfer/Start', data, {
     headers: {
       'Content-Type': 'multipart/form-data'
-    },
-    cancelToken: new CancelToken(function executor(c) {
-      cancelToken = c;
-    })
+    }
   }).then(response => {
     console.log(response.data);
-    updateProgress(100); // Upload complete
   }).catch(error => {
-    if (axios.isCancel(error)) {
-      console.log('Upload canceled');
-    } else {
-      console.error('Error:', error);
-    }
-  });
-
-  // Simulate progress
-  let progress = 0;
-  const progressInterval = setInterval(() => {
-    progress += 10; // Increase progress by 10% each interval
-    updateProgress(progress);
-    if (progress >= 100) {
-      clearInterval(progressInterval);
-    }
-  }, 1000); // Update every second
-
-  function updateProgress(value) {
-    progressBar.style.width = value + '%';
-    progressText.innerText = value + '%';
-    // Update remaining files, estimated time left, and transfer rate
-    const remainingFiles = Math.ceil((100 - value) / 100 * uploadedFiles.length);
-    document.querySelector('.transfer-remaining').innerText = `${remainingFiles} (${calculateTotalSize(uploadedFiles.slice(remainingFiles))} MB)`;
-    document.querySelector('.transfer-time').innerText = `${Math.ceil((100 - value) / 10)} seconds left`;
-    document.querySelector('.transfer-rate').innerText = `${(value / 10).toFixed(2)} MB/s`;
+    console.error('Error:', error);
+    if (error.response) {
+      console.error('Response:', error.response.data);
   }
-
-  // Cancel button event listener
-  document.querySelector('.cancel-transfer').addEventListener('click', () => {
-    cancelToken(); // Cancel the Axios request
-    clearInterval(progressInterval); // Stop the progress simulation
-    updateProgress(0); // Reset progress bar
   });
 }
-
-function calculateTotalSize(files) {
-  let totalSize = 0;
-  files.forEach(file => totalSize += file.size / (1024 * 1024)); // Convert bytes to MB
-  return totalSize.toFixed(2);
-}
-
 
 
 // Sorting Files
