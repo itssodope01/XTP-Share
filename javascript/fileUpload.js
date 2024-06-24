@@ -54,76 +54,73 @@ function appendFileItems(file) {
 let cancelTokenSource;
 
 function uploadFile(code, selectedPlatforms, uploadedFiles) {
-  code = parseInt(code);
+    code = parseInt(code);
 
-  // Raw Data
-  console.log(`UserEntered OTC: ${code}`);
-  console.log(selectedPlatforms);
-  console.log(uploadedFiles);
+    // Raw Data
+    console.log(`UserEnterd OTC: ${code}`);
+    console.log(selectedPlatforms);
+    console.log(uploadedFiles);
 
-  // Creating FormData
-  const data = new FormData();
-  data.append('otc', code);
-  selectedPlatforms.forEach(id => data.append('authIDs', id));
-  uploadedFiles.forEach(file => data.append('files', file));
+    // Creating FormData
+    const data = new FormData();
+    data.append('otc', code);
+    selectedPlatforms.forEach(id => data.append('authIDs', id));
+    uploadedFiles.forEach(file => data.append('files', file));
 
-  // The FormData content
-  for (let pair of data.entries()) {
-      console.log(pair[0] + ', ' + pair[1]);
-  }
+    // The FormData content
+    for (let pair of data.entries()) {
+        console.log(pair[0] + ', ' + pair[1]);
+    }
 
-  // Cancel Token
-  cancelTokenSource = axios.CancelToken.source();
+    // Cancel Token
+    cancelTokenSource = axios.CancelToken.source();
 
-  // Start time
-  const startTime = Date.now();
-  openTransfer();
+    // Start time
+    const startTime = Date.now();
+    openTransfer();
 
-  // Simulate client-to-server progress (assume 30% of the total time)
-  const clientToServerTime = 0.3 * (Date.now() - startTime);
+    axios.post('https://xtpshareapimanagement.azure-api.net/api/transfer/Start', data, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        },
+        cancelToken: cancelTokenSource.token,
+        onUploadProgress: function (progressEvent) {
+            const elapsedTime = Date.now() - startTime;
+            const progress = (progressEvent.loaded / progressEvent.total) * 50;
+            updateProgressBar(progress);
 
-  // Simulate server-to-user progress (assume 35% of the total time)
-  const serverToUserTime = 0.35 * (Date.now() - startTime);
-
-  // Simulate 95% progress
-  const simulatedProgress = Math.min(95, clientToServerTime + serverToUserTime);
-  updateProgressBar(simulatedProgress);
-
-  axios.post('https://xtpshareapimanagement.azure-api.net/api/transfer/Start', data, {
-      headers: {
-          'Content-Type': 'multipart/form-data'
-      },
-      cancelToken: cancelTokenSource.token,
-      // Handle actual server response progress
-      onUploadProgress: function (progressEvent) {
-          const progress = 95 + (progressEvent.loaded / progressEvent.total) * 5;
-          updateProgressBar(progress);
-      }
-  }).then(response => {
-      console.log(response.data);
-      setTimeout(() => {
-          updateProgressBar(100);
-          closeTransfer();
-      }, (Date.now() - startTime));
-  }).catch(error => {
-      console.error('Error:', error);
-      if (error.response) {
-          console.error('Response:', error.response.data);
-      }
-      if (axios.isCancel(error)) {
-          console.log('Upload canceled');
-      }
-  });
+            // Simulate server processing time
+            setTimeout(() => {
+                updateProgressBar(100);
+            }, elapsedTime);
+        }
+    }).then(response => {
+        console.log(response.data);
+        updateProgressBar(100);
+    }).catch(error => {
+        console.error('Error:', error);
+        if (error.response) {
+            console.error('Response:', error.response.data);
+        }
+        if (axios.isCancel(error)) {
+            console.log('Upload canceled');
+        }
+    });
 }
 
 function updateProgressBar(progress) {
     const progressBarFill = document.getElementById('transfer-progress');
     progressBarFill.style.width = progress + '%';
+    if (progress === 100) {
+        setTimeout(() => {
+            closeTransfer();
+        }, 1000);
+    }
 }
 
 function openTransfer() {
-    const modal = document.getElementById('transferModal');
-    showModal(modal);
+  const modal = document.getElementById('transferModal');
+  showModal(modal);
 }
 
 function closeTransfer() {
@@ -139,6 +136,8 @@ function cancelTransfer() {
     }
     closeTransfer();
 }
+
+
 
 // Sorting Files
 function handleSortChange() {
