@@ -86,27 +86,21 @@ function uploadFile(code, selectedPlatforms, uploadedFiles) {
         cancelToken: cancelTokenSource.token,
         onUploadProgress: function (progressEvent) {
             const elapsedTime = Date.now() - startTime;
-            const progressClientToServer = (progressEvent.loaded / progressEvent.total) * 50;
+            const progress = (progressEvent.loaded / progressEvent.total) * 50;
+            updateProgressBar(progress);
 
-            // Simulate server processing time (adjust the delay as needed)
-            const serverProcessingDelay = 1000; // 1 second (for example)
-            const estimatedServerToUserTime = 0.65 * elapsedTime; // 65% of client-to-server time
-
+            // Simulate server processing time
             setTimeout(() => {
-                // Update progress for client-to-server transfer
-                updateProgressBar(progressClientToServer);
-
-                // Wait at 95% until server responds
-                if (progressClientToServer >= 95) {
-                    // Simulate server response time
-                    setTimeout(() => {
-                        // Update progress to 100% when server responds
-                        updateProgressBar(100);
-                        closeTransfer();
-                    }, estimatedServerToUserTime);
-                }
-            }, serverProcessingDelay);
+                updateProgressBar(100);
+            }, elapsedTime);
         }
+    }).then(response => {
+        console.log(response.data);
+        // Wait for server processing time to be simulated before closing the transfer
+        setTimeout(() => {
+            updateProgressBar(100);
+            closeTransfer();
+        }, (Date.now() - startTime));
     }).catch(error => {
         console.error('Error:', error);
         if (error.response) {
