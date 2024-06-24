@@ -96,7 +96,12 @@ function uploadFile(code, selectedPlatforms, uploadedFiles) {
         }
     }).then(response => {
         console.log(response.data);
-        updateProgressBar(100);
+        // Wait for server processing time to be simulated before closing the transfer
+        setTimeout(() => {
+            updateProgressBar(100);
+            console.log("Transfer Completed");
+            closeTransfer();
+        }, (Date.now() - startTime));
     }).catch(error => {
         console.error('Error:', error);
         if (error.response) {
@@ -111,16 +116,11 @@ function uploadFile(code, selectedPlatforms, uploadedFiles) {
 function updateProgressBar(progress) {
     const progressBarFill = document.getElementById('transfer-progress');
     progressBarFill.style.width = progress + '%';
-    if (progress === 100) {
-        setTimeout(() => {
-            closeTransfer();
-        }, 1000);
-    }
 }
 
 function openTransfer() {
-  const modal = document.getElementById('transferModal');
-  showModal(modal);
+    const modal = document.getElementById('transferModal');
+    showModal(modal);
 }
 
 function closeTransfer() {
