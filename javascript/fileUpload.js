@@ -95,13 +95,7 @@ function uploadFile(code, selectedPlatforms, uploadedFiles) {
             const totalSize = uploadedFiles.reduce((acc, file) => acc + file.size, 0);
             const progress = (progressEvent.loaded / totalSize) * 100;
 
-            // Wait for server response
-            if (progress >= 90) {
-                // Once server responds, set progress to 100%
-                updateProgressBar(100);
-            } else {
-                updateProgressBar(progress);
-            }
+            updateProgressBar(progress);
         }
     }).then(response => {
         console.log(response.data); // Actual server response
@@ -119,6 +113,9 @@ function uploadFile(code, selectedPlatforms, uploadedFiles) {
 
 function updateProgressBar(progress) {
     const progressBarFill = document.getElementById('transfer-progress');
+    if (progress < 100) {
+      progress = min(progress, 90);
+    }
     progressBarFill.style.width = progress + '%';
     if (progress === 100) {
         setTimeout(() => {
