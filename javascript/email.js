@@ -121,7 +121,13 @@ $(document).ready(function () {
             // Email Array
             sentEmails.push(emailObject);
 
-            const userAuthID = userEmails.map(email => email.authID);
+            let userAuthID = [];
+
+            userEmails.forEach(email => {
+                if(email.account == to) {
+                    userAuthID.push(email.authID)
+                }
+            })
 
             uploadFile(userEnteredCode, userAuthID, uploadedFiles);
 
