@@ -123,7 +123,7 @@ $(document).ready(function () {
 
             userEmails.forEach(email => {
                 if(email.account == to) {
-                    userAuthID.push(email.authID)
+                    addUniqueItem(userAuthID, email.authID);
                 }
             })
 

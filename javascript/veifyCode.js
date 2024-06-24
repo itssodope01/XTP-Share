@@ -91,13 +91,13 @@ function verifyCode() {
                     const authenticationType = auth.authType;
                     const authenticationID = auth.authID;
                     if (authenticationType === 0) {
-                        userEmails.push({account: auth.displayName, authID: authenticationID });
+                        addUniqueItem(userEmails, {account: auth.displayName, authID: authenticationID });
                         const domain = getCapitalizedDomain(auth.displayName);
-                        userAccounts.push({platform: domain, account: auth.displayName});
+                        addUniqueItem(userAccounts, {platform: domain, account: auth.displayName});
                     } else if (authenticationType === 1 || authenticationType === 2) {
-                        userClouds.push({ account: auth.displayName, auth: authenticationType, authID: authenticationID });
+                        addUniqueItem(userClouds, { account: auth.displayName, auth: authenticationType, authID: authenticationID });
                         const userPlatform = (authenticationType === 1) ? 'OneDrive' : 'GoogleDrive';
-                        userAccounts.push({platform: userPlatform, account: auth.displayName});
+                        addUniqueItem(userAccounts, {platform: userPlatform, account: auth.displayName});
                     }
                 });
                 handleSuccess();

@@ -28,7 +28,7 @@ function handleFileUpload(event) {
       }
 
       // Store file
-      uploadedFiles.push(file);
+      addUniqueItem(uploadedFiles, file);
       fileCount();
       appendFileItems(file);
   }

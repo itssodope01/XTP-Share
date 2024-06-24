@@ -341,12 +341,19 @@ function handleTransferHistoryFailure(message) {
     transferHistoryErrorDiv.textContent = `${message}`;
 }
 
-//Unique values Array
-function uniqueArray(array, a, b) {
-    const existingPairIndex = array.findIndex((user) => user.a === a || user.b === b);
-    if (existingPairIndex === -1) {
-        array.push({ a, b });
-        return true; // Successfully added
-    }
-    console.log(array);
+//Add unique values in Array
+function addUniqueItem(arr, newItem) {
+    const existingItemIndex = arr.findIndex((item) => {
+        return Object.keys(newItem).every((key) => {
+            // Allow duplication only if the key/property name is platform
+            if (key === 'platform') {
+                return true;
+            }
+            return item[key] === newItem[key];
+        });
+    });
+
+    if (existingItemIndex === -1) {
+        arr.push(newItem);
+    } 
 }
