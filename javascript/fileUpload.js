@@ -89,23 +89,19 @@ function uploadFile(code, selectedPlatforms, uploadedFiles) {
         },
         cancelToken: cancelTokenSource.token,
         onUploadProgress: function (progressEvent) {
-            const elapsedTime = Date.now() - startTime;
             const totalSize = uploadedFiles.reduce((acc, file) => acc + file.size, 0);
             const progress = (progressEvent.loaded / totalSize) * 100;
 
-            // Simulate server processing time
+            // Wait for server response
             if (progress >= 90) {
-                setTimeout(() => {
-                    // Wait for server response
-                    // Once server responds, set progress to 100%
-                    updateProgressBar(100);
-                }, elapsedTime);
+                // Once server responds, set progress to 100%
+                updateProgressBar(100);
             } else {
                 updateProgressBar(progress);
             }
         }
     }).then(response => {
-        console.log(response.data);
+        console.log(response.data); // Actual server response
         updateProgressBar(100);
     }).catch(error => {
         console.error('Error:', error);
@@ -146,7 +142,6 @@ function cancelTransfer() {
     }
     closeTransfer();
 }
-
 
 
 // Sorting Files
