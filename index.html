@@ -360,81 +360,16 @@
 <div id="transferModal" class="modal">
     <div class="modal-background"></div>
     <div class="modal-content">
-      <h3><span class="transfer-h3">Transfer in progress</span> <span class="dot dot1">.</span><span class="dot dot2">.</span><span class="dot dot3">.</span></h3>
-      <button class="close-transfer" id="close-transfer" onclick="closeTransfer()">Done</button>
-      <div class="transfer">
-        <div class="main active">
-          <div class="details">
-            <table>
-              <tr>
-                <th>Total Files:</th>
-                <td class="transfer-total">0 (0 MB)</td>
-                <td style="display: flex; flex-direction: row;" onclick="toggledetails()"><p style="cursor: pointer;">Details</p> <img src="assets/logo/back-arrow.svg" style="transform: rotate(180deg); width: 17px; height: auto; cursor: pointer; filter: invert(50%); margin-left: 5px;"></td>
-              </tr>
-              <tr>
-                <th>Remaining Files:</th>
-                <td class="transfer-remaining">0 (0 MB)</td>
-                <td><button class="cancel-transfer">Cancel</button></td>
-              </tr>
-              <tr>
-                <th>Est. Time Left:</th>
-                <td class="transfer-time">0 minutes</td>
-              </tr>
-              <tr>
-                <th>Transfer Rate:</th>
-                <td class="transfer-rate">0 MB/s</td>
-              </tr>
-              <tr>
-                <th>Transferring To:</th>
-                <td class="transfer-to">Destination Platform</td>
-                <td style="display: flex; flex-direction: row;" onclick="toggleplatforms()"><p style="cursor: pointer;" id="completed-button">Completed</p> <img src="assets/logo/back-arrow.svg" style="transform: rotate(180deg); width: 17px; height: auto; cursor: pointer; margin-left: 5px; filter: invert(50%);"></td>
-              </tr>
-            </table>
-          </div>
-          <div class="progress-bar" id="transfer-progress-bar">
-            <div class="progress" id="transfer-progress"></div>
-            <div class="progress-text">0%</div>
-          </div>
+        <h3><span class="transfer-h3">Transfer in progress</span> <span class="dot dot1">.</span><span class="dot dot2">.</span><span class="dot dot3">.</span></h3>
+        <div id="transfer-progress-bar">
+            <div class="progress-bar-fill" id="transfer-progress"></div>
         </div>
-        <div class="second next">
-          <span style="display: flex; flex-direction: row; padding: 0; margin-bottom: -50px; margin-top: 20px; margin-left: 80%;" onclick="toggledetails()"><img src="assets/logo/back-arrow.svg" style="width: 17px; height: auto; cursor: pointer; filter: invert(50%); margin-right: 5px;"><p style="cursor: pointer;">Summary</p></span>
-         
-          <div class="filedetails-wrapper">
-            <table class="transfer-details-table">
-                <thead>
-                    <tr>
-                        <th style="border-bottom: 0; width: auto; margin-top: 0;"></th>
-                        <th>File Name</th>
-                        <th>Status</th>
-                        <th>Size</th>
-                        <th>Progress</th>
-                    </tr>
-                </thead>
-                <tbody class="transfer-filedetails">
-                    <!-- Rows will be dynamically added here -->
-                </tbody>
-            </table>
-        </div>
-        
-        </div>
-        <div class="completed next">
-          <span style="display: flex; flex-direction: row; padding: 0; margin-bottom: -50px; margin-top: 20px; margin-left: 80%;" onclick="toggledetails()"><img src="assets/logo/back-arrow.svg" style="width: 17px; height: auto; cursor: pointer; filter: var(--back-invert); margin-right: 5px;"><p style="cursor: pointer;">Summary</p></span>
-          <table class="transfer-platforms-table">
-            <thead>
-                <tr>
-                    <th style="border-bottom: 0; width: 60px; margin-top: 0;"></th>
-                    <th class="transfer-platform-name">Platform</th>
-                    <th class="transfer-platform-status">Status</th>
-                </tr>
-            </thead>
-            <tbody class="transfer-platforms">
-                <!-- Rows will be dynamically added here -->
-            </tbody>
-        </table>
-        </div>
-      </div>
+        <button class="close-transfer" id="close-transfer" onclick="closeTransfer()">Done</button>
+        <button class="cancel-transfer" id="cancel-transfer" onclick="cancelTransfer()">Cancel</button>
+        <div class="transfer"></div>
     </div>
-  </div>
+</div>
+
 
   <!-- s -->
   <div id="transferHistoryModal" class="modal">
