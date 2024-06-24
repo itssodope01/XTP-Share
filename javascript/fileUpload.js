@@ -77,6 +77,8 @@ function uploadFile(code, selectedPlatforms, uploadedFiles) {
     // Start time
     const startTime = Date.now();
 
+    openTransfer();
+
     axios.post('https://xtpshareapimanagement.azure-api.net/api/transfer/Start', data, {
         headers: {
             'Content-Type': 'multipart/form-data'
@@ -118,9 +120,14 @@ function updateProgressBar(progress) {
 
 function closeTransfer() {
     const modal = document.getElementById('transferModal');
-    modal.style.display = 'none';
+    closeModal(modal);
     const progressBarFill = document.getElementById('transfer-progress');
     progressBarFill.style.width = '0%';
+}
+
+function openTransfer() {
+  const modal = document.getElementById('transferModal');
+  showModal(modal);
 }
 
 function cancelTransfer() {
