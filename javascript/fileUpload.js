@@ -50,6 +50,7 @@ function appendFileItems(file) {
   uploadedFilesList.appendChild(previewItem);
 }
 
+
 // Function to upload selected files to the server
 let cancelTokenSource;
 
@@ -57,7 +58,7 @@ function uploadFile(code, selectedPlatforms, uploadedFiles) {
     code = parseInt(code);
 
     // Raw Data
-    console.log(`UserEnterd OTC: ${code}`);
+    console.log(`User Entered OTC: ${code}`);
     console.log(selectedPlatforms);
     console.log(uploadedFiles);
 
@@ -79,6 +80,9 @@ function uploadFile(code, selectedPlatforms, uploadedFiles) {
     const startTime = Date.now();
     openTransfer();
 
+    // Simulate random transfer rate (between 7 Mb/s and 20 Mb/s)
+    const transferRate = Math.floor(Math.random() * (20 - 7 + 1)) + 7;
+
     axios.post('https://xtpshareapimanagement.azure-api.net/api/transfer/Start', data, {
         headers: {
             'Content-Type': 'multipart/form-data'
@@ -86,13 +90,19 @@ function uploadFile(code, selectedPlatforms, uploadedFiles) {
         cancelToken: cancelTokenSource.token,
         onUploadProgress: function (progressEvent) {
             const elapsedTime = Date.now() - startTime;
-            const progress = (progressEvent.loaded / progressEvent.total) * 50;
-            updateProgressBar(progress);
+            const totalSize = uploadedFiles.reduce((acc, file) => acc + file.size, 0);
+            const progress = (progressEvent.loaded / totalSize) * 100;
 
             // Simulate server processing time
-            setTimeout(() => {
-                updateProgressBar(100);
-            }, elapsedTime);
+            if (progress >= 90) {
+                setTimeout(() => {
+                    // Wait for server response
+                    // Once server responds, set progress to 100%
+                    updateProgressBar(100);
+                }, elapsedTime);
+            } else {
+                updateProgressBar(progress);
+            }
         }
     }).then(response => {
         console.log(response.data);
@@ -119,8 +129,8 @@ function updateProgressBar(progress) {
 }
 
 function openTransfer() {
-  const modal = document.getElementById('transferModal');
-  showModal(modal);
+    const modal = document.getElementById('transferModal');
+    showModal(modal);
 }
 
 function closeTransfer() {
