@@ -1,5 +1,3 @@
-
-
 const uploadedFilesList = document.querySelector('.uploaded-files');
 const fileUpload = document.getElementById('file-upload');
 const folderUpload = document.getElementById('folder-upload');
@@ -51,7 +49,7 @@ function appendFileItems(file) {
 }
 
 
-// Function to upload selected files to the server
+// Function to upload selected files
 const cancelButton = document.querySelector('.cancel-transfer');
 const closeButton = document.querySelector('.close-transfer');
 
@@ -65,7 +63,6 @@ function uploadFile(code, selectedPlatforms, uploadedFiles) {
     data.append('otc', code);
     selectedPlatforms.forEach(id => data.append('authIDs', id));
     uploadedFiles.forEach(file => data.append('files', file));
-
 
     // Cancel Token
     cancelTokenSource = axios.CancelToken.source();
@@ -437,34 +434,6 @@ function handleIndividualFiles(folder) {
     }
   }, error => {
     console.error('Error reading folder entries:', error);
-  });
-}
-
-
-// Function to simulate progress
-function simulateProgress(progress, progressBar) {
-  let width = 1;
-  const interval = setInterval(() => {
-    if (width >= 100) {
-      clearInterval(interval);
-      progressBar.style.display = 'none';
-      applyStyles();
-    } else {
-      width++;
-      progress.style.width = width + '%';
-    }
-  }, 25);
-}
-
-function applyStyles() {
-  var fileItems = selectedFilesContainer.querySelectorAll('.file-item');
-  fileItems.forEach(function(item) {
-      item.style.borderColor = 'var(--file-drop-box-border)';
-      item.style.borderRadius = '10px';
-  });
-  var fileActions = document.querySelectorAll('.delete-button');
-  fileActions.forEach(function(actions) {
-      actions.style.visibility = 'visible';
   });
 }
 

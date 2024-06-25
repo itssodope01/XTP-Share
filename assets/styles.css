@@ -540,22 +540,6 @@ input[type="file"] {
     transition: background-color 0.3s ease, color 0.2s ease;
 }
 
-/* .button-container .btn::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border: 2.8px solid transparent;
-    border-color: var(--button-before);
-    background-color: var(--button-before-sh);
-    border-radius: inherit;
-    transform: translate(6px, 6px);
-    transition: transform 0.25s, border-color 0.3s ease, background-color 0.3s ease;
-    z-index: -1;
-}
-
-.button-container .btn:hover::after {
-    transform: translate(0);
-} */
 
 .button-container .btn:hover {
     background-image: var(--button-hover-color);
@@ -726,6 +710,7 @@ transform: translateX(100%);
 50% { opacity: 0.3; }
 100% { opacity: 0;}
 }
+
 .clear-all-button {
 z-index: -1;
 position: absolute;

@@ -119,7 +119,7 @@ function handleWindowResize() {
 function searchData() {
     searchOn = true;
     const searchTerm = searchBar.value.toLowerCase();
-    let filteredData = transferHistory.slice(); // Copy original data
+    let filteredData = transferHistory.slice();
 
     if (searchTerm) {
         filteredData = filteredData.filter((transfer) => {
@@ -187,7 +187,7 @@ function applyFilters() {
 }
 
 function filterTransferHistory(platforms, statuses, fromDate, toDate) {
-    let filteredData = transferHistory.slice(); // Copy original data
+    let filteredData = transferHistory.slice();
 
     if (platforms.length > 0) {
         filteredData = filteredData.filter(transfer => platforms.includes(transfer.platform));

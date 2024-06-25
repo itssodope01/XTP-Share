@@ -36,7 +36,7 @@
 }
 
 .footer {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .close {
@@ -251,32 +251,6 @@
     transition: all 0.3s ease;
 }
 
-#noSubject{
-    top: 50%;
-    width: 350px;
-    height: auto;
-    overflow: hidden;
-}
-
-#noSubject .modal-content, #successModal .modal-content{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-    margin: 0;
-}
-
-#noSubject .modal-content .button-container, #successModal .modal-content .button-container{
-    margin: 0;
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-
-#noSubject .input{
-    width: 250px;
-}
-
 #successModal {
     transform: translate(0%, 0%);
     width: 250px;
@@ -294,7 +268,7 @@
 
 
 .show {
-    left: 50px !important; 
+  left: 50px !important; 
 }
 
 #successModal .modal-content{
@@ -422,9 +396,6 @@
     color: rgb(241, 241, 241);
   }
 
-  /* #transferModal{
-    height: 20vh;
-  } */
 
     /* Transfer Modal */
     #transferModal{
@@ -450,25 +421,7 @@
     .details {
       margin-left: 20px;
     }
-  
-    table {
-      width: 92%;
-      border-collapse: collapse;
-      margin-top: 40px;
-      margin-left: 10px;
-      
-    }
-  
-    th, td {
-      padding: 8px;
-      text-align: left;
-      border-bottom: 1px solid grey;
-    }
-  
-    .main th, .main td {
-        border-bottom: 0;
-    }
-  
+    
     .dot {
       font-size: 2rem;
       animation: dotAnimation 1s infinite;
@@ -548,23 +501,7 @@
     min-height: 350px;
   }
 
-  #transferModal .modal-content .transfer .active {
-    transform: translateX(0);
-    
-  }
-
-  #transferModal .modal-content .transfer .next {
-    transform: translateX(100%);
-    
-  }
-
-  #transferModal .modal-content .transfer .prev {
-    transform: translateX(-100%);
-    animation-duration: 0s;
-    opacity: 1; 
-  }
-
-  .transfer .main, .transfer .second, .transfer .completed {
+  .transfer .main, .transfer .completed {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -634,7 +571,6 @@ font-size: large;
   width: 32px;
   height: auto;
   filter: var(--user-invert);
-  /* transform: rotate(180deg); */
   transition: filter 0.15s ease;
 }
 
@@ -656,7 +592,6 @@ font-size: large;
 }
 
 .transfer-history-table th, .transfer-history-table td {
-  /* border: 1px solid var(--border-color); */
   padding: 12px;
   text-align: left;
   color: var(--text-color);
@@ -689,4 +624,3 @@ font-size: large;
 .transfer-history-table tr:hover td:first-child {
   text-decoration: underline;
 }
-

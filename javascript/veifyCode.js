@@ -22,7 +22,7 @@ function checkTimestampOnPageLoad() {
     if (firstAttemptTimestamp) {
       const currentTime = Date.now();
       const elapsedSinceFirstAttempt = currentTime - firstAttemptTimestamp;
-      const remainingTime = 20000 - elapsedSinceFirstAttempt;
+      const remainingTime = 30000 - elapsedSinceFirstAttempt;
       updateTimeStamp(remainingTime);
     }
 } checkTimestampOnPageLoad();
@@ -83,7 +83,7 @@ function verifyCode() {
             if (!response.ok) {
                 handleFailure('Invalid response from server');
             }
-            return response.json(); // Parse response as JSON
+            return response.json();
         })
         .then(data => {
             // Handle the response
@@ -118,7 +118,7 @@ function verifyCode() {
         const firstAttemptTimestamp = parseInt(localStorage.getItem('firstAttemptTimestamp'), 10);
         const currentTime = Date.now();
         const elapsedSinceFirstAttempt = currentTime - firstAttemptTimestamp;
-        const remainingTime = 20000 - elapsedSinceFirstAttempt;
+        const remainingTime = 30000 - elapsedSinceFirstAttempt;
         updateTimeStamp(remainingTime);
         return;
     }
@@ -164,7 +164,7 @@ function handleFailure(message) {
 
 function updateTimeStamp(remainingTime) {
     if (remainingTime <= 0) {
-        // Reset incorrect attempts and firstAttemptTimestamp after 15 minutes (demo 20s)
+        // Reset incorrect attempts and firstAttemptTimestamp after 15 minutes (demo 30s)
         localStorage.removeItem('incorrectAttempts');
         localStorage.removeItem('firstAttemptTimestamp');
         incorrectAttempts = 0;

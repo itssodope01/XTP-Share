@@ -80,13 +80,13 @@
     --scrollbar-track-color:transparent;
     --scrollbar-thumb-color:#80868b;
 
-        /* cloud */
-        --cloud-bg: #1f1f1ff2;
-        --icon-invert:invert(85%);
-        --name-invert:invert(15%);
-        --platform-after:#d2517e;
+    /* cloud */
+    --cloud-bg: #1f1f1ff2;
+    --icon-invert:invert(85%);
+    --name-invert:invert(15%);
+    --platform-after:#d2517e;
 
-        /* email */
+    /* email */
 
     --email-bg: #0e0e0ef0;
     --email-border-color: #969696;

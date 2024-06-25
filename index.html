@@ -31,7 +31,6 @@
     <!-- External libraries -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
     <script>
         var deviceType = localStorage.getItem('deviceType') || (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? 'mobile' : 'desktop');
         localStorage.setItem('deviceType', deviceType);
@@ -47,7 +46,6 @@
 </head>
 
 <body>
-    <!-- Header -->
     <header>
         <!-- Logo and Navigation -->
         <div class="logo-container">
@@ -136,9 +134,6 @@
     <div class="add-files-container" onclick="openFileSelection()">
         <button for="file-upload" class="add-files-button" style="cursor: pointer;"><i class="fas fa-plus"></i><span class="add" id="add">Add More</span></button>
     </div>
-<!--     <div class="expand" id="expand-files" onclick="showUploadedFiles()">
-        <i class="fas fa-expand-alt"></i>
-    </div> -->
 </div>
 
 
@@ -177,7 +172,7 @@
     </div>
     <div id="codeInfo" class="codeInfo" >
         <div class="content">
-        <p>You can find the code in our mobile app under the "Generate One-Time Code" section.</p><p class="download" id="download"><br><a style="cursor: pointer;">Download App</a></p>
+        <p>You can find the code in our mobile app where you can connect your personal accounts.</p><p class="download" id="download"><br><a style="cursor: pointer;">Download App</a></p>
     </div>
     </div>
 </div>
@@ -259,20 +254,7 @@
             
         </div>
     </div>
-    <!-- No-Subject Modal -->
-    <div id="noSubject" class="modal">
-        <div class="modal-content">
-            <p>Send without a subject?</p>
-            <div class="input-group">
-                <input required="" type="text" name="subject" autocomplete="off" class="input" id="subjectInput">
-                <label class="user-label">Subject</label>
-            </div>
-            <div class="button-container">
-                <button id="confirmBtn" class="btn">Send</button>
-                <button id="cancelBtn" class="btn">Cancel</button>
-            </div>
-        </div>
-    </div>
+
 <!-- Email-sent Notification -->
 <div id="successModal" class="modal">
     <div class="modal-background"></div>
@@ -284,13 +266,6 @@
                 <!-- <p id="viewMessageBtn" class="view-message" onclick="viewmessage()">View Message</p> -->
             </div>
         </div>        
-    <!-- Email-sent message -->
-    <div class="message-email">
-        <p class="message-to">to</p>
-        <div class="messageattachment">
-            <p class="message-attachment"></p>
-        </div>
-    </div>
     </div>
 </div>
 
@@ -374,7 +349,7 @@
 
 
 
-  <!-- s -->
+  <!-- Transfer History -->
   <div id="transferHistoryModal" class="modal">
     <div class="modal-content">
       <img src="assets/logo/back-arrow.svg" class="close" id="history-close" alt="Close">
@@ -519,8 +494,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/zip.js/3.1.5/zip.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jszip@latest/dist/jszip.min.js"></script>
-    <script src="https://cdn.quilljs.com/1.3.7/quill.js"></script>
-    <script src="https://cdn.quilljs.com/1.3.7/quill.placeholder.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="loadScripts.js"></script>

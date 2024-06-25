@@ -40,7 +40,6 @@
     position: absolute;
     border-radius: 20px;
     border-top: solid 5px #5fb2d9;
-    /* box-shadow: 0 8px 32px 0 rgba(66, 137, 212, 0.37); */
     background-color:var(--code-v-bg);
     z-index: 10;
     left: 50%;
@@ -194,4 +193,3 @@
 .shake {
     animation: shake 0.4s ease-in-out;
 }
-

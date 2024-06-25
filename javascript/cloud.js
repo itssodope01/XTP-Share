@@ -1,4 +1,4 @@
-var selectedPlatforms = [];//Platforms selected for upload
+var selectedPlatforms = [];
 let totaldataUploaded = 0;
 
 

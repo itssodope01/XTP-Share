@@ -38,8 +38,6 @@
     --button-bg-color: var(--background-color);
     --button-border-color: #111827;
     --button-hover-text-color: #ffffff;
-    /* --button-before: #111827;
-    --button-before-sh: var(--button-before); */
     --button-hover-color: linear-gradient(to right, #111827, #111827);
     --email-button: linear-gradient(to right, royalblue, rgb(65, 134, 225));
 
@@ -95,7 +93,7 @@
 
     --preview: #616161;
 
-        --box-shadow: 5px 5px 10px rgba(72, 72, 72, 0.253);
+    --box-shadow: 5px 5px 10px rgba(72, 72, 72, 0.253);
     --user-invert: invert(5%);
     --user-invert-hover: invert(30%);
 

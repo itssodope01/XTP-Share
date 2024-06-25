@@ -194,6 +194,7 @@ function addDeleteButtonListner(deleteButton, file){
     });
 }
 
+// Fuction to preview files on-site
 function fileiconActions(fileIcon, file) {
     const fileType = getFileType(file.type, file.name);
     const actionMap = {
@@ -277,6 +278,7 @@ function openImagePreview(file) {
     }
 }
 
+// Function to shorten/truncate file names
 function truncateFileName(fileName) {
     let maxLength = 16;
     const dotIndex = fileName.lastIndexOf(".");
@@ -308,6 +310,7 @@ function getFileIcon(fileType) {
     return `assets/logo/file-icon/${fileType}.png`;
 }
 
+// Update-UI
 function updateUI(selectedFilesContainer) {
     const clearAllButton = document.querySelector('.clear-all-button');
     const AddFilesButton = document.querySelector('.add-files-button');

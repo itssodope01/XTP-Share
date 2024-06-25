@@ -1,15 +1,13 @@
 let uploadedFiles = [];
-let encryptedFiles = []; 
-let currentButton = '';
-let userEnteredCode = '';
-let timer;
-let transferButtonClicked = false;
-let transferstarted = false;
-let transferOpen = false;
+let encryptedFiles = [];
 let userEmails = [];
 let userClouds = [];
 let userAccounts = [];
 let transferHistory = [];
+let currentButton = '';
+let userEnteredCode = '';
+let timer;
+
 
 const getElement = id => document.getElementById(id);
 
@@ -285,7 +283,6 @@ function getTransferHistory(code) {
         return response.json();
     })
     .then(data => {
-        // Handle the response
         if (Array.isArray(data) && data.length > 0) {
             transferHistory = data.map(item => {
                 const { date, time } = formatDateAndTime(item.transferStartTime);
