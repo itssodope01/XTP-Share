@@ -87,14 +87,14 @@ $(document).ready(function () {
     async function sendEmail() {
         const to = document.querySelector('select[name="to"]').value;
 
-        try {
-            if(!filesUploaded()) {
-                displayError(`Please Upload Files.`);
-            } else {
                 const hasRestricted = await hasRestrictedFiles(uploadedFiles);
                 const totalFileSize = await calculateTotalFileSize();
                 try {
-                    if (hasRestricted) { // Restricted file check
+                    if(!to){
+                        displayError(`You have no email accounts connected.`);
+                    } else if(!filesUploaded()) {
+                        displayError(`Please Upload Files.`);
+                    } else if (hasRestricted) { // Restricted file check
                         displayError(`Attachments contain restricted files.`);
                     } else if (totalFileSize > SizeLimit) { // Size-limit check
                             displayError(`Total attachment size exceeds limit: 20 MB.`);
@@ -102,11 +102,6 @@ $(document).ready(function () {
                         sendEmailCallback();
                     }
                 } catch (err) {}
-            }
-
-        } catch (error) {
-            console.error("Error checking for files");
-        }
 
         function sendEmailCallback() {
             // email Object
