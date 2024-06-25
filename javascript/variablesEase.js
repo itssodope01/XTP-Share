@@ -22,11 +22,6 @@ function loadCloudAccounts() {
     const platformsContainer = document.getElementById('platformsContainer');
     platformsContainer.innerHTML = ''; 
 
-    if (!userClouds) {
-        platformsContainer.innerText = "You have no cloud accounts linked.";
-        return;
-    }
-
     const userCloudAuthTypes = userClouds.map(cloud => cloud.auth);
 
     platforms.forEach(platform => {
@@ -67,6 +62,10 @@ function loadCloudAccounts() {
             platformsContainer.appendChild(platformOption);
         }
     });
+
+    if(!userCloudAuthTypes) {
+        platformsContainer.innerText = "You have no cloud accounts linked.";
+    }
 }
 
 
