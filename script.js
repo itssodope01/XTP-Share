@@ -265,18 +265,6 @@ $(document).on('dragleave drop', function(e) {
 });
 
 
-// Function to convert date and time
-function formatDateAndTime(dateTimeStr) {
-    const dateTime = new Date(dateTimeStr);
-    
-    const timeOptions = { hour: '2-digit', minute: '2-digit' };
-    const time = dateTime.toLocaleTimeString('en-US', timeOptions); // hh:mm
-  
-    const date = dateTime.toLocaleDateString('en-GB'); // dd/mm/yyyy
-    return { date, time };
-}
-
-
 // Transfer History
 function getTransferHistory(code) {
     if (transferHistory.length > 0) {
@@ -321,6 +309,26 @@ function getTransferHistory(code) {
     .catch(error => {
         handleTransferHistoryFailure('An error occurred. Please try again later.');
     });
+}
+
+// Format date and time from UTC to local time
+function formatDateAndTime(utcDateTime) {
+    const date = new Date(utcDateTime);
+    const options = {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        timeZoneName: 'short'
+    };
+    const formatter = new Intl.DateTimeFormat(undefined, options);
+    const formattedDateTime = formatter.format(date);
+
+    // Split the formatted date and time
+    const [formattedDate, formattedTime] = formattedDateTime.split(', ');
+    return { date: formattedDate, time: formattedTime };
 }
 
 function getPlatformName(authType, displayName) {
