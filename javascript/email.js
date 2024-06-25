@@ -132,7 +132,7 @@ $(document).ready(function () {
             clearAllFiles(); 
         
             const backArrow = document.querySelector('.back.arrow');
-            backArrow.click();
+            // backArrow.click();
         
             // Showing Email-sent notification
             const successModal = document.getElementById('successModal');
