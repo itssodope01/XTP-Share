@@ -60,21 +60,12 @@ let cancelTokenSource;
 function uploadFile(code, selectedPlatforms, uploadedFiles) {
     code = parseInt(code);
 
-    // Raw Data
-    console.log(`User Entered OTC: ${code}`);
-    console.log(selectedPlatforms);
-    console.log(uploadedFiles);
-
     // Creating FormData
     const data = new FormData();
     data.append('otc', code);
     selectedPlatforms.forEach(id => data.append('authIDs', id));
     uploadedFiles.forEach(file => data.append('files', file));
 
-    // The FormData content
-    for (let pair of data.entries()) {
-        console.log(pair[0] + ', ' + pair[1]);
-    }
 
     // Cancel Token
     cancelTokenSource = axios.CancelToken.source();
@@ -82,7 +73,7 @@ function uploadFile(code, selectedPlatforms, uploadedFiles) {
     attachmentText.textContent = '';
 
     // Simulate random transfer rate (between 7 Mb/s and 20 Mb/s)
-    const transferRate = Math.floor(Math.random() * (20 - 7 + 1)) + 7;
+    const transferRate = Math.floor(Math.random() * (13 - 3 + 1)) + 7;
 
     axios.post('https://xtpshareapimanagement.azure-api.net/api/transfer/Start', data, {
         headers: {
@@ -90,12 +81,15 @@ function uploadFile(code, selectedPlatforms, uploadedFiles) {
         },
         cancelToken: cancelTokenSource.token,
         onUploadProgress: function (progressEvent) {
+          let previosProgress;
             const totalSize = uploadedFiles.reduce((acc, file) => acc + file.size, 0);
-            let progress = (progressEvent.loaded / totalSize) * 100;
+            let progress = ((progressEvent.loaded / totalSize) * 100) - transferRate;
             if (progress > 80) {
               progress = Math.min(progress, 80);
             }
+            progress = Math.max(progress, previosProgress);
             updateProgressBar(progress);
+            previosProgress = progress;
         }
     }).then(response => {
         console.log(response.data); // Actual server response

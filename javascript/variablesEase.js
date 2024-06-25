@@ -20,7 +20,7 @@ generateIcons();
 // Cloud platforms
 function loadCloudAccounts() {
     const platformsContainer = document.getElementById('platformsContainer');
-    platformsContainer.innerHTML = ''; // Clear existing content
+    platformsContainer.innerHTML = ''; 
 
     if (!userClouds) {
         platformsContainer.innerText = "You have no cloud accounts linked.";
@@ -39,7 +39,7 @@ function loadCloudAccounts() {
             // Find the corresponding user cloud to get the authID
             const userCloud = userClouds.find(cloud => cloud.auth === platform.authType);
             if (userCloud) {
-                platformOption.dataset.authId = userCloud.authID; // Add authID to dataset
+                platformOption.dataset.authId = userCloud.authID;
             }
 
             const platformBackground = document.createElement('div');
@@ -91,17 +91,6 @@ function createFileItem(file) {
 
     const fileActions = createFileActions(file);
     fileItem.appendChild(fileActions);
-
-    // // Progress bar
-    // const progressBar = document.createElement('div');
-    // progressBar.classList.add('progress-bar');
-    // const progress = document.createElement('div');
-    // progress.classList.add('progress');
-    // progressBar.appendChild(progress);
-    // fileItem.appendChild(progressBar);
-
-    // // Simulate progress
-    // simulateProgress(progress, progressBar);
 
     return fileItem;
 }
