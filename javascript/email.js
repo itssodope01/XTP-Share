@@ -129,10 +129,6 @@ $(document).ready(function () {
             uploadFile(userEnteredCode, userAuthID, uploadedFiles);
 
             clearAllFiles(); 
-        
-            const backArrow = document.querySelector('.back.arrow');
-            // backArrow.click();
-        
 
             skipVerificationSection = false;
             clearCodeFields();
@@ -147,17 +143,17 @@ $(document).ready(function () {
             clearInterval(remainingTimeDisplayInterval);
         
             // View-message
-            const lastSentEmail = sentEmails[sentEmails.length - 1];
-            const messageDiv = document.querySelector('.message-email');
-            const toDiv = messageDiv.querySelector('.message-to');
-            const attachmentDiv = messageDiv.querySelector('.messageattachment');
-            const attachmentItem = attachmentDiv.querySelector('.message-attachment');
+            // const lastSentEmail = sentEmails[sentEmails.length - 1];
+            // const messageDiv = document.querySelector('.message-email');
+            // const toDiv = messageDiv.querySelector('.message-to');
+            // const attachmentDiv = messageDiv.querySelector('.messageattachment');
+            // const attachmentItem = attachmentDiv.querySelector('.message-attachment');
         
-            toDiv.textContent = 'to: ' + lastSentEmail.to;
-            attachmentItem.innerHTML = '';
-            lastSentEmail.attachments.forEach(attachment => {
-                attachmentItem.appendChild(createViewMessageAttachment(attachment));
-            });
+            // toDiv.textContent = 'to: ' + lastSentEmail.to;
+            // attachmentItem.innerHTML = '';
+            // lastSentEmail.attachments.forEach(attachment => {
+            //     attachmentItem.appendChild(createViewMessageAttachment(attachment));
+            // });
         }
     }
 
