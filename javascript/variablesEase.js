@@ -34,9 +34,9 @@ function loadCloudAccounts() {
     platforms.forEach(platform => {
         console.log("Platform on run: ", platform);
         console.log("Platform class: ", platform.class);
-        console.log("Platform authType: ", platform.authtype);
-        console.log("Is it in userCloudAuthTypes?: ", userCloudAuthTypes.includes(platform.authtype));
-        if (platform.class === "cloud" && userCloudAuthTypes.includes(platform.authtype)) {
+        console.log("Platform authType: ", platform.authType);
+        console.log("Is it in userCloudAuthTypes?: ", userCloudAuthTypes.includes(platform.authType));
+        if (platform.class === "cloud" && userCloudAuthTypes.includes(platform.authType)) {
             const platformOption = document.createElement('div');
             platformOption.classList.add('platform-option');
             platformOption.dataset.platform = platform.name;
@@ -68,6 +68,7 @@ function loadCloudAccounts() {
         }
     });
 }
+
 
 
 // File Upload and Element Creations
