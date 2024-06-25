@@ -78,10 +78,8 @@ function uploadFile(code, selectedPlatforms, uploadedFiles) {
 
     // Cancel Token
     cancelTokenSource = axios.CancelToken.source();
-
-    // Start time
-    const startTime = Date.now();
     openTransfer();
+    attachmentText.textContent = '';
 
     // Simulate random transfer rate (between 7 Mb/s and 20 Mb/s)
     const transferRate = Math.floor(Math.random() * (20 - 7 + 1)) + 7;
@@ -148,6 +146,7 @@ function closeTransfer() {
       if(!(SectionS2.classList.contains('active'))) {
       clearAllFiles();
       backArrow.click();
+      attachmentText.textContent = ':No Attachments';
       }
     }, 200);
 }
