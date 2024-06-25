@@ -111,7 +111,7 @@ $(document).ready(function () {
         function sendEmailCallback() {
             // email Object
             const emailObject = {
-                to,
+                to: to,
                 attachments: uploadedFiles,
             };
         
