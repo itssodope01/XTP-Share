@@ -56,6 +56,8 @@ function switchUserLogo() {
         userAccount.style.display = 'block';
     } else {
         userAccount.style.display = 'none';
+        userAccounts = [];
+        userClouds = [];
     }
 }
 

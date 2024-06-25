@@ -134,6 +134,7 @@ function closeTransfer() {
       clearAllFiles();
       backArrow.click();
       attachmentText.textContent = ':No Attachments';
+      userEmails = [];
       }
     }, 200);
 }
