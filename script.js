@@ -355,18 +355,15 @@ function addUniqueItem(arr, newItem) {
     } 
 }
 
-const main = document.querySelector('.main');
-const completed = document.querySelector('.completed');
+function toggledetails() {
+    var main = document.getElementById('main');
+    var completed = document.getElementById('completed');
 
-function toggle(active, nextstatus, nonactive, currentstatus) {
-    active.classList.replace('active', nextstatus);
-    nonactive.classList.replace(currentstatus, 'active');
-  }
-  
-  function toggledetails() {
-    if (main.classList.contains('active')) { 
-      toggle(main, 'prev', completed, 'next');
-  } else {
-    toggle(completed, 'next', main, 'prev');
-  }
-  }
+    if (main.classList.contains('open')) {
+        main.classList.remove('open');
+        completed.classList.add('open');
+    } else {
+        completed.classList.remove('open');
+        main.classList.add('open');
+    }
+}

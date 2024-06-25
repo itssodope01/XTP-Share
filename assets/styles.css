@@ -837,3 +837,11 @@ top: 50%;
 left: 50%;
 transform: translate(-50%, -50%);
 }
+
+.main, .completed {
+    display: none;
+}
+
+.main.open, .completed.open {
+    display: block;
+}

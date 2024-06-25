@@ -362,12 +362,12 @@
     <div class="modal-content">
         <h3><span class="transfer-h3">Transfer in progress</span> <span class="dot dot1">.</span><span class="dot dot2">.</span><span class="dot dot3">.</span></h3>
         <button class="close-transfer" id="close-transfer" onclick="closeTransfer()">Done</button>
-        <div class="main active">
-        <div id="transfer-progress-bar">
-            <div class="progress-bar-fill" id="transfer-progress"></div>
+        <div id="main" class="main open">
+            <div id="transfer-progress-bar">
+                <div class="progress-bar-fill" id="transfer-progress"></div>
+            </div>
         </div>
-        </div>
-        <div class="completed next">
+        <div id="completed" class="completed">
             <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 10px;">
                 <span style="margin-top: -10px;"><img src="assets/logo/checked.png" alt="loading" style="width: 24px; height: 24px; margin-right: 10px;">Transfer Complete</span>
             </div>
@@ -375,6 +375,7 @@
         <button class="cancel-transfer" id="cancel-transfer" onclick="cancelTransfer()">Cancel</button>
     </div>
 </div>
+
 
 
   <!-- s -->
