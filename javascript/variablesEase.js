@@ -64,7 +64,7 @@ function loadCloudAccounts() {
     });
 
     if(!userCloudAuthTypes) {
-        platformsContainer.innerText = "You have no cloud accounts linked.";
+        platformsContainer.textContent = "You have no cloud accounts linked.";
     }
 }
 
