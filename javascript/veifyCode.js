@@ -279,7 +279,6 @@ function clearCodeFields() {
     const button = getElement(id);
     button.addEventListener('click', () => {
         if (!filesUploaded()) {
-            // For save cloud button, check if files are uploaded
             displayTemporaryMessage("Please upload files", false, 1200);
             return; 
         }             
