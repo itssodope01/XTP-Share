@@ -95,7 +95,7 @@ function uploadFile(code, selectedPlatforms, uploadedFiles) {
             const totalSize = uploadedFiles.reduce((acc, file) => acc + file.size, 0);
             const progress = (progressEvent.loaded / totalSize) * 100;
             if (progress > 80) {
-              progress = 80;
+              progress = Math.min(progress, 80);
             }
             updateProgressBar(progress);
         }
@@ -115,8 +115,8 @@ function uploadFile(code, selectedPlatforms, uploadedFiles) {
 
 function updateProgressBar(progress) {
     const progressBarFill = document.getElementById('transfer-progress');
-    if (progress > 80) {
-      progress = 80;
+    if (progress < 100) {
+      progress = Math.min(progress, 80);
     }
     progressBarFill.style.width = progress + '%';
     if (progress === 100) {
