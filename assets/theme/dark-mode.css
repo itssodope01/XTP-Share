@@ -117,7 +117,7 @@
     --filter-bg: #181818;
 
     --file-item-bg: rgba(227, 227, 227, 0.075);
-    --file-item-border-bottom: 0;
-    --file-item-border-bottom-width: 1.5px;
+    --file-item-border-bottom: transparent;
+    --file-item-border-bottom-width: '';
     
 }
