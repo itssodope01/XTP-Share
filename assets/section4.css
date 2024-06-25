@@ -115,6 +115,7 @@ button.email-compose-button {
     transition: all 0.2s;
     cursor: pointer;
     margin-left: -120px;
+    margin-bottom: 10px;
 }
 
 button.email-compose-button span {
