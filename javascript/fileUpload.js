@@ -114,14 +114,14 @@ function uploadFile(code, selectedPlatforms, uploadedFiles) {
 function updateProgressBar(progress) {
     const progressBarFill = document.getElementById('transfer-progress');
     if (progress < 100) {
-      progress = Math.min(progress, 90);
+      progress = Math.min(progress, 80);
     }
     progressBarFill.style.width = progress + '%';
     if (progress === 100) {
         setTimeout(() => {
           setTimeout (() => {
             completeTransfer();
-          }, 300);
+          }, 100);
         }, 1000);
     }
 }
