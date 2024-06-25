@@ -139,6 +139,7 @@ function closeTransfer() {
     skipVerificationSection = false;
     clearCodeFields();
     startVerificationTimer();
+    toggledetails();
 
     setTimeout(() => {
       dots('visible');
