@@ -261,7 +261,7 @@ input[type="file"] {
 
 .file-drop-box {
     background-color: var(--background-color);
-    border: 4px dashed var(--file-drop-box-border) !important;
+    border: 4px dashed var(--file-drop-box-border);
     border-radius: 18px;
     padding: 8px;
     margin: 0 auto 20px auto;

@@ -338,7 +338,7 @@ function updateUI(selectedFilesContainer) {
         fileDropText.style.display = 'block';
         placeholderImage.style.display = 'block';
         attachmentText.style.display = 'block';
-        Border.style.border = '3px dashed var(--file-drop-box-border)';
+        Border.style.border = '4px dashed var(--file-drop-box-border)';
         setTimeout(() => {
             [attachmentContainer]
                 .forEach(item => item.addEventListener("click", openFileSelection));
