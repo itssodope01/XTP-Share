@@ -1,7 +1,7 @@
 // Step descriptions
 var stepDescriptions = [
     "Download Mobile App: Download our mobile app and create an account with us. Link your Email or Storage Accounts through the app.This is a One-Time Process.",
-    "Generate One-Time Code (OTP): Use the app to generate a unique 6 digits one-time Code. This code refreshes every 2 minuets. It is usable across all your linked accounts.",
+    "Generate One-Time Code (OTP): Use the app to generate a unique 6 digits one-time Code. This code refreshes every 15 minuets. It is usable across all your linked accounts.",
     "Upload Your Files: Visit our website on the public device (desktop/laptop computer) and click 'Upload Files.' Select the files you want to send. or Drag folders (to compress them into .zip files) in the  file Drop area.",
     "Enter the One-Time Code: When prompted on the website, enter the one-time OTP generated from the app. This Code securely connects you to your linked accounts.",
     "Select Destination: Choose your preferred file storage system, such as Dropbox or OneDrive. You can even send files as Email. You'll receive confirmation once your files gets securely transferred."

@@ -72,27 +72,20 @@ function uploadFile(code, selectedPlatforms, uploadedFiles) {
     openTransfer();
     attachmentText.textContent = '';
 
-    // Simulate random transfer rate (between 7 Mb/s and 20 Mb/s)
-    const transferRate = Math.floor(Math.random() * (13 - 3 + 1)) + 7;
-
     axios.post('https://xtpshareapimanagement.azure-api.net/api/transfer/Start', data, {
         headers: {
             'Content-Type': 'multipart/form-data'
         },
         cancelToken: cancelTokenSource.token,
         onUploadProgress: function (progressEvent) {
-          let previosProgress;
             const totalSize = uploadedFiles.reduce((acc, file) => acc + file.size, 0);
-            let progress = ((progressEvent.loaded / totalSize) * 100) - transferRate;
+            let progress = (progressEvent.loaded / totalSize) * 100;
             if (progress > 80) {
               progress = Math.min(progress, 80);
             }
-            progress = Math.max(progress, previosProgress);
             updateProgressBar(progress);
-            previosProgress = progress;
         }
     }).then(response => {
-        console.log(response.data); // Actual server response
         updateProgressBar(100);
     }).catch(error => {
         console.error('Error:', error);
@@ -100,7 +93,7 @@ function uploadFile(code, selectedPlatforms, uploadedFiles) {
             console.error('Response:', error.response.data);
         }
         if (axios.isCancel(error)) {
-            console.log('Upload canceled');
+            alert('Upload canceled');
         }
     });
 }
