@@ -169,7 +169,7 @@ function completeTransfer() {
     headerMessage ('Transfer Complete');
     closeButton.style.display = 'block';
     cancelButton.style.display = 'none';
-    if (document.querySelector('S4').classList.contains('active')) {
+    if (document.querySelector('#S4').classList.contains('active')) {
       showEmailNotification();
     }  
   }, 350);
