@@ -116,8 +116,8 @@
     --filter-options: rgb(195, 195, 195);
     --filter-bg: #181818;
 
-    --file-item-bg: rgba(227, 227, 227, 0.119);
-    --file-item-border-bottom: #b6b6b61c;
-    --file-item-border-bottom-width: 5px ;
+    --file-item-bg: rgba(227, 227, 227, 0.075);
+    --file-item-border-bottom: 0;
+    --file-item-border-bottom-width: 1.5px;
     
 }
