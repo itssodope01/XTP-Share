@@ -2,6 +2,7 @@ let uploadedFiles = [];
 let encryptedFiles = []; 
 let currentButton = '';
 let userEnteredCode = '';
+let timer;
 let transferButtonClicked = false;
 let transferstarted = false;
 let transferOpen = false;

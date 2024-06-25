@@ -166,6 +166,7 @@ function completeTransfer() {
     headerMessage ('Transfer Complete');
     closeButton.style.display = 'block';
     cancelButton.style.display = 'none';
+    showEmailNotification();
   }, 350);
 }
 
