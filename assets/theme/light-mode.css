@@ -115,4 +115,8 @@
     --filter-input: #cacaca;
     --filter-options: rgb(37, 37, 37);
     --filter-bg: #e4edf0;
+
+    --file-item-bg: rgba(26, 26, 26, 0.09);
+    --file-item-border-bottom: #1e1e1e23;
+    --file-item-border-bottom-width: 5px ;
 }

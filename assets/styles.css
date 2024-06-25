@@ -343,8 +343,11 @@ input[type="file"] {
   }
 
   .file-item{
-    border: 1.5px solid var(--file-drop-box-border);
+    border: 1.5px solid transparent;
     border-radius: 10px;
+    background-color: var(--file-item-bg);
+    border-bottom-color: var(--file-item-border-bottom);
+    border-bottom-width: var(--file-item-border-bottom-width);
   }
 
   .edge .file-item{
