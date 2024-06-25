@@ -28,19 +28,19 @@ function loadCloudAccounts() {
     }
 
     const userCloudAuthTypes = userClouds.map(cloud => cloud.auth);
-    console.log("User Cloud Auths:");
-    console.log(userCloudAuthTypes);
 
     platforms.forEach(platform => {
-        console.log("Platform on run: ", platform);
-        console.log("Platform class: ", platform.class);
-        console.log("Platform authType: ", platform.authType);
-        console.log("Is it in userCloudAuthTypes?: ", userCloudAuthTypes.includes(platform.authType));
         if (platform.class === "cloud" && userCloudAuthTypes.includes(platform.authType)) {
             const platformOption = document.createElement('div');
             platformOption.classList.add('platform-option');
             platformOption.dataset.platform = platform.name;
             platformOption.dataset.authType = platform.authType;
+
+            // Find the corresponding user cloud to get the authID
+            const userCloud = userClouds.find(cloud => cloud.auth === platform.authType);
+            if (userCloud) {
+                platformOption.dataset.authId = userCloud.authID; // Add authID to dataset
+            }
 
             const platformBackground = document.createElement('div');
             platformBackground.classList.add('platform-background');
