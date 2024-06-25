@@ -285,6 +285,7 @@
     bottom: 80px;
     height: auto;
     position: fixed;
+    z-index: 10000;
     padding: 0;
     margin: 0;
     border: none;
