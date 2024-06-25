@@ -278,5 +278,5 @@ function showEmailNotification() {
                     setTimeout(() => {
                         successModal.style.display = 'none';
                     }, 200);
-                }, 2300);
+                }, 3000);
 }
