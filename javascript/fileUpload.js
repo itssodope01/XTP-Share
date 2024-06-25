@@ -93,7 +93,7 @@ function uploadFile(code, selectedPlatforms, uploadedFiles) {
         cancelToken: cancelTokenSource.token,
         onUploadProgress: function (progressEvent) {
             const totalSize = uploadedFiles.reduce((acc, file) => acc + file.size, 0);
-            const progress = (progressEvent.loaded / totalSize) * 100;
+            let progress = (progressEvent.loaded / totalSize) * 100;
             if (progress > 80) {
               progress = Math.min(progress, 80);
             }
