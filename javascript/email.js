@@ -92,7 +92,7 @@ $(document).ready(function () {
                 try {
                     if(!to){
                         displayError(`You have no email accounts connected.`);
-                    } else if(!filesUploaded()) {
+                    } else if(uploadFile.length<1) {
                         displayError(`Please Upload Files.`);
                     } else if (hasRestricted) { // Restricted file check
                         displayError(`Attachments contain restricted files.`);
