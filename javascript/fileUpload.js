@@ -94,7 +94,7 @@ function uploadFile(code, selectedPlatforms, uploadedFiles) {
         onUploadProgress: function (progressEvent) {
             const totalSize = uploadedFiles.reduce((acc, file) => acc + file.size, 0);
             const progress = (progressEvent.loaded / totalSize) * 100;
-            if (progress == 100) {
+            if (progress > 80) {
               progress = Math.min(progress, 80);
             }
             updateProgressBar(progress);
