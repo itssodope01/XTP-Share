@@ -386,10 +386,18 @@ document.querySelector('#overlay').addEventListener('click', function(event) {
     const appButton = document.querySelector('#mobileApp');
     const apkModal = document.querySelector('#apkModal');
     const zipModal = document.getElementById('Zipmodal');
-    if(zipModal.style.display === "block") {
-        return;
+
+    // Check if zipModal is open
+    if (zipModal.style.display === "block") {
+        console.log("Zip modal is open, not closing all modals."); // Debug log
+        return; // Return early to avoid closing modals
     }
+
+    // Check if the click is outside specific elements
     if (!apkModal.contains(event.target) && !appButton.contains(event.target) && !hamburgerMenu.contains(event.target)) {
+        console.log("Click is outside apkModal, appButton, and hamburgerMenu, closing all modals."); // Debug log
         closeAllModal();
+    } else {
+        console.log("Click is inside one of the specified elements."); // Debug log
     }
 });
