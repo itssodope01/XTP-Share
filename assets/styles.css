@@ -27,11 +27,13 @@ footer {
     position: fixed;
     width: 100%;
     bottom: 0;
+    text-align: left;
     transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
 }
 
-footer {
-    text-align: left;
+footer a{
+    text-decoration: none;
+    color: inherit;
 }
 
 footer p{
