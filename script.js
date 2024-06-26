@@ -374,25 +374,32 @@ function toggledetails() {
     }
 }
 
-document.querySelector('#mobileApp').addEventListener('click', () => {
+function openQR() {
     const apkModal = document.querySelector('#apkModal');
     showModal(apkModal);
     if(hamburgerMenu.classList.contains('active')) {
         hamburgerMenu.click();
     }
+}
+
+document.querySelector('#mobileApp').addEventListener('click', () => {
+    openQR();
 });
+
+
 
 document.querySelector('#overlay').addEventListener('click', function(event) {
     const appButton = document.querySelector('#mobileApp');
     const apkModal = document.querySelector('#apkModal');
     const zipModal = document.getElementById('Zipmodal');
+    const downloadApp = document.querySelector('#download');
 
     // Check if zipModal is open
     if (zipModal.style.display === "block") {
         return;
     }
 
-    if (!apkModal.contains(event.target) && !appButton.contains(event.target) && !hamburgerMenu.contains(event.target)) {
+    if (!apkModal.contains(event.target) && !appButton.contains(event.target) && !hamburgerMenu.contains(event.target) && !downloadApp.contains(event.target)) {
         closeAllModal();
     }
 });
