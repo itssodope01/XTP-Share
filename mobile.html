@@ -142,7 +142,7 @@
             <br><span class="highlight">No LogIn Required. </span>
         </h4>
         <div class="button-container" style="margin-top: -20px; margin-left: -4.5px;">
-            <button id="download-app" class="btn" background-color: transparent;" onclick="downloadApp()">Download
+            <button id="download-app" class="btn" style="background-color: transparent;" onclick="downloadApp()">Download
                 App</button>
         </div>
         <!-- Currently Supported Platforms -->
@@ -215,6 +215,10 @@
         document.getElementById('logo').addEventListener('click', function() {
             location.reload();
         });
+
+        function downloadApp(){
+            window.location.href = 'https://github.com/itssodope01/XTP-Share/releases/download/v2.0.0/XTP-Share.apk';
+        }
         
     </script>
 </body>
