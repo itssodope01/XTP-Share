@@ -510,12 +510,6 @@ function showZipModal(message, zipCallback, uploadCallback) {
     uploadCallback();
   };
 
-  // Close the modal and invoke cancelCallback if the overlay or close button is clicked
-  document.getElementById('overlay').addEventListener('click', function() {
-    zipConversionCancelled=true;
-    resetZipModal();
-  });
-
   document.getElementById('closeZip').addEventListener('click', function() {
     zipConversionCancelled=true;
     resetZipModal();

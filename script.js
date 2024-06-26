@@ -389,7 +389,6 @@ document.querySelector('#overlay').addEventListener('click', function(event) {
 
     // Check if zipModal is open
     if (zipModal.style.display === "block") {
-        showModal(zipModal);
         return;
     }
 
