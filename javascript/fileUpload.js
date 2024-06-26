@@ -441,34 +441,6 @@ function handleIndividualFiles(folder) {
 }
 
 
-// Function to simulate progress
-function simulateProgress(progress, progressBar) {
-  let width = 1;
-  const interval = setInterval(() => {
-    if (width >= 100) {
-      clearInterval(interval);
-      progressBar.style.display = 'none';
-      applyStyles();
-    } else {
-      width++;
-      progress.style.width = width + '%';
-    }
-  }, 25);
-}
-
-function applyStyles() {
-  var fileItems = selectedFilesContainer.querySelectorAll('.file-item');
-  fileItems.forEach(function(item) {
-      item.style.borderColor = 'var(--file-drop-box-border)';
-      item.style.borderRadius = '10px';
-  });
-  var fileActions = document.querySelectorAll('.delete-button');
-  fileActions.forEach(function(actions) {
-      actions.style.visibility = 'visible';
-  });
-}
-
-
 // Event listeners for placeholder image and file drop text
 document.querySelectorAll('.placeholder-image, .file-drop-text').forEach(element => element.addEventListener('click',
 () => openFileSelection()));
