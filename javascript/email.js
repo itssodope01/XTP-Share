@@ -1,4 +1,3 @@
-
 // Gmail-outlook combined restricted files
 const restrictedFileTypes = [
     'ade', 'adp', 'apk', 'appx', 'appxbundle', 'bat', 'cab', 'chm', 'cmd', 'com', 'cpl', 'diagcab', 'diagcfg',
@@ -81,6 +80,7 @@ const displayError = (message) => {
 };
 
 let sendButtonClicked = false;
+let sentEmails = []; // Email Array
 
 $(document).ready(function () {
     async function sendEmail() {
@@ -104,6 +104,11 @@ $(document).ready(function () {
                 } catch (err) {}
 
         function sendEmailCallback() {
+            // email Object
+            const emailObject = {
+                to: to,
+                attachments: uploadedFiles,
+            };
         
             // Email Array
             sentEmails.push(emailObject);
@@ -131,7 +136,7 @@ $(document).ready(function () {
         
             clearTimeout(verificationTimer);
             clearInterval(remainingTimeDisplayInterval);
-        
+
         }
     }
 
@@ -156,6 +161,44 @@ function loadUserEmails () {
 document.querySelectorAll("#attachment-container")
 .forEach(item => item.addEventListener("click", openFileSelection));
 
+//View-Email-message
+
+let viewButtonClicked = false;
+const modalS = document.getElementById('successModal');
+const modalContent = modalS.querySelector('.modal-content');
+const notification = modalContent.querySelector('.notification');
+const message = modalContent.querySelector('.message-email');
+
+function viewmessage() {
+    const lastSentEmail = sentEmails[sentEmails.length - 1];
+    const overlay = document.getElementById("overlay");
+    overlay.style.display = 'block';
+    overlay.style.opacity = '0';
+    removeMouseEventr();
+    viewButtonClicked = true;
+    clearInterval(timer);
+
+    if(lastSentEmail.attachments.length === 0){
+        document.querySelector('.messageattachment').style.display = 'none';
+    } else {
+        document.querySelector('.messageattachment').style.display = 'block';
+    }
+
+    modalS.style.width = 'auto';
+    notification.style.display = 'none';
+    message.style.display = 'block';
+
+    function clickOutsideHandler(event) {
+        if (overlay.contains(event.target)) {
+            resetNotification();
+            document.removeEventListener('click', clickOutsideHandler);
+            overlay.style.opacity = '1';
+            overlay.style.display = 'none';
+        }
+    }
+
+    document.addEventListener('click', clickOutsideHandler);
+}
 
 function resetNotification() {
     const delay = viewButtonClicked ? 1 : 1200;
@@ -194,25 +237,25 @@ function mouseEvent() {
 }
 
 function showEmailNotification() {
-    // Showing Email-sent notification
-    const successModal = document.getElementById('successModal');
-    const modalContent = successModal.querySelector('.modal-content');
-    const notification = modalContent.querySelector('.notification');
-    const message = modalContent.querySelector('.message-email');
-    successModal.style.display = 'block';
-    setTimeout(() => {
-        message.style.display = 'none';
-        notification.style.display = 'block';
-        successModal.classList.add('show');
-    }, 100);
+                // Showing Email-sent notification
+                const successModal = document.getElementById('successModal');
+                const modalContent = successModal.querySelector('.modal-content');
+                const notification = modalContent.querySelector('.notification');
+                const message = modalContent.querySelector('.message-email');
+                successModal.style.display = 'block';
+                setTimeout(() => {
+                    message.style.display = 'none';
+                    notification.style.display = 'block';
+                    successModal.classList.add('show');
+                }, 100);
             
-    mouseEvent();
+                mouseEvent();
             
-    // Hide Email-sent notification
-    timer = setTimeout(() => {
-        successModal.classList.remove('show');
-        setTimeout(() => {
-            successModal.style.display = 'none';
-        }, 200);
-    }, 3000);
+                // Hide Email-sent notification
+                timer = setTimeout(() => {
+                    successModal.classList.remove('show');
+                    setTimeout(() => {
+                        successModal.style.display = 'none';
+                    }, 200);
+                }, 3000);
 }
