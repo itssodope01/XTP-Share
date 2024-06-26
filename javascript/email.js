@@ -104,11 +104,6 @@ $(document).ready(function () {
                 } catch (err) {}
 
         function sendEmailCallback() {
-            // email Object
-            const emailObject = {
-                to: to,
-                attachments: uploadedFiles,
-            };
         
             // Email Array
             sentEmails.push(emailObject);
@@ -136,7 +131,7 @@ $(document).ready(function () {
         
             clearTimeout(verificationTimer);
             clearInterval(remainingTimeDisplayInterval);
-    
+        
         }
     }
 
@@ -161,13 +156,6 @@ function loadUserEmails () {
 document.querySelectorAll("#attachment-container")
 .forEach(item => item.addEventListener("click", openFileSelection));
 
-//View-Email-message
-
-let viewButtonClicked = false;
-const modalS = document.getElementById('successModal');
-const modalContent = modalS.querySelector('.modal-content');
-const notification = modalContent.querySelector('.notification');
-const message = modalContent.querySelector('.message-email');
 
 function resetNotification() {
     const delay = viewButtonClicked ? 1 : 1200;
