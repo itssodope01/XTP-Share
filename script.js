@@ -21,13 +21,14 @@ const transferHistoryErrorDiv = document.querySelector(".transferHistoryError");
 const transferHistoryTable = document.querySelector(".transfer-history-table");
 const theContainer = getElement('container1');
 const emailError = document.querySelector('.emailError');
+const hamburgerMenu = document.querySelector('.hamburger-menu');
+const headerButtons = document.querySelector('.header-buttons');
 
 
 // hamburger menu
 $(document).ready(function() {
     $(function() {
-        var hamburgerMenu = document.querySelector('.hamburger-menu');
-        var headerButtons = document.querySelector('.header-buttons');
+
 
         hamburgerMenu.addEventListener('click', function() {
             headerButtons.classList.toggle('show');
