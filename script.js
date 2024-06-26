@@ -382,7 +382,7 @@ document.querySelector('#mobileApp').addEventListener('click', () => {
     }
 });
 
-document.addEventListener('click', function(event) {
+document.querySelector('#overlay').addEventListener('click', function(event) {
     const appButton = document.querySelector('#mobileApp');
     const apkModal = document.querySelector('#apkModal');
     if (!apkModal.contains(event.target) && !appButton.contains(event.target) && !hamburgerMenu.contains(event.target)) {
