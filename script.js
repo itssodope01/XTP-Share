@@ -1,15 +1,13 @@
 let uploadedFiles = [];
-let encryptedFiles = []; 
-let currentButton = '';
-let userEnteredCode = '';
-let timer;
-let transferButtonClicked = false;
-let transferstarted = false;
-let transferOpen = false;
+let encryptedFiles = [];
 let userEmails = [];
 let userClouds = [];
 let userAccounts = [];
 let transferHistory = [];
+let currentButton = '';
+let userEnteredCode = '';
+let timer;
+
 
 const getElement = id => document.getElementById(id);
 
@@ -285,7 +283,6 @@ function getTransferHistory(code) {
         return response.json();
     })
     .then(data => {
-        // Handle the response
         if (Array.isArray(data) && data.length > 0) {
             transferHistory = data.map(item => {
                 const { date, time } = formatDateAndTime(item.transferStartTime);
@@ -375,3 +372,19 @@ function toggledetails() {
         main.classList.add('open');
     }
 }
+
+document.querySelector('#mobileApp').addEventListener('click', () => {
+    const apkModal = document.querySelector('#apkModal');
+    showModal(apkModal);
+    if(hamburgerMenu.classList.contains('active')) {
+        hamburgerMenu.click();
+    }
+});
+
+document.addEventListener('click', function(event) {
+    const appButton = document.querySelector('#mobileApp');
+    const apkModal = document.querySelector('#apkModal');
+    if (!apkModal.contains(event.target) && !appButton.contains(event.target) && !hamburgerMenu.contains(event.target)) {
+        closeModal(apkModal);
+    }
+});
