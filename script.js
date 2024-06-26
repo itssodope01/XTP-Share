@@ -386,7 +386,7 @@ document.querySelector('#overlay').addEventListener('click', function(event) {
     const appButton = document.querySelector('#mobileApp');
     const apkModal = document.querySelector('#apkModal');
     const zipModal = document.getElementById('Zipmodal');
-    if(zipModal.style.display == 'block') {
+    if(zipModal.style.display === "block") {
         return;
     }
     if (!apkModal.contains(event.target) && !appButton.contains(event.target) && !hamburgerMenu.contains(event.target)) {
