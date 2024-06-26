@@ -403,3 +403,7 @@ document.querySelector('#overlay').addEventListener('click', function(event) {
         closeAllModal();
     }
 });
+
+function downloadApp(){
+    window.location.href = 'https://github.com/itssodope01/XTP-Share/releases/download/v2.0.0/XTP-Share.apk';
+}
