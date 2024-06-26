@@ -219,7 +219,7 @@ align-items: center;
 }
 
 .connected-account{
-    display: flex !important; /* Use flexbox to align items side by side */
+    display: flex !important; 
     flex-direction: row !important;
 }
 
@@ -235,7 +235,7 @@ background-color: var(--user-dropdown-bg);
 }
 
 .connected-account img {
-    vertical-align: middle; /* Align image vertically */
+    vertical-align: middle; 
 }
 
 .icon-container {
@@ -246,17 +246,17 @@ background-color: var(--user-dropdown-bg);
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-right: 5px; /* Space between icon and text */
+    margin-right: 5px; 
     background-color: rgb(189, 189, 189);
     transition: background-color 0.3s ease;
 }
 
 .connected-account:hover .icon-container {
-    background-color: var(--hover-color); /* Apply hover color */
+    background-color: var(--hover-color);
 }
 
 .icon-container img {
-    width: 20px; /* Adjust icon size */
+    width: 20px; 
     height: 20px;
 }
 
