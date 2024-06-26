@@ -194,6 +194,7 @@ function addDeleteButtonListner(deleteButton, file){
     });
 }
 
+// Function for file icon click events
 function fileiconActions(fileIcon, file) {
     const fileType = getFileType(file.type, file.name);
     const actionMap = {

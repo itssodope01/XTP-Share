@@ -83,7 +83,7 @@ function verifyCode() {
             if (!response.ok) {
                 handleFailure('Invalid response from server');
             }
-            return response.json(); // Parse response as JSON
+            return response.json();
         })
         .then(data => {
             // Handle the response
