@@ -275,7 +275,7 @@ input[type="file"] {
     overflow-y: hidden; 
     overflow-x: hidden;
     z-index: 2;
-    transition: transform 0.3s ease, background-color 0.3s ease, border 0.0s ease;
+    transition: transform 0.3s ease, background-color 0.3s ease, border 0.0s ease !important;
 }
 
 

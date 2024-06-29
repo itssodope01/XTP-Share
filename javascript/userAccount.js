@@ -273,12 +273,11 @@ function showUserAccounts() {
 
 
 function populateConnectedAccounts() {
-
+    const defaultPlatform = platforms.find(p => p.name === "Email");
     let html = '';
 
     userAccounts.forEach(({ platform, account }) => {
-        const platformData = platforms.find(p => p.name == platform);
-        if (!platformData) return;
+        const platformData = platforms.find(p => p.name === platform) || defaultPlatform;
 
         html += `
             <a class="connected-account" style="--hover-color: ${platformData.hover_color}">
