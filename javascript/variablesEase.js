@@ -137,10 +137,14 @@ function createPreviewItem(file) {
 function createFileItemElement(file, isAttachment = false) {
     const fileItem = document.createElement('li');
     
-    if(!isAttachment)
-    fileItem.classList.add('file-item');
-    else
-    fileItem.classList.add('attachment-item');
+    if(!isAttachment) {
+        fileItem.classList.add('file-item');
+        fileItem.addEventListener('click', function(event) {
+            event.stopPropagation();
+        });
+    } else {
+        fileItem.classList.add('attachment-item');
+    }
 
     fileItem.setAttribute('data-full-name', file.name);
     return fileItem;

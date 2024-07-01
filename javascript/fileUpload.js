@@ -16,8 +16,9 @@ sortBySelect.addEventListener('change', handleSortChange);
 function openFileSelection(event) {
   const clickedElement = event.target;
   const isFolderUploadLabel = clickedElement.id === 'upload-folder' || clickedElement.closest('#upload-folder');
+  const isFileItem = clickedElement.id === 'file-item';
   
-  if (!isFolderUploadLabel) {
+  if (!isFolderUploadLabel && !isFileItem) {
     fileUpload.click();
   }
 }
