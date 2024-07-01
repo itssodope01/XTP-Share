@@ -6,12 +6,20 @@ const folderUpload = document.getElementById('folder-upload');
 const sortBySelect = document.getElementById('sort-by');
 
 // Event Listeners
+folderUpload.addEventListener('click', function(event) {
+  event.stopPropagation();
+});
 fileUpload.addEventListener('change', handleFileUpload);
 folderUpload.addEventListener('change', handleFileUpload);
 sortBySelect.addEventListener('change', handleSortChange);
 
-function openFileSelection() {
-  fileUpload.click();
+function openFileSelection(event) {
+  const clickedElement = event.target;
+  const isFolderUploadLabel = clickedElement.id === 'upload-folder' || clickedElement.closest('#upload-folder');
+  
+  if (!isFolderUploadLabel) {
+    fileUpload.click();
+  }
 }
 
 // Function to handle file Upload
@@ -439,11 +447,6 @@ function handleIndividualFiles(folder) {
     console.error('Error reading folder entries:', error);
   });
 }
-
-
-// Event listeners for placeholder image and file drop text
-document.querySelectorAll('.placeholder-image, .file-drop-text').forEach(element => element.addEventListener('click',
-() => openFileSelection()));
 
 // Function to check if any files are uploaded
 function filesUploaded() {

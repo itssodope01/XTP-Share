@@ -117,24 +117,25 @@
     </div>
 
 <!-- File Drop Area -->
-<div class="file-drop-box" style="height: 200px;" id="fileDropBox">
-    <!-- Placeholder Image -->
+<div class="file-drop-box" style="height: 200px;" id="fileDropBox" onclick="openFileSelection(event)">
     <img src="assets/logo/folder.png" alt="Placeholder Image" class="placeholder-image" style="width: 50px; margin-top: 35px;">
     <p class="file-drop-text" style="cursor: default;">Drag folders (to zip) or files here</p>
-    <div class="file-container"style="height: 200px; overflow-y: auto; overflow-x: hidden;"><ul class="file-list" id="selected-files-container" style="height: auto;"></ul></div>
+    <div class="file-container" style="height: 200px; overflow-y: auto; overflow-x: hidden;">
+        <ul class="file-list" id="selected-files-container" style="height: auto;"></ul>
+    </div>
     <div class="upload">
-    <input type="file" id="file-upload" multiple hidden>
-    <label for="file-upload" class="upload-button" style="cursor: pointer;" id="upload-files"><span>Upload Files </span></label>
-    
-    <input type="file" id="folder-upload" style="display:none;" multiple directory webkitdirectory>
-    <label for="folder-upload" class="upload-button" style="cursor: pointer;" id="upload-folder"><i class="fas fa-folder"></i></label>
+        <input type="file" id="file-upload" multiple hidden>
+        <label class="upload-button" style="cursor: pointer;" id="upload-files"><span>Upload Files </span></label>
+        
+        <input type="file" id="folder-upload" style="display:none;" multiple directory webkitdirectory>
+        <label for="folder-upload" class="upload-button" style="cursor: pointer;" id="upload-folder"><i class="fas fa-folder"></i></label>
+    </div>
 </div>
-    <div class="clear-container" onclick="clearAllFiles()">
-        <button class="clear-all-button" style="cursor: pointer;"><i class="fas fa-trash-alt"></i><span class="clear" id="clear">Remove All</span></button>
-    </div>
-    <div class="add-files-container" onclick="openFileSelection()">
-        <button for="file-upload" class="add-files-button" style="cursor: pointer;"><i class="fas fa-plus"></i><span class="add" id="add">Add More</span></button>
-    </div>
+<div class="clear-container" onclick="clearAllFiles()">
+    <button class="clear-all-button" style="cursor: pointer;"><i class="fas fa-trash-alt"></i><span class="clear" id="clear">Remove All</span></button>
+</div>
+<div class="add-files-container" onclick="openFileSelection()">
+    <button for="file-upload" class="add-files-button" style="cursor: pointer;"><i class="fas fa-plus"></i><span class="add" id="add">Add More</span></button>
 </div>
 
 
