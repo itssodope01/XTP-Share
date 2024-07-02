@@ -811,13 +811,18 @@ text-align: left;
 visibility: visible;
 width: auto;
 }
-.add-files-button i {
-margin-left: 3.8px ;
-font-size: 18px; 
-}
+
 .clear-all-button i {
-margin-left: 3.8px ;
-font-size: 18px;
+    display: flex;
+    margin-left: 4.7px;
+    align-items: center;
+    font-size: 18px;
+}
+    
+.add-files-button i {
+    display: flex;
+    margin-left: 5.5px;
+    align-items: center;
 }
 
 .loader {
