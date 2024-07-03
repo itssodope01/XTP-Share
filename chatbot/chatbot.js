@@ -128,29 +128,45 @@ async function handleUserInput(message) {
         const userMessage = message || userInput.value.trim();
         if (userMessage === '') return;
 
-        chatbox.innerHTML += `<p class="user-message"><content><strong>You:</strong> ${userMessage}</content></p>`;
+        // Append user message to chatbox
+        chatbox.innerHTML += `<p class="user-message"><strong>You:</strong> ${userMessage}</p>`;
         userInput.value = '';
         followUpContainer.innerHTML = '';
-        chatbox.scrollTop = chatbox.scrollHeight;  // Adjust scroll position
+        chatbox.scrollTop = chatbox.scrollHeight;
 
+        // Display loading indicator
         const loadingIndicatorHTML = '<p class="bot-message"><em><strong>Chatbot:</strong> <span class="typing-indicator"><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></em></p>';
         chatbox.innerHTML += loadingIndicatorHTML;
 
+        // Retrieve bot response
         const botResponse = await getBotResponse(userMessage);
         const formattedAnswer = botResponse.answer.replace(/\n/g, '<br>');
 
-        // Remove the loading indicator
+        // Remove loading indicator
         chatbox.innerHTML = chatbox.innerHTML.replace(loadingIndicatorHTML, '');
 
-        // Create a new paragraph element for the bot's message
+        // Create bot message element
         const botMessageElem = document.createElement('p');
         botMessageElem.classList.add('bot-message');
-        botMessageElem.innerHTML = '<em><strong>Chatbot:</strong></em> ';
+        botMessageElem.innerHTML = `<em><strong>Chatbot:</strong></em> `;
         chatbox.appendChild(botMessageElem);
 
-        // Type the text word by word
+        // Type the bot response text word by word
         await typeText(botMessageElem, formattedAnswer);
 
+        // Remove previous "Contact support" link if it exists
+        const previousSupportLink = document.querySelector('.support-link');
+        if (previousSupportLink) {
+            previousSupportLink.remove();
+        }
+
+        // Add "Contact support" link after bot response
+        const supportLink = document.createElement('p');
+        supportLink.classList.add('support-link');
+        supportLink.innerHTML = '<span onclick="contactSupport()" style="cursor: pointer; font-size: 0.8rem; color: #838383;">Not satisfied with the answer? <span style="text-decoration: underline;" >Contact support</span></span>';
+        chatbox.appendChild(supportLink);
+
+        // Append follow-up questions if available
         if (Array.isArray(botResponse.follow_up) && botResponse.follow_up.length > 0) {
             botResponse.follow_up.forEach(followUpQuestion => {
                 const followUpBtn = document.createElement('button');
@@ -161,11 +177,13 @@ async function handleUserInput(message) {
             });
         }
 
+        // Scroll to the bottom of the chatbox
         chatbox.scrollTop = chatbox.scrollHeight;
     } catch (error) {
         console.error('Error handling user input:', error);
     }
 }
+
 
 async function typeText(element, htmlText, delay = 50) {
     const tempDiv = document.createElement('div');
@@ -183,6 +201,11 @@ async function typeText(element, htmlText, delay = 50) {
     // After finishing the word by word typing, set the full HTML
     element.innerHTML = `<em><strong>Chatbot:</strong></em> ${htmlText}`;
     chatbox.scrollTop = chatbox.scrollHeight;  // Final scroll adjustment
+}
+
+function contactSupport() {
+    // Implement your logic for contacting support here
+    console.log('Contact support clicked!');
 }
 
 
