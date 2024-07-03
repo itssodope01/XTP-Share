@@ -539,6 +539,6 @@ const qaData = [
     "Send" : ["transfer"],
     "Deactivate" : ["remove", "delete"],
     "System" : ["Software"],
-    "OTP" : ["OTC", "One-Time Code"],
-    "One Time Password" : ["OTC", "One-Time Code"]
+    "OTP" : ["OTC", "One-Time Code", "Code"],
+    "One Time Password" : ["OTC", "One-Time Code", "Code"]
 };
