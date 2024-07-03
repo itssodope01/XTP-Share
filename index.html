@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="assets/verify.css">
     <link rel="stylesheet" href="assets/modal.css">
     <link rel="stylesheet" href="assets/user-account.css">
+    <link rel="stylesheet" href="chatbot/chatBotStyles.css">
     <!-- Theme stylesheets -->
     <link rel="stylesheet" href="assets/theme/dark-mode.css">
     <link rel="stylesheet" href="assets/theme/light-mode.css">
@@ -429,6 +430,32 @@
     
 <!-- Overlay for Modals -->
 <div id="overlay"></div>
+
+    <!-- Floating icon to open chat -->
+    <div class="chat-icon" id="chatIcon"><i class="fas fa-comments"></i></i></div>
+
+    <!-- Chat container -->
+    <div class="chat-container" id="chatContainer" style="display: none;">
+        <div class="chat-header">
+            XTP Share Chatbot
+        </div>
+        <div class="chat-body" id="chatbox">
+            <!-- Chat messages will be appended here -->
+        </div>
+        <div id="followUpContainer"></div>
+        <div class="chat-input">
+            <input type="text" class="user-input" id="userInput" placeholder="Type your question..." disabled>
+            <button class="send-button" id="sendButton" disabled>Send</button>
+        </div>
+        <div class="loading-indicator" id="loadingIndicator">
+            <span class="loading"></span> Loading chatbot
+            <span class="typing-indicator">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </span> 
+        </div>
+    </div>
 
     <footer>
         <p style="cursor: default;">&copy; 2024 XTP Services Inc.</p>

@@ -120,4 +120,7 @@
     --file-item-border-bottom: transparent;
     --file-item-border-bottom-width: '';
     
+    /* chatbot */
+    --chatbot-bg: #2a2a2a;
+    --chatbot-text: var(--text-color);
 }

@@ -3,9 +3,13 @@ generateSteps('desktop');
 // Open Modal
 const showModal = (modal) => { 
   const Overlay = getElement("overlay");
+  const chatIcon = document.getElementById('chatIcon');
+  const chatContainer = document.getElementById('chatContainer');
   modal.style.display = Overlay.style.display = "block";
   if(modal === transferHistoryModal)
     Overlay.style.display = "none";
+  chatContainer.style.display = 'none';
+  chatIcon.style.visibility = 'visible';
 }
 
 // Close Modal
