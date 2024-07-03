@@ -516,3 +516,29 @@ const qaData = [
         ]
       }
   ];
+
+
+
+  const synonymDict = {
+    "mobile app": ["app", "mobile application", "XTP Share App", "XTP App"],
+    "website": ["web platform", "web app", "site"],
+    "file transfer": ["file sending", "file transmission"],
+    "OneDrive": ["onedrive", "one drive", "Onedrive", "one-Drive"],
+    "GoogleDrive": ["google drive", "Google Drive", "google-drive"],
+    "File": ["files"],
+    "OTC" : ["One Time Code", "One-Time-Code", "Code", "One-Time Code"],
+    "user" : ["users", "I"],
+    "Cloud Storage" : ["Google Drive", "One Drive", "Cloud Service", "Cloud services"],
+    "Email" : ["Gmail", "Outlook"],
+    "Google Drive" : ["Cloud Storage", "google-drive"],
+    "One Drive" : ["Cloud Storage", "one-drive"],
+    "Unlink" : ["unlinking", "remove"],
+    "their" : ["my"],
+    "validity" : ["expiration"],
+    "XTP account" : ["account"],
+    "Send" : ["transfer"],
+    "Deactivate" : ["remove", "delete"],
+    "System" : ["Software"],
+    "OTP" : ["OTC", "One-Time Code"],
+    "One Time Password" : ["OTC", "One-Time Code"]
+};
