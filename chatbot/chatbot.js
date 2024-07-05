@@ -4,15 +4,13 @@ let chatbox;
 let userInput;
 let sendButton;
 let loadingIndicator;
-let precomputedEmbeddings = [];
 
-const responseCache = new Map();
-const CACHE_EXPIRATION_TIME = 4 * 24 * 60 * 60 * 1000; //4 days
-const LRU_CACHE_SIZE = 100; 
+let preComputedEmbeddings = {};
 
 async function loadModel() {
     try {
         model = await use.load();
+        await preComputeEmbeddings();  // Precompute embeddings after loading the model
         chatbox.innerHTML += '<p><em><strong>Chatbot:</strong> Hello! How can I help you today?</em></p>';
         displayInitialFollowUpQuestions();
         hideLoadingIndicator();
@@ -24,16 +22,14 @@ async function loadModel() {
     }
 }
 
-async function precomputeEmbeddings() {
-    const worker = new Worker('worker.js');
-    worker.postMessage(qaData);
-
-    worker.onmessage = function(event) {
-        precomputedEmbeddings = event.data;
-        hideLoadingIndicator();
-        enableUserInput();
-        worker.terminate();
-    };
+async function preComputeEmbeddings() {
+    for (const qa of qaData) {
+        for (const question of qa.questions) {
+            const questionNormalized = normalizeTextWithSynonyms(question);
+            const questionEmbedding = await model.embed([questionNormalized]);
+            preComputedEmbeddings[question] = questionEmbedding;
+        }
+    }
 }
 
 function displayInitialFollowUpQuestions() {
@@ -67,25 +63,35 @@ function normalizeTextWithSynonyms(input) {
     return normalizedInput;
 }
 
-
 async function findMostSimilarQuestion(input) {
     const inputNormalized = normalizeTextWithSynonyms(input);
     const inputEmbedding = await model.embed([inputNormalized]);
-    let maxSimilarity = -1;
-    let mostSimilarQA = null;
 
-    for (const { embedding, qa } of precomputedEmbeddings) {
-        if (inputEmbedding && embedding && inputEmbedding.shape && embedding.shape) {
-            const similarity = await tf.matMul(inputEmbedding, embedding, false, true).data();
-            if (similarity[0] > maxSimilarity) {
-                maxSimilarity = similarity[0];
-                mostSimilarQA = qa;
+    let maxSimilarity = -1;
+    let mostSimilarQuestion = '';
+    let mostSimilarAnswer = '';
+    let mostSimilarFollowUp = '';
+
+    for (const qa of qaData) {
+        for (const question of qa.questions) {
+            const questionEmbedding = preComputedEmbeddings[question];
+
+            if (inputEmbedding && questionEmbedding && inputEmbedding.shape && questionEmbedding.shape) {
+                const similarity = await tf.matMul(inputEmbedding, questionEmbedding, false, true).data();
+                if (similarity[0] > maxSimilarity) {
+                    maxSimilarity = similarity[0];
+                    mostSimilarQuestion = question;
+                    mostSimilarAnswer = qa.answer;
+                    mostSimilarFollowUp = qa.follow_up;
+                }
+            } else {
+                console.warn('Invalid embeddings detected:', inputEmbedding, questionEmbedding);
             }
         }
     }
 
     if (maxSimilarity > 0.7) {
-        return { question: mostSimilarQA.questions[0], answer: mostSimilarQA.answer, follow_up: mostSimilarQA.follow_up };
+        return { question: mostSimilarQuestion, answer: mostSimilarAnswer, follow_up: mostSimilarFollowUp };
     } else {
         return findMostCommonTermsQuestion(inputNormalized);
     }
@@ -113,40 +119,20 @@ function findMostCommonTermsQuestion(input) {
 }
 
 async function getBotResponse(input) {
-    if (responseCache.has(input)) {
-        const cachedItem = responseCache.get(input);
-        if (Date.now() - cachedItem.timestamp < CACHE_EXPIRATION_TIME) {
-            return cachedItem.value;
-        } else {
-            responseCache.delete(input);
-        }
-    }
-
     try {
         const mostSimilarAnswer = await findMostSimilarQuestion(input);
 
-        if (mostSimilarAnswer.question || mostSimilarAnswer.answer) {
-            addToCache(input, mostSimilarAnswer);
+        if (mostSimilarAnswer.question) {
+            return mostSimilarAnswer;
+        } else if (mostSimilarAnswer.answer) {
             return mostSimilarAnswer;
         } else {
-            const defaultResponse = { answer: "I'm sorry, I don't have specific information about that. Can you please rephrase your question or ask about a different aspect of the XTP Share Platform?" };
-            addToCache(input, defaultResponse);
-            return defaultResponse;
+            return { answer: "I'm sorry, I don't have specific information about that. Can you please rephrase your question or ask about a different aspect of the XTP Share Platform?" };
         }
     } catch (error) {
         console.error('Error getting bot response:', error);
-        const errorMessage = { answer: "I'm sorry, an error occurred while processing your request. Please try again later." };
-        addToCache(input, errorMessage);
-        return errorMessage;
+        return { answer: "I'm sorry, an error occurred while processing your request. Please try again later." };
     }
-}
-
-function addToCache(key, value) {
-    if (responseCache.size >= LRU_CACHE_SIZE) {
-        const oldestKey = responseCache.keys().next().value;
-        responseCache.delete(oldestKey);
-    }
-    responseCache.set(key, { value, timestamp: Date.now() });
 }
 
 async function handleUserInput(message) {
@@ -154,36 +140,45 @@ async function handleUserInput(message) {
         const userMessage = message || userInput.value.trim();
         if (userMessage === '') return;
 
+        // Append user message to chatbox
         chatbox.innerHTML += `<p class="user-message"><strong>You:</strong> ${userMessage}</p>`;
         userInput.value = '';
         followUpContainer.innerHTML = '';
         chatbox.scrollTop = chatbox.scrollHeight;
 
+        // Display loading indicator
         const loadingIndicatorHTML = '<p class="bot-message"><em><strong>Chatbot:</strong> <span class="typing-indicator"><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></em></p>';
         chatbox.innerHTML += loadingIndicatorHTML;
 
+        // Retrieve bot response
         const botResponse = await getBotResponse(userMessage);
         const formattedAnswer = botResponse.answer.replace(/\n/g, '<br>');
 
+        // Remove loading indicator
         chatbox.innerHTML = chatbox.innerHTML.replace(loadingIndicatorHTML, '');
 
+        // Create bot message element
         const botMessageElem = document.createElement('p');
         botMessageElem.classList.add('bot-message');
         botMessageElem.innerHTML = `<em><strong>Chatbot:</strong></em> `;
         chatbox.appendChild(botMessageElem);
 
+        // Type the bot response text word by word
         await typeText(botMessageElem, formattedAnswer);
 
+        // Remove previous "Contact support" link if it exists
         const previousSupportLink = document.querySelector('.support-link');
         if (previousSupportLink) {
             previousSupportLink.remove();
         }
 
+        // Add "Contact support" link after bot response
         const supportLink = document.createElement('p');
         supportLink.classList.add('support-link');
         supportLink.innerHTML = '<span onclick="contactSupport()" style="cursor: pointer; font-size: 0.8rem; color: #838383;">Not satisfied with the answer? <span style="text-decoration: underline;" >Contact support</span></span>';
         chatbox.appendChild(supportLink);
 
+        // Append follow-up questions if available
         if (Array.isArray(botResponse.follow_up) && botResponse.follow_up.length > 0) {
             botResponse.follow_up.forEach(followUpQuestion => {
                 const followUpBtn = document.createElement('button');
@@ -194,11 +189,13 @@ async function handleUserInput(message) {
             });
         }
 
+        // Scroll to the bottom of the chatbox
         chatbox.scrollTop = chatbox.scrollHeight;
     } catch (error) {
         console.error('Error handling user input:', error);
     }
 }
+
 
 async function typeText(element, htmlText, delay = 50) {
     const tempDiv = document.createElement('div');
@@ -209,31 +206,18 @@ async function typeText(element, htmlText, delay = 50) {
     for (let i = 0; i < words.length; i++) {
         currentHTML += words[i] + ' ';
         element.innerHTML = `<em><strong>Chatbot:</strong></em> ${currentHTML}`;
-        chatbox.scrollTop = chatbox.scrollHeight;
+        chatbox.scrollTop = chatbox.scrollHeight;  // Adjust scroll position
         await new Promise(resolve => setTimeout(resolve, delay));
     }
 
+    // After finishing the word by word typing, set the full HTML
     element.innerHTML = `<em><strong>Chatbot:</strong></em> ${htmlText}`;
-    chatbox.scrollTop = chatbox.scrollHeight;
+    chatbox.scrollTop = chatbox.scrollHeight;  // Final scroll adjustment
 }
 
 function contactSupport() {
+    // Implement your logic for contacting support here
     console.log('Contact support clicked!');
-}
-
-function showLoadingIndicator() {
-    loadingIndicator.style.display = 'block';
-}
-
-function hideLoadingIndicator() {
-    loadingIndicator.style.display = 'none';
-}
-
-function enableUserInput() {
-    const chatInput = document.querySelector('.chat-input');
-    chatInput.style.visibility = 'visible';
-    userInput.disabled = false;
-    sendButton.disabled = false;
 }
 
 document.addEventListener('DOMContentLoaded', async function () {
@@ -265,18 +249,21 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     showLoadingIndicator();
 
-});
-
-window.addEventListener('load', async () => {
     await loadModel();
-    await precomputeEmbeddings();
-
-    setInterval(() => {
-        const now = Date.now();
-        responseCache.forEach((value, key) => {
-            if (now - value.timestamp > CACHE_EXPIRATION_TIME) {
-                responseCache.delete(key);
-            }
-        });
-    }, CACHE_EXPIRATION_TIME / 2);
 });
+
+function showLoadingIndicator() {
+    loadingIndicator.style.display = 'block';
+}
+
+function hideLoadingIndicator() {
+    loadingIndicator.style.display = 'none';
+}
+
+function enableUserInput() {
+    const chatInput = document.querySelector('.chat-input');
+    chatInput.style.visibility = 'visible';
+    userInput.disabled = false;
+    sendButton.disabled = false;
+}
+ 
