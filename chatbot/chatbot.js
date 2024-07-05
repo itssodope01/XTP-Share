@@ -44,7 +44,7 @@ function normalizeTextWithSynonyms(input) {
     Object.keys(synonymDict).forEach(key => {
         const synonyms = synonymDict[key];
         synonyms.forEach(synonym => {
-            normalizedInput = normalizedInput.replace(new RegExp(`\\b${synonym}\\b`, 'gi'), key);
+            normalizedInput = normalizedInput.replace(new RegExp(`\\b${synonym.toLowerCase()}\\b`, 'gi'), key);
         });
     });
     return normalizedInput;
