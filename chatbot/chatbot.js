@@ -7,6 +7,8 @@ let loadingIndicator;
 let precomputedEmbeddings = [];
 
 const responseCache = new Map();
+const CACHE_EXPIRATION_TIME = 4 * 24 * 60 * 60 * 1000; //4 days
+const LRU_CACHE_SIZE = 100; 
 
 async function loadModel() {
     try {
@@ -65,28 +67,29 @@ function normalizeTextWithSynonyms(input) {
     return normalizedInput;
 }
 
+
 async function findMostSimilarQuestion(input) {
     const inputNormalized = normalizeTextWithSynonyms(input);
     const inputEmbedding = await model.embed([inputNormalized]);
     let maxSimilarity = -1;
     let mostSimilarQA = null;
-  
+
     for (const { embedding, qa } of precomputedEmbeddings) {
-      if (inputEmbedding && embedding && inputEmbedding.shape && embedding.shape) {
-        const similarity = await tf.matMul(inputEmbedding, embedding, false, true).data();
-        if (similarity[0] > maxSimilarity) {
-          maxSimilarity = similarity[0];
-          mostSimilarQA = qa;
+        if (inputEmbedding && embedding && inputEmbedding.shape && embedding.shape) {
+            const similarity = await tf.matMul(inputEmbedding, embedding, false, true).data();
+            if (similarity[0] > maxSimilarity) {
+                maxSimilarity = similarity[0];
+                mostSimilarQA = qa;
+            }
         }
-      }
     }
-  
+
     if (maxSimilarity > 0.7) {
-      return { question: mostSimilarQA.questions[0], answer: mostSimilarQA.answer, follow_up: mostSimilarQA.follow_up };
+        return { question: mostSimilarQA.questions[0], answer: mostSimilarQA.answer, follow_up: mostSimilarQA.follow_up };
     } else {
-      return findMostCommonTermsQuestion(inputNormalized);
+        return findMostCommonTermsQuestion(inputNormalized);
     }
-  }
+}
 
 function findMostCommonTermsQuestion(input) {
     const inputTerms = input.split(/\W+/).filter(term => term !== '');
@@ -111,24 +114,39 @@ function findMostCommonTermsQuestion(input) {
 
 async function getBotResponse(input) {
     if (responseCache.has(input)) {
-        return responseCache.get(input);
+        const cachedItem = responseCache.get(input);
+        if (Date.now() - cachedItem.timestamp < CACHE_EXPIRATION_TIME) {
+            return cachedItem.value;
+        } else {
+            responseCache.delete(input);
+        }
     }
+
     try {
         const mostSimilarAnswer = await findMostSimilarQuestion(input);
 
-        if (mostSimilarAnswer.question) {
-            responseCache.set(input, mostSimilarAnswer);
-            return mostSimilarAnswer;
-        } else if (mostSimilarAnswer.answer) {
-            responseCache.set(input, mostSimilarAnswer);
+        if (mostSimilarAnswer.question || mostSimilarAnswer.answer) {
+            addToCache(input, mostSimilarAnswer);
             return mostSimilarAnswer;
         } else {
-            return { answer: "I'm sorry, I don't have specific information about that. Can you please rephrase your question or ask about a different aspect of the XTP Share Platform?" };
+            const defaultResponse = { answer: "I'm sorry, I don't have specific information about that. Can you please rephrase your question or ask about a different aspect of the XTP Share Platform?" };
+            addToCache(input, defaultResponse);
+            return defaultResponse;
         }
     } catch (error) {
         console.error('Error getting bot response:', error);
-        return { answer: "I'm sorry, an error occurred while processing your request. Please try again later." };
+        const errorMessage = { answer: "I'm sorry, an error occurred while processing your request. Please try again later." };
+        addToCache(input, errorMessage);
+        return errorMessage;
     }
+}
+
+function addToCache(key, value) {
+    if (responseCache.size >= LRU_CACHE_SIZE) {
+        const oldestKey = responseCache.keys().next().value;
+        responseCache.delete(oldestKey);
+    }
+    responseCache.set(key, { value, timestamp: Date.now() });
 }
 
 async function handleUserInput(message) {
@@ -182,7 +200,6 @@ async function handleUserInput(message) {
     }
 }
 
-
 async function typeText(element, htmlText, delay = 50) {
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = htmlText;
@@ -204,7 +221,20 @@ function contactSupport() {
     console.log('Contact support clicked!');
 }
 
+function showLoadingIndicator() {
+    loadingIndicator.style.display = 'block';
+}
 
+function hideLoadingIndicator() {
+    loadingIndicator.style.display = 'none';
+}
+
+function enableUserInput() {
+    const chatInput = document.querySelector('.chat-input');
+    chatInput.style.visibility = 'visible';
+    userInput.disabled = false;
+    sendButton.disabled = false;
+}
 
 document.addEventListener('DOMContentLoaded', async function () {
     followUpContainer = document.getElementById('followUpContainer');
@@ -240,19 +270,13 @@ document.addEventListener('DOMContentLoaded', async function () {
 window.addEventListener('load', async () => {
     await loadModel();
     await precomputeEmbeddings();
-  });
 
-function showLoadingIndicator() {
-    loadingIndicator.style.display = 'block';
-}
-
-function hideLoadingIndicator() {
-    loadingIndicator.style.display = 'none';
-}
-
-function enableUserInput() {
-    const chatInput = document.querySelector('.chat-input');
-    chatInput.style.visibility = 'visible';
-    userInput.disabled = false;
-    sendButton.disabled = false;
-}
+    setInterval(() => {
+        const now = Date.now();
+        responseCache.forEach((value, key) => {
+            if (now - value.timestamp > CACHE_EXPIRATION_TIME) {
+                responseCache.delete(key);
+            }
+        });
+    }, CACHE_EXPIRATION_TIME / 2);
+});
