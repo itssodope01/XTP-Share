@@ -4,6 +4,9 @@ let chatbox;
 let userInput;
 let sendButton;
 let loadingIndicator;
+let precomputedEmbeddings = [];
+
+const responseCache = new Map();
 
 async function loadModel() {
     try {
@@ -17,6 +20,18 @@ async function loadModel() {
         chatbox.innerHTML += '<p><em>Chatbot: Oops! Something went wrong while loading the chatbot. Please try again later.</em></p>';
         hideLoadingIndicator();
     }
+}
+
+async function precomputeEmbeddings() {
+    const worker = new Worker('worker.js');
+    worker.postMessage(qaData);
+
+    worker.onmessage = function(event) {
+        precomputedEmbeddings = event.data;
+        hideLoadingIndicator();
+        enableUserInput();
+        worker.terminate();
+    };
 }
 
 function displayInitialFollowUpQuestions() {
@@ -53,37 +68,25 @@ function normalizeTextWithSynonyms(input) {
 async function findMostSimilarQuestion(input) {
     const inputNormalized = normalizeTextWithSynonyms(input);
     const inputEmbedding = await model.embed([inputNormalized]);
-
     let maxSimilarity = -1;
-    let mostSimilarQuestion = '';
-    let mostSimilarAnswer = '';
-    let mostSimilarFollowUp = '';
-
-    for (const qa of qaData) {
-        for (const question of qa.questions) {
-            const questionNormalized = normalizeTextWithSynonyms(question);
-            const questionEmbedding = await model.embed([questionNormalized]);
-
-            if (inputEmbedding && questionEmbedding && inputEmbedding.shape && questionEmbedding.shape) {
-                const similarity = await tf.matMul(inputEmbedding, questionEmbedding, false, true).data();
-                if (similarity[0] > maxSimilarity) {
-                    maxSimilarity = similarity[0];
-                    mostSimilarQuestion = question;
-                    mostSimilarAnswer = qa.answer;
-                    mostSimilarFollowUp = qa.follow_up;
-                }
-            } else {
-                console.warn('Invalid embeddings detected:', inputEmbedding, questionEmbedding);
-            }
+    let mostSimilarQA = null;
+  
+    for (const { embedding, qa } of precomputedEmbeddings) {
+      if (inputEmbedding && embedding && inputEmbedding.shape && embedding.shape) {
+        const similarity = await tf.matMul(inputEmbedding, embedding, false, true).data();
+        if (similarity[0] > maxSimilarity) {
+          maxSimilarity = similarity[0];
+          mostSimilarQA = qa;
         }
+      }
     }
-
+  
     if (maxSimilarity > 0.7) {
-        return { question: mostSimilarQuestion, answer: mostSimilarAnswer, follow_up: mostSimilarFollowUp };
+      return { question: mostSimilarQA.questions[0], answer: mostSimilarQA.answer, follow_up: mostSimilarQA.follow_up };
     } else {
-        return findMostCommonTermsQuestion(inputNormalized);
+      return findMostCommonTermsQuestion(inputNormalized);
     }
-}
+  }
 
 function findMostCommonTermsQuestion(input) {
     const inputTerms = input.split(/\W+/).filter(term => term !== '');
@@ -107,12 +110,17 @@ function findMostCommonTermsQuestion(input) {
 }
 
 async function getBotResponse(input) {
+    if (responseCache.has(input)) {
+        return responseCache.get(input);
+    }
     try {
         const mostSimilarAnswer = await findMostSimilarQuestion(input);
 
         if (mostSimilarAnswer.question) {
+            responseCache.set(input, mostSimilarAnswer);
             return mostSimilarAnswer;
         } else if (mostSimilarAnswer.answer) {
+            responseCache.set(input, mostSimilarAnswer);
             return mostSimilarAnswer;
         } else {
             return { answer: "I'm sorry, I don't have specific information about that. Can you please rephrase your question or ask about a different aspect of the XTP Share Platform?" };
@@ -128,45 +136,36 @@ async function handleUserInput(message) {
         const userMessage = message || userInput.value.trim();
         if (userMessage === '') return;
 
-        // Append user message to chatbox
         chatbox.innerHTML += `<p class="user-message"><strong>You:</strong> ${userMessage}</p>`;
         userInput.value = '';
         followUpContainer.innerHTML = '';
         chatbox.scrollTop = chatbox.scrollHeight;
 
-        // Display loading indicator
         const loadingIndicatorHTML = '<p class="bot-message"><em><strong>Chatbot:</strong> <span class="typing-indicator"><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></em></p>';
         chatbox.innerHTML += loadingIndicatorHTML;
 
-        // Retrieve bot response
         const botResponse = await getBotResponse(userMessage);
         const formattedAnswer = botResponse.answer.replace(/\n/g, '<br>');
 
-        // Remove loading indicator
         chatbox.innerHTML = chatbox.innerHTML.replace(loadingIndicatorHTML, '');
 
-        // Create bot message element
         const botMessageElem = document.createElement('p');
         botMessageElem.classList.add('bot-message');
         botMessageElem.innerHTML = `<em><strong>Chatbot:</strong></em> `;
         chatbox.appendChild(botMessageElem);
 
-        // Type the bot response text word by word
         await typeText(botMessageElem, formattedAnswer);
 
-        // Remove previous "Contact support" link if it exists
         const previousSupportLink = document.querySelector('.support-link');
         if (previousSupportLink) {
             previousSupportLink.remove();
         }
 
-        // Add "Contact support" link after bot response
         const supportLink = document.createElement('p');
         supportLink.classList.add('support-link');
         supportLink.innerHTML = '<span onclick="contactSupport()" style="cursor: pointer; font-size: 0.8rem; color: #838383;">Not satisfied with the answer? <span style="text-decoration: underline;" >Contact support</span></span>';
         chatbox.appendChild(supportLink);
 
-        // Append follow-up questions if available
         if (Array.isArray(botResponse.follow_up) && botResponse.follow_up.length > 0) {
             botResponse.follow_up.forEach(followUpQuestion => {
                 const followUpBtn = document.createElement('button');
@@ -177,7 +176,6 @@ async function handleUserInput(message) {
             });
         }
 
-        // Scroll to the bottom of the chatbox
         chatbox.scrollTop = chatbox.scrollHeight;
     } catch (error) {
         console.error('Error handling user input:', error);
@@ -194,17 +192,15 @@ async function typeText(element, htmlText, delay = 50) {
     for (let i = 0; i < words.length; i++) {
         currentHTML += words[i] + ' ';
         element.innerHTML = `<em><strong>Chatbot:</strong></em> ${currentHTML}`;
-        chatbox.scrollTop = chatbox.scrollHeight;  // Adjust scroll position
+        chatbox.scrollTop = chatbox.scrollHeight;
         await new Promise(resolve => setTimeout(resolve, delay));
     }
 
-    // After finishing the word by word typing, set the full HTML
     element.innerHTML = `<em><strong>Chatbot:</strong></em> ${htmlText}`;
-    chatbox.scrollTop = chatbox.scrollHeight;  // Final scroll adjustment
+    chatbox.scrollTop = chatbox.scrollHeight;
 }
 
 function contactSupport() {
-    // Implement your logic for contacting support here
     console.log('Contact support clicked!');
 }
 
@@ -239,8 +235,12 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     showLoadingIndicator();
 
-    await loadModel();
 });
+
+window.addEventListener('load', async () => {
+    await loadModel();
+    await precomputeEmbeddings();
+  });
 
 function showLoadingIndicator() {
     loadingIndicator.style.display = 'block';
