@@ -14,6 +14,7 @@
     right: 8%;
     bottom: 7%;
     color: var(--chatbot-text);
+    z-index: 5000;
 }
 
 .chat-header {
