@@ -59,7 +59,7 @@ function displayInitialFollowUpQuestions() {
 }
 
 function normalizeText(text) {
-    return text.toLowerCase().replace(/[^\w\s]/gi, '');
+    return text.replace(/(\d+)([a-zA-Z]+)/g, '$1 $2').toLowerCase();
 }
 
 function normalizeTextWithSynonyms(input) {

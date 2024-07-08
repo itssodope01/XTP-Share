@@ -606,6 +606,7 @@ const qaData = [
     "file management": ["document management", "data handling"],
     "file protection": ["data protection", "document security"],
     "file support": ["document support", "data assistance"],
-    "file upload security": ["upload security", "document upload security"]
+    "file upload security": ["upload security", "document upload security"],
+    "file size" : ["gb", "mb", "gigabyte", "megabyte", "tb", "byte"]
 
 };
