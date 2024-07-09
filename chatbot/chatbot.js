@@ -291,7 +291,7 @@ async function handleUserInput(message) {
                         accounts +=`<br>`;
                     });
                     combinedAnswer += accounts;
-                    
+
                 }
             }else {
                 if (!displayedAnswers.has(formattedAnswer)) {
@@ -334,14 +334,15 @@ async function handleUserInput(message) {
 function chatBotHistoryCheck() {
     chatContainer.style.display = 'none';
     chatIcon.style.visibility = 'visible';
-    const code = document.getElementById('botHistoryCode').value;
+    const codeDiv = document.getElementById('botHistoryCode');
+    const code = codeDiv.value;
     if (code.length === 6) {
         getTransferHistory(code);
         transferHistoryLink.click();   
     } else {
         alert("Please enter a valid 6-digit code.");
     }
-    code = '';
+    codeDiv.value = '';
 }
 
 function selectUniqueRandomFollowUps(followUps, count, displayedFollowUps) {
