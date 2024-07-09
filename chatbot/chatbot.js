@@ -284,9 +284,9 @@ async function handleUserInput(message) {
                     combinedAnswer += "Please Login to see your connected accounts."
                 } else {
                     let accounts = `<br>These are accounts that you have currently connected with us: <br><br>`;
-                    userAccounts.forEach(account => {
-                        accounts += account.platform;
-                        account +=`<br>`;
+                    userAccounts.forEach(acc => {
+                        accounts += acc.account;
+                        accounts +=`<br>`;
                     });
                     combinedAnswer += accounts;
                 }
@@ -329,13 +329,16 @@ async function handleUserInput(message) {
 }
 
 function chatBotHistoryCheck() {
+    chatContainer.style.display = 'none';
+    chatIcon.style.visibility = 'visible';
     const code = document.getElementById('botHistoryCode').value;
     if (code.length === 6) {
         getTransferHistory(code);
-        transferHistoryLink.click();
+        transferHistoryLink.click();   
     } else {
         alert("Please enter a valid 6-digit code.");
     }
+    code = '';
 }
 
 function selectUniqueRandomFollowUps(followUps, count, displayedFollowUps) {
