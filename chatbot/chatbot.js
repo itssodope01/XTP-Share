@@ -179,6 +179,16 @@ async function getBotResponse(input) {
     }
 }
 
+// tailored reply patterns
+const rsPattern = "We do not allow transfer/sharing files with these extensions through email due to security reasons: <br><br> 'ade', 'adp', 'apk', 'appx', 'appxbundle', 'bat', 'cab', 'chm', 'cmd', 'com', 'cpl', 'diagcab', 'diagcfg','diagpack', 'dll', 'dmg', 'ex', 'ex_', 'exe', 'hta', 'img', 'ins', 'iso', 'isp', 'jar', 'jnlp', 'js', 'jse', 'lib', 'lnk', 'mde', 'mjs', 'msc', 'msi', 'msix', 'msixbundle', 'msp', 'mst', 'nsh', 'pif', 'ps1', 'scr', 'sct', 'shb', 'sys', 'vb', 'vbe', 'vbs', 'vhd', 'vxd', 'wsc', 'wsf', 'wsh', 'xll', 'appref-ms', 'bas', 'bgi', 'cer', 'csh', 'der', 'fxp', 'gadget', 'grp', 'hlp', 'hpj', 'htc', 'inf', 'its', 'mad', 'maf', 'mag', 'mam', 'maq', 'mar', 'mas', 'mat', 'mau', 'mav', 'maw', 'mcf', 'mda', 'mdb', 'mdt', 'mdw', 'mdz', 'msc', 'msh', 'msh1', 'msh2', 'mshxml', 'msh1xml', 'msh2xml', 'msu', 'ops', 'osd', 'pcd', 'plg', 'prf', 'prg', 'printerexport', 'pst', 'pyc', 'pyo', 'pyw', 'pyz', 'pyzw', 'reg', 'scf', 'sct', 'shs', 'theme', 'vbp', 'vsmacros', 'vsw', 'webpnp', 'website', 'ws', 'xbap'<br><br> But you can transfer any other file types without any problem. <br><br> There are no restricted file types for Google Drive or OneDrive, but if it is a business/organization account, some file types may be blocked on your organization’s site. The list of blocked files will vary depending on your administrator.";
+let ynPattern = "\"<extension>\" files are blocked in email due to security.<br>But there are no restricted file types for Google Drive or OneDrive (unless it is a business account.)";
+
+const modePattern = "<Dark/Light> mode turned on.";
+
+const historyPattern = "Transfer History Pattern";
+
+const linkedPattern = "Linked Accounts Pattern";
+
 async function handleUserInput(message) {
     try {
         const userMessage = message || userInput.value.trim();
@@ -216,9 +226,75 @@ async function handleUserInput(message) {
         let combinedAnswer = '';
         botResponses.forEach((botResponse, index) => {
             const formattedAnswer = botResponse.answer.replace(/\n/g, '<br>');
-            if (!displayedAnswers.has(formattedAnswer)) {
-                combinedAnswer += (combinedAnswer.length > 0 ? '<br><br>' : '') + formattedAnswer;
-                displayedAnswers.add(formattedAnswer);
+
+            if (formattedAnswer === rsPattern) {
+                const foundExtensions = restrictedFileTypes.filter(ext => {
+                    const regex = new RegExp(`\\b${ext}\\b`, 'i');
+                    return regex.test(userMessage);
+                });
+
+                if (foundExtensions.length > 0) {
+                    const uniqueExtensions = [...new Set(foundExtensions)];
+                    const extensionsStr = uniqueExtensions.join(', ');
+                    combinedAnswer += ynPattern.replace('<extension>', extensionsStr);
+                } else {
+                    combinedAnswer += formattedAnswer;
+                }
+            } else if (formattedAnswer === modePattern) {
+                const darkModeRequested = /dark|night/i.test(userMessage);
+                const lightModeRequested = /light|day/i.test(userMessage);
+                const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+
+                if (darkModeRequested && currentTheme === 'dark') {
+                    combinedAnswer += "The dark mode is already turned on.";
+                } else if (lightModeRequested && currentTheme === 'light') {
+                    combinedAnswer += "The light mode is already turned on.";
+                } else if (darkModeRequested) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('theme', 'dark');
+                    darkModeToggle.checked = true;
+                    combinedAnswer += "Dark mode turned on.";
+                } else if (lightModeRequested) {
+                    document.documentElement.setAttribute('data-theme', 'light');
+                    localStorage.setItem('theme', 'light');
+                    darkModeToggle.checked = false;
+                    combinedAnswer += "Light mode turned on.";
+                } else {
+                    darkModeToggle.click();
+                    if (currentTheme === 'dark')
+                        combinedAnswer += "Light mode turned on.";
+                    else
+                        combinedAnswer += "Dark mode turned on.";
+                }
+            } else if (formattedAnswer === historyPattern) {
+                if (skipVerificationSection) {
+                    transferHistoryLink.click();
+                    combinedAnswer += "Check Transfer History.";
+                } else {
+                    combinedAnswer += `
+                        <div class="verification-block" style="width: 250px; height: 140px; padding: 6px;">
+                            <p>Please enter the 6-digit One-Time Code from the mobile app.</p>
+                            <input type="text" id="botHistoryCode" maxlength="6" style="width: 100%; padding: 5px;">
+                            <button onclick="chatBotHistoryCheck()" style="margin-top: 10px; background-color: transparent; border: 1.5px solid royalblue; color: royalblue; padding: 10px; cursor: pointer;">Check History</button>
+                        </div>
+                    `;
+                }
+            } else if (formattedAnswer === linkedPattern) {
+                if (!skipVerificationSection) {
+                    combinedAnswer += "Please Login to see your connected accounts."
+                } else {
+                    let accounts = `<br>These are accounts that you have currently connected with us: <br><br>`;
+                    userAccounts.forEach(account => {
+                        accounts += account.platform;
+                        account +=`<br>`;
+                    });
+                    combinedAnswer += accounts;
+                }
+            }else {
+                if (!displayedAnswers.has(formattedAnswer)) {
+                    combinedAnswer += (combinedAnswer.length > 0 ? '<br><br>' : '') + formattedAnswer;
+                    displayedAnswers.add(formattedAnswer);
+                }
             }
         });
 
@@ -247,7 +323,19 @@ async function handleUserInput(message) {
         });
 
         chatbox.scrollTop = chatbox.scrollHeight;
-    } catch (error) { }
+    } catch (error) { 
+        console.error(error);
+    }
+}
+
+function chatBotHistoryCheck() {
+    const code = document.getElementById('botHistoryCode').value;
+    if (code.length === 6) {
+        getTransferHistory(code);
+        transferHistoryLink.click();
+    } else {
+        alert("Please enter a valid 6-digit code.");
+    }
 }
 
 function selectUniqueRandomFollowUps(followUps, count, displayedFollowUps) {
