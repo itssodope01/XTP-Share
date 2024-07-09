@@ -291,6 +291,7 @@ async function handleUserInput(message) {
                         accounts +=`<br>`;
                     });
                     combinedAnswer += accounts;
+                    
                 }
             }else {
                 if (!displayedAnswers.has(formattedAnswer)) {
