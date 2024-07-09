@@ -284,8 +284,10 @@ async function handleUserInput(message) {
                     combinedAnswer += "Please Login to see your connected accounts."
                 } else {
                     let accounts = `<br>These are accounts that you have currently connected with us: <br><br>`;
-                    userAccounts.forEach(acc => {
-                        accounts += acc.account;
+                    const defaultPlatform = platforms.find(p => p.name === "Email");
+                    userAccounts.forEach(({ platform, account }) => {
+                        const platformData = platforms.find(p => p.name === platform) || defaultPlatform;
+                        accounts += `${platformData.name} : ${account};`
                         accounts +=`<br>`;
                     });
                     combinedAnswer += accounts;
