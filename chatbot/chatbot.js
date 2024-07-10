@@ -285,7 +285,7 @@ async function handleUserInput(message) {
                         accounts +=`<br>`;
                     });
                     populateConnectedAccounts();
-                    combinedAnswer += document.getElementById('connectedAccountsList').innerHTML;
+                    combinedAnswer += document.getElementById('connectedAccountsContainer').innerHTML;
 
                 }
             }else {
