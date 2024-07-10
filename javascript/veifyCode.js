@@ -110,6 +110,7 @@ function verifyCode() {
         })
         .catch(error => {
             handleFailure('An error occurred. Please try again later.');
+            console.error(error);
         });
     } else if (incorrectAttempts >= 5) {
         // Handle 5 incorrect attempts scenario
