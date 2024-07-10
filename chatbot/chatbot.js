@@ -18,7 +18,7 @@ worker.onmessage = function (e) {
     } else if (e.data.status === 'preComputeComplete') {
         isReady = true;
         chatbox.innerHTML += '<p><em><strong>Chatbot:</strong> Hello! How can I help you today?</em></p>';
-        displayInitialFollowUpQuestions();
+        displayInitialFollowUpQuestions(initialQuestions);
         hideLoadingIndicator();
         enableUserInput();
     } else if (e.data.status === 'error') {
@@ -42,12 +42,19 @@ async function loadModel() {
     }
 }
 
-function displayInitialFollowUpQuestions() {
-    const initialQuestions = [
-        "What is XTP Share, how does it work?",
-        "How to transfer files using XTP Share?",
-        "Upload files to Google Drive/OneDrive without login?"
-    ];
+const initialQuestions = [
+    "What is XTP Share, how does it work?",
+    "How to transfer files using XTP Share?",
+    "Upload files to Google Drive/OneDrive without login?"
+];
+
+const loginQuestions = [
+    "Show me my linkend accounts",
+    "How to transfer files using XTP Share?",
+    "Show my Transfer History"
+];
+
+function displayInitialFollowUpQuestions(initialQuestions) {
 
     initialQuestions.forEach(question => {
         const followUpBtn = document.createElement('button');
@@ -180,6 +187,9 @@ async function getBotResponse(input) {
 }
 
 // tailored reply patterns
+let codeAsked = false;
+let historyAsked = false;
+
 const rsPattern = "We do not allow transfer/sharing files with these extensions through email due to security reasons: <br><br> 'ade', 'adp', 'apk', 'appx', 'appxbundle', 'bat', 'cab', 'chm', 'cmd', 'com', 'cpl', 'diagcab', 'diagcfg','diagpack', 'dll', 'dmg', 'ex', 'ex_', 'exe', 'hta', 'img', 'ins', 'iso', 'isp', 'jar', 'jnlp', 'js', 'jse', 'lib', 'lnk', 'mde', 'mjs', 'msc', 'msi', 'msix', 'msixbundle', 'msp', 'mst', 'nsh', 'pif', 'ps1', 'scr', 'sct', 'shb', 'sys', 'vb', 'vbe', 'vbs', 'vhd', 'vxd', 'wsc', 'wsf', 'wsh', 'xll', 'appref-ms', 'bas', 'bgi', 'cer', 'csh', 'der', 'fxp', 'gadget', 'grp', 'hlp', 'hpj', 'htc', 'inf', 'its', 'mad', 'maf', 'mag', 'mam', 'maq', 'mar', 'mas', 'mat', 'mau', 'mav', 'maw', 'mcf', 'mda', 'mdb', 'mdt', 'mdw', 'mdz', 'msc', 'msh', 'msh1', 'msh2', 'mshxml', 'msh1xml', 'msh2xml', 'msu', 'ops', 'osd', 'pcd', 'plg', 'prf', 'prg', 'printerexport', 'pst', 'pyc', 'pyo', 'pyw', 'pyz', 'pyzw', 'reg', 'scf', 'sct', 'shs', 'theme', 'vbp', 'vsmacros', 'vsw', 'webpnp', 'website', 'ws', 'xbap'<br><br> But you can transfer any other file types without any problem. <br><br> There are no restricted file types for Google Drive or OneDrive, but if it is a business/organization account, some file types may be blocked on your organization’s site. The list of blocked files will vary depending on your administrator.";
 let ynPattern = "\"<extension>\" files are blocked in email due to security.<br>But there are no restricted file types for Google Drive or OneDrive (unless it is a business account.)";
 
@@ -198,6 +208,11 @@ async function handleUserInput(message) {
         userInput.value = '';
         followUpContainer.innerHTML = '';
         chatbox.scrollTop = chatbox.scrollHeight;
+
+        if (codeAsked) {
+            loginUser(userMessage);
+            return;
+        }
 
         const questions = splitIntoQuestions(userMessage);
         const botResponses = [];
@@ -271,27 +286,20 @@ async function handleUserInput(message) {
                     transferHistoryLink.click();
                     combinedAnswer += "Check Transfer History.";
                 } else {
-                    combinedAnswer += `
-                        <div class="verification-block" style="width: 250px; height: 140px; padding: 6px;">
-                            <p>Please enter the 6-digit One-Time Code from the mobile app.</p>
-                            <input type="text" id="botHistoryCode" maxlength="6" style="width: 100%; padding: 5px;">
-                            <button onclick="chatBotHistoryCheck()" style="margin-top: 10px; background-color: transparent; border: 1.5px solid royalblue; color: royalblue; padding: 10px; cursor: pointer;">Check History</button>
-                        </div>
-                    `;
+                    combinedAnswer += `Enter the One-Time Code from the mobile app.`;
+                    codeAsked = true;
+                    historyAsked = true;
                 }
             } else if (formattedAnswer === linkedPattern) {
                 if (!skipVerificationSection) {
                     combinedAnswer += "Please Login to see your connected accounts."
                 } else {
                     let accounts = `<br>These are accounts that you have currently connected with us: <br><br>`;
-                    const defaultPlatform = platforms.find(p => p.name === "Email");
-                    userAccounts.forEach(({ platform, account }) => {
-                        const platformData = platforms.find(p => p.name === platform) || defaultPlatform;
-                        accounts += `${platformData.name} : ${account};`
+                    userAccounts.forEach(acc => {
+                        accounts += acc.account;
                         accounts +=`<br>`;
                     });
                     combinedAnswer += accounts;
-
                 }
             }else {
                 if (!displayedAnswers.has(formattedAnswer)) {
@@ -313,17 +321,19 @@ async function handleUserInput(message) {
         supportLink.innerHTML = '<span onclick="contactSupport()" style=" font-size: 0.8rem; color: #838383;">Not satisfied with the answer? <span style="text-decoration: underline; cursor: pointer;" >Contact support</span></span>';
         chatbox.appendChild(supportLink);
 
-        const uniqueFollowUps = Array.from(new Set(allFollowUps));
-        const followUpsToShow = selectUniqueRandomFollowUps(uniqueFollowUps, 4, displayedFollowUps);
-
-        followUpsToShow.forEach(followUpQuestion => {
-            const followUpBtn = document.createElement('button');
-            followUpBtn.innerText = followUpQuestion;
-            followUpBtn.className = 'follow-up-btn';
-            followUpBtn.onclick = () => handleUserInput(followUpQuestion);
-            followUpContainer.appendChild(followUpBtn);
-            displayedFollowUps.add(followUpQuestion);
-        });
+        if(!codeAsked) {
+            const uniqueFollowUps = Array.from(new Set(allFollowUps));
+            const followUpsToShow = selectUniqueRandomFollowUps(uniqueFollowUps, 4, displayedFollowUps);
+    
+            followUpsToShow.forEach(followUpQuestion => {
+                const followUpBtn = document.createElement('button');
+                followUpBtn.innerText = followUpQuestion;
+                followUpBtn.className = 'follow-up-btn';
+                followUpBtn.onclick = () => handleUserInput(followUpQuestion);
+                followUpContainer.appendChild(followUpBtn);
+                displayedFollowUps.add(followUpQuestion);
+            });
+        }
 
         chatbox.scrollTop = chatbox.scrollHeight;
     } catch (error) { 
@@ -331,18 +341,55 @@ async function handleUserInput(message) {
     }
 }
 
-function chatBotHistoryCheck() {
-    chatContainer.style.display = 'none';
-    chatIcon.style.visibility = 'visible';
-    const codeDiv = document.getElementById('botHistoryCode');
-    const code = codeDiv.value;
-    if (code.length === 6) {
-        getTransferHistory(code);
-        transferHistoryLink.click();   
+async function loginUser (code) {
+    const loadingIndicatorHTML = '<p class="bot-message"><em><strong>Chatbot:</strong> <span class="typing-indicator"><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></em></p>';
+    chatbox.innerHTML += loadingIndicatorHTML;
+    let botResponse = '';
+    const isNonNumeric = /\D/.test(code);
+    if (code.length < 6 || code.trim() === "" || isNonNumeric) {
+        botResponse = "Invalid Code Format."
     } else {
-        alert("Please enter a valid 6-digit code.");
+        const inputs = document.querySelectorAll(".code-input");
+        code.split('').forEach((digit, index) => {
+            inputs[index].value = digit;
+        });
+        verifyCode(true);
+        if (skipVerificationSection) {
+            botResponse = "You are now logged in. Click the User Icon on the top right of the screen for more info.";
+
+            if (historyAsked) {
+                transferHistoryLink.click();
+                botResponse += `<br> Check Transfer History.`
+            }
+
+            displayInitialFollowUpQuestions(loginQuestions);
+        }
+        else
+            botResponse = "Incorrect Code."
     }
-    codeDiv.value = '';
+
+    chatbox.innerHTML = chatbox.innerHTML.replace(loadingIndicatorHTML, '');
+
+    const botMessageElem = document.createElement('p');
+    botMessageElem.classList.add('bot-message');
+    chatbox.appendChild(botMessageElem);
+
+    await typeText(botMessageElem, botResponse);
+
+    const previousSupportLink = document.querySelector('.support-link');
+    if (previousSupportLink) {
+        previousSupportLink.remove();
+    }
+    
+    const supportLink = document.createElement('p');
+    supportLink.classList.add('support-link');
+    supportLink.innerHTML = '<span onclick="contactSupport()" style=" font-size: 0.8rem; color: #838383;">Not satisfied with the answer? <span style="text-decoration: underline; cursor: pointer;" >Contact support</span></span>';
+    chatbox.appendChild(supportLink);
+
+    chatbox.scrollTop = chatbox.scrollHeight;
+
+    codeAsked = false;
+
 }
 
 function selectUniqueRandomFollowUps(followUps, count, displayedFollowUps) {
