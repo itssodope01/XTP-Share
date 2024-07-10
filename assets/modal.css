@@ -593,7 +593,7 @@ font-size: large;
 
 .transfer-history-table th, .transfer-history-table td {
   padding: 12px;
-  text-align: left;
+  text-align: left !important;
   color: var(--text-color);
   border-bottom: 0 !important;
 }
