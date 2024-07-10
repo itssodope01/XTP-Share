@@ -278,14 +278,13 @@ async function handleUserInput(message) {
                     combinedAnswer += "Please Login to see your connected accounts."
                 } else {
                     let accounts = `<br>These are accounts that you have currently connected with us: <br><br>`;
-                    const defaultPlatform = platforms.find(p => p.name === "Email");
-                    userAccounts.forEach(({ platform, account }) => {
-                        const platformData = platforms.find(p => p.name === platform) || defaultPlatform;
-                        accounts += `${platformData.name} : ${account};`
-                        accounts +=`<br>`;
-                    });
                     populateConnectedAccounts();
-                    combinedAnswer += document.getElementById('connectedAccountsContainer').innerHTML;
+                    let connectedAccounts = document.querySelectorAll('.connected-account');
+                    connectedAccounts.forEach(account => {
+                        accounts += `${account.innerHTML} <br><br>`;
+                    });
+
+                    combinedAnswer += accounts;
 
                 }
             }else {
