@@ -61,7 +61,7 @@ function switchUserLogo() {
     }
 }
 
-function verifyCode(botLogin = false) {
+function verifyCode() {
     const verificationCode = [...document.querySelectorAll(".code-input")].map(input => input.value).join(""); // Verification Code from user
     userEnteredCode = verificationCode;
 
@@ -102,7 +102,7 @@ function verifyCode(botLogin = false) {
                         addUniqueItem(userAccounts, {platform: userPlatform, account: auth.displayName});
                     }
                 });
-                handleSuccess(botLogin);
+                handleSuccess();
             } else {
                 handleFailure('Invalid response from server');
             }
@@ -124,7 +124,7 @@ function verifyCode(botLogin = false) {
     }
 }
 
-function handleSuccess(botLogin) {
+function handleSuccess() {
     clearTimeout(pageReloadTimer);
     verificationStartTime = Date.now();
     const displayNamep = document.querySelector('#displayName')
@@ -132,16 +132,14 @@ function handleSuccess(botLogin) {
     loadUserEmails();
     loadCloudAccounts();
     addCloudEventListners();
-    if (!botLogin) {
-        if (currentButton === 'send-email-button') {
-            transitionSections('S2', 'S4');
-        } else if (currentButton === 'save-cloud-button') {
-            transitionSections('S2', 'S3');
-            if(transferOpen) {
-                setTimeout(() => {
-                showModal(transferModal);
-                }, 400);
-            }
+    if (currentButton === 'send-email-button') {
+        transitionSections('S2', 'S4');
+    } else if (currentButton === 'save-cloud-button') {
+        transitionSections('S2', 'S3');
+        if(transferOpen) {
+            setTimeout(() => {
+            showModal(transferModal);
+        }, 400);
         }
     }
     setTimeout(() => {
