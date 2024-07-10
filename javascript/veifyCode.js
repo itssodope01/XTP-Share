@@ -103,6 +103,7 @@ function verifyCode() {
                     }
                 });
                 handleSuccess();
+                return;
             } else {
                 handleFailure('Invalid response from server');
             }
@@ -157,7 +158,7 @@ function handleFailure(message) {
     if (incorrectAttempts < 5){
         incorrectAttempts++; // Increment incorrect attempts
         localStorage.setItem('incorrectAttempts', incorrectAttempts); // Save incorrectAttempts to localStorage
-        displayVerificationMessage('Incorrect verification code', false);
+        displayVerificationMessage(message, false);
         shake('.code-input-container');
     }  
 }
