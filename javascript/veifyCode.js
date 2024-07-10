@@ -154,7 +154,7 @@ function handleFailure(message) {
     if (incorrectAttempts < 5){
         incorrectAttempts++; // Increment incorrect attempts
         localStorage.setItem('incorrectAttempts', incorrectAttempts); // Save incorrectAttempts to localStorage
-        displayVerificationMessage(message, false);
+        displayVerificationMessage('Incorrect Code', false);
         shake('.code-input-container');
     }  
 }
