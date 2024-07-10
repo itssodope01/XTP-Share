@@ -293,7 +293,7 @@ async function handleUserInput(message) {
         await typeText(botMessageElem, combinedAnswer);
 
         if(accountsRequested) {
-            let accountList = document.querySelector('#botAccountList');
+            let accountList = document.querySelector('#botAccountsList');
             populateConnectedAccounts(accountList);
             accountsRequested = false;
         }
