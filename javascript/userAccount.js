@@ -267,12 +267,12 @@ const connectedAccountsList = document.getElementById('connectedAccountsList');
 function showUserAccounts() {
     connectedAccountsContainer.classList.toggle('open');
     if (connectedAccountsContainer.classList.contains('open')) {
-        populateConnectedAccounts(); // Populate the connected accounts dynamically
+        populateConnectedAccounts(connectedAccountsList); // Populate the connected accounts dynamically
     }
 }
 
 
-function populateConnectedAccounts() {
+function populateConnectedAccounts(connectedAccountsList) {
     const defaultPlatform = platforms.find(p => p.name === "Email");
     let html = '';
 
@@ -293,7 +293,8 @@ function populateConnectedAccounts() {
     });
 
     connectedAccountsList.innerHTML = html;
-    connectedAccountsList.onclick = () => {
-        connectedAccountsContainer.classList.add('open');
-    };
 }
+
+connectedAccountsList.onclick = () => {
+    connectedAccountsContainer.classList.add('open');
+};

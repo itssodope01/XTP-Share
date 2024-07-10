@@ -277,12 +277,9 @@ async function handleUserInput(message) {
                 if (!skipVerificationSection) {
                     combinedAnswer += "Please Login to see your connected accounts."
                 } else {
-                    let accounts = `<br>These are accounts that you have currently connected with us: <br><br>`;
-                    populateConnectedAccounts();
-                    let connectedAccounts = document.querySelectorAll('.connected-account');
-                    connectedAccounts.forEach(account => {
-                        accounts += `${account.innerHTML} <br><br>`;
-                    });
+                    let accounts = `<br>These are accounts that you have currently connected with us: <br><br> <div id="botAccountsList" class="connected-accounts-list">`;
+                    let accountList = document.querySelector('#botAccountList');
+                    populateConnectedAccounts(accountList);
 
                     combinedAnswer += accounts;
 
