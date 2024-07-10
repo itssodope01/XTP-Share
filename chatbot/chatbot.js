@@ -279,10 +279,8 @@ async function handleUserInput(message) {
                 if (!skipVerificationSection) {
                     combinedAnswer += "Please Login to see your connected accounts."
                 } else {
-                    let accounts = `<br>These are accounts that you have currently connected with us: <br><br> <div id="botAccountsList" class="connected-accounts-list">`;
-                    combinedAnswer += accounts;
+                    combinedAnswer += `<br>These are accounts that you have currently connected with us: <br><br> <div id="botAccountsList" class="connected-accounts-list"></div>`;
                     accountsRequested = true;
-
                 }
             }else {
                 if (!displayedAnswers.has(formattedAnswer)) {
