@@ -138,11 +138,6 @@ function handleSuccess() {
         transitionSections('S2', 'S4');
     } else if (currentButton === 'save-cloud-button') {
         transitionSections('S2', 'S3');
-        if(transferOpen) {
-            setTimeout(() => {
-            showModal(transferModal);
-        }, 400);
-        }
     }
     setTimeout(() => {
         clearCodeFields();
