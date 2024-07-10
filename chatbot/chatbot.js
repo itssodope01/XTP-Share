@@ -284,6 +284,7 @@ async function handleUserInput(message) {
                         accounts += `${platformData.name} : ${account};`
                         accounts +=`<br>`;
                     });
+                    populateConnectedAccounts();
                     combinedAnswer += document.getElementById('connectedAccountsList').innerHTML;
 
                 }
