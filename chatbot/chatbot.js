@@ -279,8 +279,7 @@ async function handleUserInput(message) {
                 } else {
                     let accounts = `<br>These are accounts that you have currently connected with us: <br><br>`;
                     const defaultPlatform = platforms.find(p => p.name === "Email");
-                    let html = '';
-                
+                    let html = `<div>`;
                     userAccounts.forEach(({ platform, account }) => {
                         const platformData = platforms.find(p => p.name === platform) || defaultPlatform;
                 
@@ -294,8 +293,11 @@ async function handleUserInput(message) {
                                     <span class="platformName">${platformData.name}</span>
                                 </span>
                             </a>
+                            <br>
                         `;
                     });
+
+                    html += `</div>`
 
                     accounts += html;
                     combinedAnswer += accounts;
