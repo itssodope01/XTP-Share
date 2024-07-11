@@ -189,8 +189,6 @@ const historyPattern = "Transfer History Pattern";
 
 const linkedPattern = "Linked Accounts Pattern";
 
-let accountsRequested = false;
-
 async function handleUserInput(message) {
     try {
         const userMessage = message || userInput.value.trim();
@@ -279,8 +277,30 @@ async function handleUserInput(message) {
                 if (!skipVerificationSection) {
                     combinedAnswer += "Please Login to see your connected accounts."
                 } else {
-                    combinedAnswer += `<br>These are accounts that you have currently connected with us: <br><br> <div id="botAccountsList" class="connected-accounts-list"></div>`;
-                    accountsRequested = true;
+                    let accounts = `<br>These are accounts that you have currently connected with us: <br><br>`;
+                    const defaultPlatform = platforms.find(p => p.name === "Email");
+                    let html = '';
+                
+                    userAccounts.forEach(({ platform, account }) => {
+                        const platformData = platforms.find(p => p.name === platform) || defaultPlatform;
+                
+                        html += `
+                            <a class="connected-account" style="--hover-color: ${platformData.hover_color}">
+                                <div class="icon-container">
+                                    <img src="${baseURL}${platformData.src}" alt="${platformData.name} Logo">
+                                </div>
+                                <span class="account-data">
+                                    <span>${account}</span>
+                                    <span class="platformName">${platformData.name}</span>
+                                </span>
+                            </a>
+                        `;
+                    });
+
+                    accounts += html;
+                    combinedAnswer += accounts;
+
+
                 }
             }else {
                 if (!displayedAnswers.has(formattedAnswer)) {
@@ -291,7 +311,6 @@ async function handleUserInput(message) {
         });
 
         await typeText(botMessageElem, combinedAnswer);
-
 
         const previousSupportLink = document.querySelector('.support-link');
         if (previousSupportLink) {
@@ -413,11 +432,6 @@ async function typeText(element, htmlText, delay = 50) {
             chatbox.scrollTop = chatbox.scrollHeight;
             await new Promise(resolve => setTimeout(resolve, delay));
         }
-    }
-    if(accountsRequested) {
-        let accountList = document.querySelector('#botAccountsList');
-        populateConnectedAccounts(accountList);
-        accountsRequested = false;
     }
 
     element.innerHTML = `<em><strong>Chatbot:</strong></em> ${htmlText}`;
