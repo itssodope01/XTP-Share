@@ -279,12 +279,12 @@ async function handleUserInput(message) {
                 } else {
                     let accounts = `<br>These are accounts that you have currently connected with us: <br><br>`;
                     const defaultPlatform = platforms.find(p => p.name === "Email");
-                    let html = `<div>`;
+                    let html = ``;
                     userAccounts.forEach(({ platform, account }) => {
                         const platformData = platforms.find(p => p.name === platform) || defaultPlatform;
                 
                         html += `
-                            <a class="connected-account" style="--hover-color: ${platformData.hover_color}">
+                            <a class="connected-account" style="--hover-color: ${platformData.hover_color}; cursor: default; margin-bottom: 6px;">
                                 <div class="icon-container">
                                     <img src="${baseURL}${platformData.src}" alt="${platformData.name} Logo">
                                 </div>
@@ -296,8 +296,6 @@ async function handleUserInput(message) {
                             <br>
                         `;
                     });
-
-                    html += `</div>`
 
                     accounts += html;
                     combinedAnswer += accounts;
