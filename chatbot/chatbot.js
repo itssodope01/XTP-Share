@@ -189,8 +189,6 @@ const historyPattern = "Transfer History Pattern";
 
 const linkedPattern = "Linked Accounts Pattern";
 
-let accountsRequested = false;
-
 async function handleUserInput(message) {
     try {
         const userMessage = message || userInput.value.trim();
@@ -280,7 +278,8 @@ async function handleUserInput(message) {
                     combinedAnswer += "Please Login to see your connected accounts."
                 } else {
                     combinedAnswer += `<br>These are accounts that you have currently connected with us: <br><br> <div id="botAccountsList" class="connected-accounts-list"></div>`;
-                    accountsRequested = true;
+                        let accountList = document.querySelector('#botAccountsList');
+                        populateConnectedAccounts(accountList);
                 }
             }else {
                 if (!displayedAnswers.has(formattedAnswer)) {
@@ -292,11 +291,6 @@ async function handleUserInput(message) {
 
         await typeText(botMessageElem, combinedAnswer);
 
-        if(accountsRequested) {
-            let accountList = document.querySelector('#botAccountsList');
-            populateConnectedAccounts(accountList);
-            accountsRequested = false;
-        }
 
         const previousSupportLink = document.querySelector('.support-link');
         if (previousSupportLink) {
