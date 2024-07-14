@@ -450,8 +450,9 @@ async function appendBotResponse(answer) {
 }
 
 async function typeText(element, htmlText, delay = 50) {
+    const paraphrased = await paraphraseResponse(htmlText);
     const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = htmlText;
+    tempDiv.innerHTML = paraphrased;
     const nodes = [...tempDiv.childNodes];
 
     let currentHTML = '';
@@ -476,7 +477,7 @@ async function typeText(element, htmlText, delay = 50) {
         }
     }
 
-    element.innerHTML = `<em></em> ${htmlText}`;
+    element.innerHTML = `<em></em> ${paraphrased}`;
     chatbox.scrollTop = chatbox.scrollHeight;
 }
 
