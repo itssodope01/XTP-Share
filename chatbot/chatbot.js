@@ -45,27 +45,30 @@ async function loadModel() {
 }
 
 async function paraphraseResponse(originalResponse) {
-    const apiUrl = 'https://api.apilayer.com/paraphraser/paraphrase';
+    const apiUrl = 'https://api.apilayer.com/paraphraser';
     const apiKey = '70ZjWER2CUfyO0YWLEdF5KZ1TLA1EwSw';
   
-    const response = await fetch(apiUrl, {
+    const myHeaders = new Headers();
+    myHeaders.append("apikey", apiKey);
+  
+    const requestOptions = {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'apikey': apiKey
-      },
-      body: new URLSearchParams({
-        text: originalResponse,
-        mode: 'fluency' // You can change this to 'formal' or 'creative' if needed
-      })
-    });
+      headers: myHeaders,
+      body: JSON.stringify({ text: originalResponse }),
+      redirect: 'follow'
+    };
   
-    if (!response.ok) {
-      throw new Error(`API request failed with status ${response.status}`);
+    try {
+      const response = await fetch(apiUrl, requestOptions);
+      if (!response.ok) {
+        throw new Error(`API request failed with status ${response.status}`);
+      }
+      const result = await response.json();
+      return result.paraphrased;
+    } catch (error) {
+      console.error('Error:', error);
+      return originalResponse;
     }
-  
-    const data = await response.json();
-    return data.paraphrased; // The API returns the paraphrased text in the 'paraphrased' field
   }
 
 function displayInitialFollowUpQuestions() {
