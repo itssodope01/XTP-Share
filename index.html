@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="assets/logo/logo.png">
+    <title>XTP Share</title>
+
+    <!--
+    Copyright (c) 2024 Pritam Chakraborty
+    -->
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="assets/styles.css">
+    <link rel="stylesheet" href="assets/section3.css">
+    <link rel="stylesheet" href="assets/section4.css">
+    <link rel="stylesheet" href="assets/verify.css">
+    <link rel="stylesheet" href="assets/modal.css">
+    <link rel="stylesheet" href="assets/user-account.css">
+    <link rel="stylesheet" href="chatbot/chatBotStyles.css">
+    <!-- Theme stylesheets -->
+    <link rel="stylesheet" href="assets/theme/dark-mode.css">
+    <link rel="stylesheet" href="assets/theme/light-mode.css">
+    <!-- Screen resize stylesheets -->
+    <link rel="stylesheet" href="assets/screen-resize/smallscreen.css">
+    <link rel="stylesheet" href="assets/screen-resize/mediumscreen.css">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <!-- External libraries -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script>
+        var deviceType = localStorage.getItem('deviceType') || (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? 'mobile' : 'desktop');
+        localStorage.setItem('deviceType', deviceType);
+        
+        if (deviceType === 'mobile') {
+            window.location.href = 'mobile.html'; 
+        } else {
+            document.addEventListener('DOMContentLoaded', function() {
+                document.querySelector('html').style.display = 'block';
+            });
+        }
+    </script>    
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <!-- Logo and Navigation -->
+        <div class="logo-container">
+            <img id="logo" src="assets/logo/logo.png" alt="Company Logo" style="width: 25px;">
+            <span class="company-name">XTP SHARE</span>
+        </div>
+
+        <!-- Header Buttons -->
+        <div class="header-buttons">
+            <button class="header-button" id="mobileApp">Mobile App</button>
+            <button class="header-button">Help</button>
+            <button class="header-button">Contact</button>
+            <button class="header-button">About</button>
+        </div>
+        <div class="time" id="remainingTimeDisplay" title="Verified">00m 00s</div>
+        <div class="userAccount" id="userAccount">
+            <img src="assets/logo/user.png" alt="User Logo">
+        </div>
+        <div class="user-dropdown-menu" id="userDropdownMenu">
+            <div class="arrow-up"></div>
+            <p id="displayName">Not logged In</p>
+            <a href="#" id="transferHistoryLink"><i class="fa fa-clock"></i> Transfer History</a>
+                        <div id="connectedAccountsContainer">
+                <a  id="connectedAccounts" onclick="showUserAccounts()"><i class="fa fa-link"></i> Connected Accounts <div id="connectedAccountsList" class="connected-accounts-list">
+                    <!-- This will be populated dynamically -->
+                </div></a>
+
+            </div>
+            <a href="#" id="logoutLink"><i class="fa fa-sign-out-alt"></i> Log Out</a>
+        </div>
+        
+        <!-- Dark Mode Toggle -->
+        <div class="toggle-container">
+            <input type="checkbox" id="dark-mode-toggle" class="toggle-checkbox">
+            <label for="dark-mode-toggle" class="toggle-label">
+                <div class="toggle-oval">
+                    <div class="toggle-button">
+                        <div class="ticon">
+                            <img src="assets/logo/brightness.png" alt="Sun" class="sun-icon">
+                            <img src="assets/logo/moon.png" alt="Moon" class="moon-icon">
+                        </div>
+                    </div>
+                </div>
+            </label>
+        </div>
+
+        <!-- Hamburger Menu Button -->
+        <div class="hamburger-menu">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container" id="container">
+        <h1 class="title" id="title">Online File Transfer System</h1>
+        <p class="subtitle" id="title">by XTP</p></div>
+        <span class="back arrow" id="backArrow"></span>
+            <!-- Sections -->
+    <div class="container1" id="container1">
+        <div class="section S1 active" id="S1" ondragover="handleDragOver(event)" ondragenter="handleDragEnter(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
+        <div class="container2" id="C2">
+        <h4 class="description">Securely Send Files Without Compromising Your Account Passwords and Privacy.<br>
+            <span class="highlight" data-text="No LogIn Required">No Login Required.</span>
+            <span class="find-out">Find out How! </span>
+        </h4>
+    </div>
+
+<!-- File Drop Area -->
+<div class="file-drop-box" style="height: 225px;" id="fileDropBox" onclick="openFileSelection(event)">
+    <img src="assets/logo/folder.png" alt="Placeholder Image" class="placeholder-image" style="width: 55px; margin-top: 40px;">
+    <p class="file-drop-text" style="cursor: default;">Drag folders (to zip) or files here</p>
+    <div class="file-container" style="height: 225px; overflow-y: auto; overflow-x: hidden;">
+        <ul class="file-list" id="selected-files-container" style="height: auto;"></ul>
+    </div>
+    <div class="upload">
+        <input type="file" id="file-upload" multiple hidden>
+        <label class="upload-button" style="cursor: pointer;" id="upload-files"><span>Upload Files </span></label>
+        
+        <input type="file" id="folder-upload" style="display:none;" multiple directory webkitdirectory>
+        <label for="folder-upload" class="upload-button" style="cursor: pointer;" id="upload-folder"><i class="fas fa-folder"></i></label>
+    </div>
+</div>
+<div class="clear-container" onclick="clearAllFiles()">
+    <button class="clear-all-button" style="cursor: pointer;"><i class="fas fa-trash-alt"></i><span class="clear" id="clear">Clear All</span></button>
+</div>
+<div class="add-files-container" onclick="openFileSelection(event)">
+    <button for="file-upload" class="add-files-button" style="cursor: pointer;"><i class="fas fa-plus"></i><span class="add" id="add">Add More</span></button>
+</div>
+
+
+
+
+    <!-- Buttons for File Actions -->
+    <div class="button-container">
+        <button id="send-email-button" class="btn"><strong>Send Email</strong></button>
+        <button id="save-cloud-button" class="btn"><strong>Cloud Storage</strong></button>
+    </div>
+</div>
+
+<div class="section S2 next" id="S2">
+    <!-- Div Elements for Code Verification -->
+    <div id="codeVerification" class="codeVerification">
+        <div class="content">
+            
+            <h2>Enter OTP</h2>
+            <p>Please enter the one-time code from the mobile app. This code securely connects you to your accounts.</p>
+            <!-- Code Input Fields -->
+            <div class="code-input-container">
+                <input type="tel" pattern="[0-9]*" inputmode="numeric" maxlength="1" class="code-input" autocomplete="new-code-1" />
+                <input type="tel" pattern="[0-9]*" inputmode="numeric" maxlength="1" class="code-input" autocomplete="new-code-2" />
+                <input type="tel" pattern="[0-9]*" inputmode="numeric" maxlength="1" class="code-input" autocomplete="new-code-3" />
+                <input type="tel" pattern="[0-9]*" inputmode="numeric" maxlength="1" class="code-input" autocomplete="new-code-4" />
+                <input type="tel" pattern="[0-9]*" inputmode="numeric" maxlength="1" class="code-input" autocomplete="new-code-5" />
+                <input type="tel" pattern="[0-9]*" inputmode="numeric" maxlength="1" class="code-input" autocomplete="new-code-6" />
+            </div>
+                        
+            <!-- Verification Message -->
+            <p id="verificationMessage" class="verification-message"></p>
+            <!-- Verify Code Button -->
+            <button id="verifyCodeButton" class="btn"><strong>Verify</strong></button>
+            <p class="find-code-text"><a id="findCodeLink" onclick="toggleCodeInfo()">Where to find the code?</a></p>
+        </div>
+    </div>
+    <div id="codeInfo" class="codeInfo" >
+        <div class="content">
+        <p>You can find the code in our mobile app under the "Generate One-Time Code" section.</p><p class="download" id="download"><br><a style="cursor: pointer;" onclick="openQR()">Download App</a></p>
+    </div>
+    </div>
+</div>
+
+<!-- Div Elements for choosing Cloud Storage options -->
+    <!-- Section S3 -->
+    <div class="section S3 next" id="S3" >
+        <h2 class="description">Select Cloud Storage Options</h2>
+        <p class="description" style="text-align: center;">You can transfer files to multiple Storage systems at the same time.</p>
+        <div class="platforms-container" id="platformsContainer">
+            <!-- Platforms will be dynamically added here -->
+        </div>
+        <!-- Buttons for File Actions -->
+        <div class="button-container">
+            <button id="start-transfer-button" class="btn">
+                <strong>Start Transfer</strong>
+                <svg id="svg1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" style="margin-left: -3px;" transform="rotate(-90)">
+                    <path d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/>
+                </svg>
+                <svg id="svg2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" style="margin-left: -18px;" transform="rotate(-90)">
+                    <path d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/>
+                </svg>
+            </button>
+        </div>
+        <div class="preview-button"><a class="preview" id="preview">Preview Files</a></div>
+    </div>
+<!-- Div Elements for Email -->
+<div class="section S4 next" id="S4">
+    <div class="email-compose-container" ondragover="handleDragOver(event)" ondragenter="handleDragEnter(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
+        <!-- <div class="email-label">E M A I L</div> -->
+        <div class="email-compose">
+            <div class="email-compose-header" id="header-input">
+            </div>
+            <div class="email-compose-header">
+                <div class="input-group">
+                    <select required name="to" class="input"></select>
+                    <label class="user-label" id="to">To</label>
+                </div>
+            </div>           
+        </div>
+        <div class="attachment-container" id="attachment-container">
+            <div class="attach-contain"> 
+               <p class="attachment-text" style="cursor: default;">:No Attachments</p>
+            </div>
+        </div>
+        <div class="email-compose-footer">
+            <span class="emailError"></span>               
+            <button class="email-compose-button">
+                <div class="svg-wrapper-1">
+                    <div class="svg-wrapper">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                            <path fill="none" d="M0 0h24v24H0z"></path>
+                            <path fill="currentColor" d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <span>Send</span>
+            </button>
+        </div>
+    </div>
+</div>
+</div>
+    <!-- Modal for System Information -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Welcome to XTP Share!</h2>
+            <p class="description" id="step">Our system allows you to securely send files from any public device to your personal accounts without the need to log in. Here's how it works:</p>
+            <div class="steps-container">
+                <!-- Step Buttons -->
+                <div class="step-buttons" id="stepButtons"></div>
+                <div class="steps-content" id="stepsContent"></div>
+            </div>
+            <!-- Currently Supported Platforms -->
+            <p class="description">We currently support sending files to:</p>
+            <div class="wrapper" id="iconWrapper"></div>
+            
+        </div>
+    </div>
+
+<!-- Email-sent Notification -->
+<div id="successModal" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="notification">
+            <div style="display: flex; flex-direction: row; justify-content: center; align-items: center;">
+                <i class="fas fa-bell" style="margin-right: 10px;"></i>
+                <p id="successMessage">Email sent!</p>
+            </div>
+        </div>        
+    </div>
+</div>
+
+<!-- Zip-Modal -->
+<div id="Zipmodal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="closeZip" >&times;</span>
+        <div id="zip-loader" class="loader"></div>
+      <p id="modal-text"></p>
+      <div class="button-container">
+      <button id="zip-button" class="btn">Convert to Zip</button>
+      <button id="upload-button" class="btn">Individual Files</button>
+      </div>
+    </div>
+  </div>
+  
+<!-- modal to preview uploaded files -->
+<div id="uploaded-files-modal" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <span class="close" id="uploaded-files-modal-close">&times;</span>
+        <div>
+            <h3 id="file-count">0 Files Total size 0 MB</h3>
+            <div class="sort-dropdown">
+                <label for="sort-by" style="border-radius: 20px;">Sort by:</label>
+                <select id="sort-by" style="border-radius: 20px;">
+                    <option value="select">Select</option>
+                    <option value="size-ascending">Size Ascending</option>
+                    <option value="size-descending">Size Descending</option>
+                    <option value="date-sort">Last Modified</option>
+                </select>
+            </div>
+        </div>
+        <h4 id="file-size-error"></h4>
+        <div class="uploaded-files-table-container">
+            <table class="uploaded-files-table">
+                <thead>
+                    <tr>
+                        <th style="border-bottom: 0; width: auto; margin-top: 0;"></th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Size</th>
+                        <th>Last Modified</th>
+                        <th style="border-bottom: 0; width: auto; margin-top: 0;"></th>
+                    </tr>
+                </thead>
+                <tbody class="uploaded-files">
+                    <!-- Rows will be dynamically added here -->
+                </tbody>
+            </table>
+        </div>
+        <div class="file-drop-button">
+            <div class="button-container">
+                <button id="addFiles" class="btn">Add Files</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- APK-QR-Modal -->
+<div id="apkModal" class="modal">
+    <div class="modal-content">
+      <p>Scan the QR Code To begin app download.</p>
+      <img id="apkQR" src="assets/apk_download_qr.png">
+    </div>
+</div>
+
+<!-- Transfer-Modal -->
+<div id="transferModal" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <h3><span class="transfer-h3">Transfer in progress</span> <span class="dot dot1">.</span><span class="dot dot2">.</span><span class="dot dot3">.</span></h3>
+        <button class="close-transfer" id="close-transfer" onclick="closeTransfer()">Done</button>
+        <div id="main" class="main open">
+            <div id="transfer-progress-bar">
+                <div class="progress-bar-fill" id="transfer-progress"></div>
+            </div>
+        </div>
+        <div id="completed" class="completed">
+            <div style="display: flex; justify-content: center; align-items: center;">
+                <span style="display: flex; justify-content: center; align-items: center; margin-top: 10px;"><img src="assets/logo/checked.png" alt="loading" style="width: 24px; height: 24px; margin-right: 6px;"><p style="margin-bottom: 10px;">All Set</p></span>
+            </div>
+        </div>
+        <button class="cancel-transfer" id="cancel-transfer" onclick="cancelTransfer()">Cancel</button>
+    </div>
+</div>
+
+
+
+  <!-- Transfer History -->
+  <div id="transferHistoryModal" class="modal">
+    <div class="modal-content">
+      <img src="assets/logo/back-arrow.svg" class="close" id="history-close" alt="Close">
+      <div class="search-and-filter">
+        <input type="text" id="search-bar" placeholder="Search Transfer History">
+        <div id="filter-by">
+          <i class="fas fa-sliders-h"></i>
+          <span class="filter-text">Filter</span>
+        </div>
+      </div>
+      <p>Transfer History</p>
+      <div id="filter-window">
+        <div class="filter-group">
+          <h5 class="filter-title">Platform</h5>
+          <div class="filter-checkboxes">
+            <div class="filter-pair">
+                <label><input type="checkbox" class="platform-filter" value="GoogleDrive"> Google Drive</label>
+                <label><input type="checkbox" class="platform-filter" value="Gmail"> Gmail</label>
+              </div>
+              <div class="filter-pair">
+                <label><input type="checkbox" class="platform-filter" value="OneDrive"> OneDrive</label>
+                <label><input type="checkbox" class="platform-filter" value="Outlook"> Outlook</label>
+              </div>
+          </div>
+        </div>
+        <div class="filter-group">
+          <h5 class="filter-title">Date Range</h5>
+          <div class="date-range">
+            <label for="from-date">From:</label>
+            <input type="date" id="from-date" class="date-input">
+          </div>
+          <div class="date-range">
+            <label for="to-date">To:</label>
+            <input type="date" id="to-date" class="date-input">
+          </div>
+        </div>
+        <div class="filter-group">
+          <h5 class="filter-title">Status</h5>
+          <div class="filter-checkboxes">
+            <div class="filter-pair">
+                <label><input type="checkbox" class="status-filter" value="Complete"> Complete </label>
+                <label><input type="checkbox" class="status-filter" value="Cancelled"> Cancelled</label>
+            </div>
+            <div class="filter-pair">
+                <label><input type="checkbox" class="status-filter" value="InProgress"> In Progress </label>
+                <label><input type="checkbox" class="status-filter" value="Failed"> Failed </label>
+            </div>
+          </div>
+        </div>
+        <button id="apply-filter" class="filter-button">Apply Filter</button>
+        <button id="clear-filters" class="filter-button">Clear Filters</button>
+
+      </div>
+      <table class="transfer-history-table">
+        <thead style="pointer-events: none;">
+          <tr>
+            <th>Transfer ID</th>
+            <th>Date</th>
+            <th>Platforms</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody class="transfer-history-actual">
+        </tbody>
+      </table>
+      <span class ="transferHistoryError"></span>
+    </div>
+  </div>
+
+    
+<!-- Overlay for Modals -->
+<div id="overlay"></div>
+
+    <!-- Floating icon to open chat -->
+    <div class="chat-icon" id="chatIcon"><i class="fas fa-comments"></i></i></div>
+
+    <!-- Chat container -->
+    <div class="chat-container" id="chatContainer" style="display: none;">
+        <div class="chat-header">
+            <span>XTP Share Chatbot</span>
+            <i class="fas fa-window-minimize" id="chatMinimize" style="position: absolute; right: 5%; cursor: pointer;" onclick="minimizeChat()"></i>
+        </div>
+        <div class="chat-body" id="chatbox">
+            <!-- Chat messages will be appended here -->
+        </div>
+        <div id="followUpContainer"></div>
+        <div class="chat-input">
+            <input type="text" class="user-input" id="userInput" placeholder="Type your question..." disabled>
+            <button class="send-button" id="sendButton" disabled>Send</button>
+        </div>
+        <div class="loading-indicator" id="loadingIndicator">
+            <span class="loading"></span> Loading chatbot
+            <span class="typing-indicator">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </span>
+            <span id="loading-percent"> 0% </span>
+        </div>
+    </div>
+
+    <footer>
+        <p style="cursor: default;">&copy; 2024 XTP Services Inc.</p>
+        <div class="tnc" id="tnc">
+            <span><a href="terms_of_use">Terms of Use</a> | <a href="privacy_policy">Privacy Policy</a></span>
+        </div>
+    </footer>
+
+
+    <script>
+        // Dark Mode Toggle
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            darkModeToggle.checked = savedTheme === 'dark';
+        }
+
+        darkModeToggle.addEventListener('change', () => {
+            const theme = darkModeToggle.checked ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+        });
+
+        document.getElementById('logo').addEventListener('click', function() {
+        location.reload();
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const body = document.querySelector('body');
+            body.style.display = 'block';
+        });
+        
+    </script>
+    <script>
+        let zoomChanged = false;
+        let lastDevicePixelRatio;
+        function adjustZoom() {
+            const currentZoom = Math.round(window.devicePixelRatio * 100);
+            const attV = document.querySelector('.attachment-container');
+              
+            if (currentZoom < 125 && currentZoom > 90 && zoomChanged == false) {
+                const scaleFactor = 125 / currentZoom;
+                document.body.style.transform = `scale(${scaleFactor})`;
+                document.body.style.width = `${100 / scaleFactor}vw`;
+                document.body.style.height = `${100 / scaleFactor}vh`;
+                attV.style.height = '35vh';
+            } else {
+                document.body.style.transform = 'scale(1)';
+                document.body.style.width = '100vw';
+                document.body.style.height = '100vh';
+                attV.style.height = '40vh';
+            }
+            lastDevicePixelRatio = window.devicePixelRatio;
+            }
+        
+        // window.addEventListener('resize', adjustZoom);
+        window.addEventListener('load', adjustZoom);
+
+        window.addEventListener('resize', () => {
+            if (window.devicePixelRatio !== lastDevicePixelRatio && zoomChanged == false) {
+                 zoomChanged = true;
+            }
+            adjustZoom();
+        });
+
+    </script>
+
+    <script src="chatbot/chatbot.js"></script>
+    <div id="script" class="script"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.4/mammoth.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/zip.js/3.1.5/zip.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jszip@latest/dist/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.11.0/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/universal-sentence-encoder@1.3.3/dist/universal-sentence-encoder.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/levenshtein@1.0.5/levenshtein.js"></script>
+    <script src="loadScripts.js"></script>
+</body>
+
+</html>

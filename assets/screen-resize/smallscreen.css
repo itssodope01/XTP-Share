@@ -1,0 +1,288 @@
+/* Small Screen */
+@media only screen and (max-width: 700px) {
+    header {
+        padding: 10px 20px 5px 20px;
+    }
+
+    .company-name {
+        font-size: 0.85rem;
+    }
+
+    .file-div {
+        width: 100%;
+    }
+
+    .container {
+        margin-top: 10px;
+    }
+
+    .file-drop-box {
+        padding: 10px;
+        width: 70%;
+    }
+
+    .file-drop-text {
+        font-size: 1rem;
+    }
+    
+    .modal {
+        width: 400px;
+        height: auto;
+        overflow-y: auto; 
+        border-radius: 15px;
+        transition: height 0.3s ease;
+    }
+    
+    .step-buttons {
+        margin-top: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .step-button {
+        margin: 5px;
+        font-size: 1em;
+    }
+    
+    .step-content {
+        flex-direction: column;
+    }
+    
+    .step-description {
+        margin-right: 2px;
+        margin-left: 2px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        min-height: 15vh;
+    }
+
+    .step-button {
+        width: 47px;
+        height: 47px;
+        font-size: 1.22rem;
+    }
+    
+    .step-image-container {
+        width: 100%; 
+        margin-bottom: 10px;
+    }
+    .step-image-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    
+    .step-image-container img {
+        width: 70%;
+    }
+    
+    .wrapper {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .modal-content h2,
+    .modal-content .description {
+        margin-top: 0;
+        margin-bottom: 5px; 
+        
+    }
+
+    .clear-all-button{
+        top: 36.8%;
+    }
+    .add-files-button{
+        top: 27.5%;
+    }
+
+    .message {
+        right: 250px;
+    }
+
+    .back.arrow {
+        left: 12%;
+    }
+
+    .button-container {
+        margin-left: 0;
+    }
+
+    .clear-all-button:hover {
+        width: 35px;
+        border-radius: 50%;
+    }
+    .clear-all-button:hover .clear{
+        visibility: hidden;
+        width: 0;
+    }
+
+    .add-files-button:hover {
+        width: 35px;
+        border-radius: 50%;
+    }
+    .add-files-button:hover .add{
+        visibility: hidden;
+        width: 0;
+    }
+
+    .section.S3 h2{
+        font-size: 18px;
+    }
+
+    .platforms-container {
+        gap: 10px;
+        margin-top: 30px;
+    }
+    
+    .platform-option {
+        width: 400px;
+        height: 170px;
+
+    }
+    .platform-name {
+        font-size: 20px;
+    }
+    
+    .platform-icon {
+        width:60px !important;
+        height: 60px !important;
+    }
+
+    .header-buttons.show {
+        display: block !important;
+    }
+
+    .hamburger-menu {
+        position:relative;
+        display: block !important;
+        cursor: pointer;
+        padding: 10px;
+        right: 0;
+    }
+    .header-buttons
+     {
+        display: none;
+    }
+
+    #expand-files {
+        right: 12.5%;
+        bottom: 20%;
+    }
+
+    #expand-files {
+        right: 13.6%;
+        bottom: 27.6%;
+    }
+    #successModal {
+        width: 250px;
+        max-width: 80%;
+    }
+
+    .search-and-filter {
+        top: 85px;
+        right: 10%;
+    }
+
+    .toggle-container {
+        right: 0px;
+    }
+
+    #filter-window {
+        top: 20%;
+    }
+
+    .file-item, .attachment-item {
+        width: 100%;
+      }
+
+      .file-name {
+        width: 100%;
+      }
+}
+
+@media only screen and (max-width: 650px) {
+    .email-compose-container{
+        min-width: 370px;
+    }
+
+    .email-compose-container .email-compose {
+        width: 100%;
+    }
+
+    #editorPlaceholder{
+        top:45%;
+        left:6.1%;
+        transition: left 0s ease;
+    }
+
+    button.email-compose-button {
+        margin-left: 10px;
+    }
+
+    .sort-dropdown {
+        position: absolute;
+        right: 0%;
+        left: 10%;
+        top: 2%;
+      }
+
+
+}
+@media only screen and (max-width: 670px) {
+#expand-files {
+    right: 13.6%;
+    bottom: 23.6%;
+}
+}
+
+@media only screen and (min-width: 700px) and (max-width: 950px) {
+    .search-and-filter {
+        top: 85px;
+        right: 10%;
+    }
+    #filter-window {
+        top: 20%;
+      }
+}
+
+@media only screen and (max-width: 500px) {
+.email-compose-container{
+    margin-left: -0px;
+}
+.title {
+    font-size: 22px;
+}
+
+.highlight {
+    font-size: 1rem !important;
+}
+
+.subtitle {
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+.description{
+    font-size: 15px;
+    padding: 15px;
+    margin-bottom: 10px;
+}
+
+    .section.S3 p{
+        margin-top: -12px;
+    }
+
+    .section.S3{
+        margin-top: -30px;
+    }
+
+    .bot-message {
+        margin-left: 12%;
+    }
+
+    .bot-icon {
+        margin-bottom: -8%;
+    }
+
+}

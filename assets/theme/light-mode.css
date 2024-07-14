@@ -1,0 +1,126 @@
+:root[data-theme="light"] {
+    /* body */
+    --background-color: #ffffff;
+    --background-color-gradient: linear-gradient(to right,#dc3c99, #a927cd, #8629c4, #691bce);
+    --text-color: #303030;
+
+    /* header */
+    --header-background: #ffffff;
+    --header-text: #303030;
+    --header-show-bg: #f0f0f0;
+    --header-show-border: #ccc;
+    --header-hov-ug: scaleX(0.8);
+    --header-hov-bg: transparent;
+    --header-hov-text: var(--text-color);
+
+    /* file upload-box placeholder image */
+    --placeholder-image-filter: invert(40%);
+
+    --subtitle-color: #888888;
+
+    /* find-out button */
+    --find-out-color: #3f3f3f;
+    --find-out-line: #343434;
+
+    /* main description */
+    --description-color: #494949;
+
+    /* file drop box */
+    --file-drop-box-border: #afafaf;
+    --file-drop-text-color: #888888;
+    --file-name: #3f3f3f;
+    --blink: rgb(231, 131, 131);
+
+    /* email/cloud-storage button (send) */
+    --btn-padding:12px 22px;
+    --btn-border:2px;
+    --button-text-color: #111827;
+    --button-bg-color: var(--background-color);
+    --button-border-color: #111827;
+    --button-hover-text-color: #ffffff;
+    /* --button-before: #111827;
+    --button-before-sh: var(--button-before); */
+    --button-hover-color: linear-gradient(to right,#dc3c99, #a927cd, #8629c4, #691bce);
+    --email-button: linear-gradient(to right, royalblue, rgb(65, 134, 225));
+
+    /* theme toggle */
+    --toggle-oval-bg: #000000;
+    --toggle-button-bg: #dbdbdb;
+    --toggle-icon: url('logo/brightness.png');
+
+    /* footer */
+    --footer-background: #ffffff;
+
+    /* upload-files button */
+    --upload-button-bg: #111827;
+    --upload-button-text-color: #ffffff;
+    --upload-button-border: white;
+    --upload-button-text-hover: rgb(255, 255, 255);
+    --upload-button-border-hover: var(--background-color);
+    --upload-button-hover: linear-gradient(to right,#1ebc60, #4cce28, #71d032, #7ac914);
+
+    /* modal */
+    --modal-close: #0b0b0b;
+
+    /* code-veification-modal */
+    --code-v-bg: #c1e1e8;
+    --code-input-bg: rgb(237, 237, 237);
+    --code-input-border-color: #ccc;
+    --code-input-color: #0b0b0b;
+    --back-invert:invert(10%);
+    --verify-green:#2cac0d;
+
+    /* hamburger-menu bars */
+    --bar-bg: #1c1c1c;
+
+    --back:url('logo/back-arrow.svg');
+
+    /* Add More/Remove Buttons */
+    --add: linear-gradient(to right,#29c483, #27cd82, #29c464, #67d63f);
+    --remove: linear-gradient(to right, #cf5695,  #cb5479, #d15872, #d75562);
+
+    --scrollbar-track-color:transparent;
+    --scrollbar-thumb-color:#121212;
+
+    /* cloud */
+    --cloud-bg: rgba(0, 0, 0, 0.9);
+    --icon-invert:invert(90%);
+    --name-invert:invert(10%);
+    --platform-after:#51d296;
+
+    --email-bg: #ffffff;
+    --email-border-color: #aaaaaa;
+
+    --quill-invert:invert(0%);
+
+    --preview: #616161;
+
+        --box-shadow: 5px 5px 10px rgba(72, 72, 72, 0.253);
+    --user-invert: invert(5%);
+    --user-invert-hover: invert(30%);
+
+    /* table transfer history */
+
+    --header-bg: transparent;
+    --header-text: #1e1e1e;
+    --row-even-bg: transparent;
+    --row-hover-bg: #e9e9e9;
+    --border-color: #ddd;
+
+    /* user account */
+    --user-dropdown-bg: #ececec;
+    --user-hover: #dddddd;
+
+    --search-image:  url("logo/search.png");
+    --filter-input: #cacaca;
+    --filter-options: rgb(37, 37, 37);
+    --filter-bg: #e4edf0;
+
+    --file-item-bg: #eaeff2;
+    --file-item-border-bottom: #1e1e1e23;
+    --file-item-border-bottom-width: 2px ;
+
+    /* chatbot */
+    --chatbot-bg: #eaeff2;
+    --chatbot-text: var(--text-color);
+}

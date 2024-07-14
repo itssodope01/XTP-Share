@@ -1,0 +1,160 @@
+.section.S3 h2 {
+    font-size: 24px;
+    font-weight: bold;
+    position: relative;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 0;
+    transition: font-size 0.3s ease;
+}
+
+.section.S3 p{
+    transition: margin-top 0.3s ease;
+}
+
+.platforms-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 40px;
+    transition: gap 0.3s ease, margin-top 0.3s ease;
+}
+
+.platform-option {
+    position: relative;
+    overflow: hidden;
+    width: 300px;
+    height: 200px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.platform-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    border-radius: 10px;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+}
+
+.platform {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    border-top-right-radius: 50px;
+    display: flex;
+    background-color:var(--cloud-bg);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transform-style: preserve-3d;
+    transition: top 0.2s ease;
+}
+
+.platform-option.active .platform, .platform-option.selected .platform {
+    top: 5%;
+    background-color: var(--cloud-bg);
+}
+
+.platform-name {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 10px;
+    filter: var(--name-invert);
+    transition: font-size 0.3s ease;
+}
+
+.platform-icon {
+    font-size: 48px;
+    color: #ffffff;
+    margin-bottom: 10px;
+    filter: var(--icon-invert);
+    transition: width 0.3s ease, height 0.3s ease;
+}
+
+.selected.platform-option .platform-name::after {
+    width: 95%;
+}
+
+.platform-name::after {
+    content: '';
+    display: block;
+    width: 55%;
+    height: 2px;
+    background-color: var(--platform-after);
+    margin: 10px auto;
+    transition: width 0.27s ease;
+}
+
+#start-transfer-button{
+    margin-top: 2.4%;
+    margin-left: -1%;
+    padding-right: 7px;
+}
+
+#start-transfer-button svg {
+    fill: currentColor;
+    vertical-align: middle;
+}
+
+@keyframes blink1 {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes blink2 {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+.blink-animation-1 {
+    animation: blink1 0.9s infinite;
+}
+
+.blink-animation-2 {
+    animation: blink2 0.9s infinite;
+}
+
+.platform-icon[data-platform="Google Drive"] {
+    width: 58px; 
+    height: 58px;
+}
+.preview-button{
+    display: flex;
+    justify-content: center;
+}
+.preview{
+    margin-top: -20px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    color: var(--preview);
+    width:100px;
+    margin-left: 18.6px;
+}
+
+.preview:hover{
+    color: var(--text-color);
+}
