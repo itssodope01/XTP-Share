@@ -44,6 +44,27 @@ async function loadModel() {
     }
 }
 
+async function paraphraseResponse(response) {
+    const apiUrl = 'https://api.apilayer.com/paraphraser';
+    const apiKey = '70ZjWER2CUfyO0YWLEdF5KZ1TLA1EwSw';
+  
+    const response = await fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': apiKey
+      },
+      body: JSON.stringify({ text: response })
+    });
+  
+    if (!response.ok) {
+      throw new Error(`API request failed with status ${response.status}`);
+    }
+  
+    const data = await response.json();
+    return data.paraphrased_text;
+  }
+
 function displayInitialFollowUpQuestions() {
     const initialQuestions = [
         "What is XTP Share, how does it work?",
