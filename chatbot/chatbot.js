@@ -44,17 +44,20 @@ async function loadModel() {
     }
 }
 
-async function paraphraseResponse(response) {
-    const apiUrl = 'https://api.apilayer.com/paraphraser';
+async function paraphraseResponse(originalResponse) {
+    const apiUrl = 'https://api.apilayer.com/paraphraser/paraphrase';
     const apiKey = '70ZjWER2CUfyO0YWLEdF5KZ1TLA1EwSw';
   
     const response = await fetch(apiUrl, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded',
         'apikey': apiKey
       },
-      body: JSON.stringify({ text: response })
+      body: new URLSearchParams({
+        text: originalResponse,
+        mode: 'fluency' // You can change this to 'formal' or 'creative' if needed
+      })
     });
   
     if (!response.ok) {
@@ -62,7 +65,7 @@ async function paraphraseResponse(response) {
     }
   
     const data = await response.json();
-    return data.paraphrased_text;
+    return data.paraphrased; // The API returns the paraphrased text in the 'paraphrased' field
   }
 
 function displayInitialFollowUpQuestions() {
